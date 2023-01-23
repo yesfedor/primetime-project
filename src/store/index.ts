@@ -1,14 +1,9 @@
-import { createStore } from 'vuex'
+import { defineStore } from 'pinia'
 
-export default createStore({
-  state: {
+export const useGlobalStore = defineStore('global-store', {
+  state() {
+    return {}
   },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+  getters: {},
+  actions: {},
 })
