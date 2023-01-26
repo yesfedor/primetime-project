@@ -1,11 +1,11 @@
 <template>
-  <h1>test</h1>
+  <div></div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'Home',
+  name: 'error404',
 })
 </script>
