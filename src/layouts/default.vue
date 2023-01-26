@@ -1,7 +1,7 @@
 <template>
   <div>
     default
-    <router-view />
+    <slot />
   </div>
 </template>
 

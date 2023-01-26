@@ -2,7 +2,7 @@
   <div>
     error
     {{ error }}
-    <router-view />
+    <slot />
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default defineComponent({
   name: 'error',
   props: {
     error: {
-      type: Object,
+      type: String,
     },
   },
 })

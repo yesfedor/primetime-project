@@ -1,5 +1,7 @@
 <template>
-  <AppCoreLayoutProvider />
+  <AppCoreLayoutProvider>
+    <RouterView/>
+  </AppCoreLayoutProvider>
 </template>
 
 <script lang="ts">

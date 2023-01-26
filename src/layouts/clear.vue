@@ -1,7 +1,7 @@
 <template>
   <div>
     clear
-    <router-view />
+    <slot />
   </div>
 </template>
 

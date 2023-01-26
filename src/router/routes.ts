@@ -1,26 +1,22 @@
 import { RouteRecordRaw } from 'vue-router'
-
-enum LayoutTypes {
-  default = 'default',
-  clear = 'clear',
-  error = 'error',
-}
+import { RouteNamesEnum } from '@/router/router.types'
+import { LayoutsNamesEnum } from '@/layouts/layouts.types'
 
 export const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'home',
-    component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
+    name: RouteNamesEnum.home,
+    component: () => import(/* webpackChunkName: "home" */ '@/pages/Home.vue'),
     meta: {
-      layout: LayoutTypes.default,
+      layout: LayoutsNamesEnum.default,
     },
   },
   {
     path: '/:pathMatch(.*)*',
-    name: 'error404',
-    component: () => import(/* webpackChunkName: "home" */ '../views/error/404.vue'),
+    name: RouteNamesEnum.error404,
+    component: () => import(/* webpackChunkName: "error" */ '@/pages/error/404.vue'),
     meta: {
-      layout: LayoutTypes.clear,
+      layout: LayoutsNamesEnum.error,
     },
   },
 ]
