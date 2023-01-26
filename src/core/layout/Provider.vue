@@ -10,9 +10,8 @@ import { useRoute } from 'vue-router'
 export default {
   name: 'AppLayout',
   setup() {
-    const route = useRoute()
     return {
-      route,
+      route: useRoute(),
     }
   },
 }
