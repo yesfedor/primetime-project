@@ -2,8 +2,8 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from '@/App.vue'
 import router from '@/router'
-import vuetify from '@/plugins/vuetify'
-import { i18n } from '@/plugins/i18n'
+import vuetify from '@/plugins/vuetify/create'
+import { i18n } from '@/plugins/i18n/create'
 import { loadFonts } from '@/plugins/webfontloader'
 
 loadFonts()

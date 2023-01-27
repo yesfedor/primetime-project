@@ -1,6 +1,5 @@
 <template>
-  <div>
-    clear
+  <div class="layout layout--clear">
     <slot />
   </div>
 </template>

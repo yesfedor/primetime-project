@@ -1,11 +1,11 @@
 <template>
-  <v-app-bar></v-app-bar>
+  <div class="app-global-scope"></div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'AppHeader',
+  name: 'AppGlobalScope',
 })
 </script>
