@@ -1,17 +1,18 @@
 <template>
-  <v-app-bar-nav-icon v-if="!$vuetify.display.mobile" @click="toggle" />
+  <v-btn @click="toggleWidth">{{ navigationDrawer.width }}</v-btn>
 </template>
+
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { useNavigationDrawer } from '@/composables/useNavigationDrawer'
 
 export default defineComponent({
-  name: 'AppNavigationToggle',
+  name: 'AppNavigationDrawerToggleWidth',
   setup() {
-    const { navigationDrawer, toggle } = useNavigationDrawer()
+    const { navigationDrawer, toggleWidth } = useNavigationDrawer()
     return {
       navigationDrawer,
-      toggle,
+      toggleWidth,
     }
   },
 })

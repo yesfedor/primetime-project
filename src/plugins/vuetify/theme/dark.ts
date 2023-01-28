@@ -3,7 +3,7 @@ import { ThemeDefinition } from 'vuetify'
 export const darkTheme: ThemeDefinition = {
   dark: true,
   colors: {
-    background: '#0f0f0f',
+    background: '#121212',
     surface: '#0f0f0f',
     primary: '#f1f1f1',
     'primary-darken-1': '#0f0f0f',

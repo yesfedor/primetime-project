@@ -6,7 +6,7 @@
       <v-main>
         <slot />
       </v-main>
-      <AppGlobalScope />
+      <AppNavigationBottom />
     </v-layout>
   </v-app>
 </template>
@@ -15,12 +15,14 @@
 import { defineComponent } from 'vue'
 import AppHeader from '@/components/common/Header.vue'
 import AppNavigationDrawer from '@/components/navigation/Drawer.vue'
+import AppNavigationBottom from '@/components/navigation/Bottom.vue'
 
 export default defineComponent({
   name: 'error',
   components: {
     AppHeader,
     AppNavigationDrawer,
+    AppNavigationBottom,
   },
 })
 </script>
