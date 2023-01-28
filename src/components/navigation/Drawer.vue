@@ -1,5 +1,8 @@
 <template>
-  <v-navigation-drawer permanent></v-navigation-drawer>
+  <v-navigation-drawer 
+    :touchless="false"
+    class="border-none"
+  ></v-navigation-drawer>
 </template>
 
 <script lang="ts">

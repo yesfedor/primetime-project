@@ -1,7 +1,11 @@
 <template>
-  <div class="layout layout--clear">
-    <slot />
-  </div>
+  <v-app>
+    <v-layout :full-height="true" class="layout layout--clear">
+      <v-main>
+        <slot />
+      </v-main>
+    </v-layout>
+  </v-app>
 </template>
 
 <script lang="ts">

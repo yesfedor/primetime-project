@@ -1,10 +1,12 @@
 import { createI18n } from 'vue-i18n'
 import { i18nLanguagesEnum } from '@/plugins/i18n/i18n.types'
 import { pluralRules } from '@/utils/pluralRules.helper'
-import ruRuMessages from '@/i18n/ru-RU'
-import enUsMessages from '@/i18n/en-US'
+import ruRuMessages from '@/locales/ru-RU'
+import enUsMessages from '@/locales/en-US'
 
-export const i18n = createI18n({
+type MessageSchema = typeof ruRuMessages
+
+export const i18n = createI18n<[MessageSchema], i18nLanguagesEnum.ruRU | i18nLanguagesEnum.enUS>({
   sync: true,
   legacy: true,
   locale: i18nLanguagesEnum.ruRU,

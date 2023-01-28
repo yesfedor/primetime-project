@@ -5,7 +5,7 @@ export const lightTheme: ThemeDefinition = {
   colors: {
     background: '#F5F5F5',
     surface: '#FFFFFF',
-    primary: '#6200EE',
+    primary: '#000000',
     'primary-darken-1': '#3700B3',
     secondary: '#03DAC6',
     'secondary-darken-1': '#018786',
