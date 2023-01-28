@@ -1,5 +1,8 @@
 <template>
-  <h1>{{ $t('home.title') }}</h1>
+  <v-container>
+    <h1>{{ $t('home.title') }}</h1>
+    <v-btn @click="$router.push({ name: 'watch', params: { kpid: 1 } })">Watch</v-btn>
+  </v-container>
 </template>
 
 <script lang="ts">

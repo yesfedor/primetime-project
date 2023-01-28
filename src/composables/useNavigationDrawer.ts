@@ -1,7 +1,9 @@
 import { onMounted, reactive, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { RouteNamesEnum } from '@/router/router.types'
 
 export enum navigationDrawerWidthEnum {
-  iconWithLabel = '256',
+  iconWithLabel = '240',
   icon = '68'
 }
 
@@ -15,15 +17,15 @@ interface INavigationDrawer {
   width: string | navigationDrawerWidthEnum
 }
 
+const storageKey = 'NavigationDrawer'
+const storageKeyWidth = 'NavigationDrawerWidth'
 const navigationDrawer = reactive<INavigationDrawer>({
   show: false,
   width: navigationDrawerWidthEnum.iconWithLabel,
 })
 
 export function useNavigationDrawer() {
-  const storageKey = 'NavigationDrawer'
-  const storageKeyWidth = 'NavigationDrawerWidth'
-
+  const router = useRouter()
   const show = () => {
     navigationDrawer.show = true
   }
@@ -51,6 +53,20 @@ export function useNavigationDrawer() {
     }
   })
 
+  const resetWidth = () => {
+    if (router.currentRoute.value.name === RouteNamesEnum.film ||
+        router.currentRoute.value.name === RouteNamesEnum.watch ||
+        router.currentRoute.value.name === RouteNamesEnum.trailer) {
+      navigationDrawer.width = navigationDrawerWidthEnum.icon
+    } else {
+      navigationDrawer.width = navigationDrawerWidthEnum.iconWithLabel
+    }
+  }
+
+  watch(router.currentRoute, () => {
+    resetWidth()
+  })
+
   onMounted(() => {
     const savedNavigationDrawer = localStorage.getItem(storageKey)
     const savedNavigationDrawerWidth = localStorage.getItem(storageKeyWidth) || navigationDrawerWidthEnum.iconWithLabel
@@ -62,6 +78,8 @@ export function useNavigationDrawer() {
     } else {
       hide()
     }
+
+    resetWidth()
   })
 
   return {

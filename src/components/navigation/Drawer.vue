@@ -70,16 +70,6 @@ export default defineComponent({
           },
         ],
       },
-      {
-        subtitle: '',
-        links: [
-          {
-            icon: 'mdi-star',
-            label: 'Star',
-            to: { name: 'home' },
-          },
-        ],
-      },
     ])
 
     return {
