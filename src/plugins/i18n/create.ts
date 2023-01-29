@@ -8,7 +8,7 @@ type MessageSchema = typeof ruRuMessages
 
 export const i18n = createI18n<[MessageSchema], i18nLanguagesEnum.ruRU | i18nLanguagesEnum.enUS>({
   sync: true,
-  legacy: true,
+  legacy: false,
   locale: i18nLanguagesEnum.ruRU,
   fallbackLocale: i18nLanguagesEnum.ruRU,
   pluralizationRules: {

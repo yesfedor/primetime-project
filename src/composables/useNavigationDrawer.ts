@@ -1,5 +1,5 @@
 import { onMounted, reactive, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { RouteRecordName, useRouter } from 'vue-router'
 import { RouteNamesEnum } from '@/router/router.types'
 
 export enum navigationDrawerWidthEnum {
@@ -20,12 +20,18 @@ interface INavigationDrawer {
 const storageKey = 'NavigationDrawer'
 const storageKeyWidth = 'NavigationDrawerWidth'
 const navigationDrawer = reactive<INavigationDrawer>({
-  show: false,
+  show: true,
   width: navigationDrawerWidthEnum.iconWithLabel,
 })
 
 export function useNavigationDrawer() {
   const router = useRouter()
+  const minWidthRouteList: (RouteRecordName | string | null | undefined)[] = [
+    RouteNamesEnum.film,
+    RouteNamesEnum.watch,
+    RouteNamesEnum.trailer,
+  ]
+
   const show = () => {
     navigationDrawer.show = true
   }
@@ -53,13 +59,17 @@ export function useNavigationDrawer() {
     }
   })
 
+  const initWidth = () => {
+    const savedNavigationDrawerWidth = localStorage.getItem(storageKeyWidth) || navigationDrawerWidthEnum.iconWithLabel
+    if (navigationDrawer.width !== savedNavigationDrawerWidth) {
+      navigationDrawer.width = savedNavigationDrawerWidth
+    }
+  }
   const resetWidth = () => {
-    if (router.currentRoute.value.name === RouteNamesEnum.film ||
-        router.currentRoute.value.name === RouteNamesEnum.watch ||
-        router.currentRoute.value.name === RouteNamesEnum.trailer) {
+    if (minWidthRouteList.includes(router.currentRoute.value.name)) {
       navigationDrawer.width = navigationDrawerWidthEnum.icon
     } else {
-      navigationDrawer.width = navigationDrawerWidthEnum.iconWithLabel
+      initWidth()
     }
   }
 
@@ -68,11 +78,8 @@ export function useNavigationDrawer() {
   })
 
   onMounted(() => {
-    const savedNavigationDrawer = localStorage.getItem(storageKey)
-    const savedNavigationDrawerWidth = localStorage.getItem(storageKeyWidth) || navigationDrawerWidthEnum.iconWithLabel
-    if (navigationDrawer.width !== savedNavigationDrawerWidth) {
-      navigationDrawer.width = savedNavigationDrawerWidth
-    }
+    const savedNavigationDrawer = localStorage.getItem(storageKey) || navigationDrawerStorageEnum.show
+    initWidth()
     if (savedNavigationDrawer === navigationDrawerStorageEnum.show) {
       show()
     } else {
