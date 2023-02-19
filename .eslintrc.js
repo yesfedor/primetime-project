@@ -20,6 +20,7 @@ module.exports = {
     quotes: ['error', 'single', { avoidEscape: true }],
     'import/prefer-default-export': 'off',
     'import/extensions': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
     'vue/multi-word-component-names': 'off',
     'vue/attribute-hyphenation': 'warn',
     'vue/attributes-order': 'warn',

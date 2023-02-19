@@ -41,8 +41,5 @@
     "vue-cli-plugin-pinia": "^0.2.3",
     "vue-cli-plugin-vuetify": "^2.5.8",
     "webpack-plugin-vuetify": "^2.0.0-alpha.0"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
   }
 }
