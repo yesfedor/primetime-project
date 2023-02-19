@@ -1,7 +1,10 @@
 <template>
   <v-container>
-    <h1>{{ $t('home.title') }}</h1>
-    <v-btn @click="$router.push({ name: 'watch', params: { kpid: 1 } })">Watch</v-btn>
+    <v-row>
+      <v-col cols="12">
+        <h1>{{ $t('home.title') }}</h1>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

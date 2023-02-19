@@ -21,18 +21,17 @@ export default defineComponent({
   },
   setup() {
     const authProvider = useAuth()
-    authProvider.install({
-      appId: 1,
-      routerPush(routeName, routeReason) {
-        console.log(routeName, routeReason)
-      },
-      storeCommit(what, payload) {
-        console.log(what, payload)
-      },
-    })
-    onMounted(() => {
-      authProvider.mounted()
-    })
+    authProvider
+      .install({
+        appId: 1,
+        routerPush(routeName, routeReason) {
+          console.log(routeName, routeReason)
+        },
+        storeCommit(what, payload) {
+          console.log(what, payload)
+        },
+      })
+      .mounted()
   },
 })
 </script>
