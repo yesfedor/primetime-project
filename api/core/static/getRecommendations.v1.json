@@ -1,0 +1,55 @@
+{
+  "items": [
+    {
+      "id": "193",
+      "kinopoiskId": "520",
+      "nameRu": "Телесеть",
+      "ratingAgeLimits": "16",
+      "ratingKinopoisk": "7.7",
+      "posterUrl": "https:\/\/kinopoiskapiunofficial.tech\/images\/posters\/kp\/520.jpg",
+      "type": "FILM",
+      "year": "1976"
+    },
+    {
+      "id": "194",
+      "kinopoiskId": "437040",
+      "nameRu": "Доброе утро",
+      "ratingAgeLimits": "16",
+      "ratingKinopoisk": "7.1",
+      "posterUrl": "https:\/\/kinopoiskapiunofficial.tech\/images\/posters\/kp\/437040.jpg",
+      "type": "FILM",
+      "year": "2010"
+    },
+    {
+      "id": "192",
+      "kinopoiskId": "584777",
+      "nameRu": "Служба новостей",
+      "ratingAgeLimits": "16",
+      "ratingKinopoisk": "8.0",
+      "posterUrl": "https:\/\/kinopoiskapiunofficial.tech\/images\/posters\/kp\/584777.jpg",
+      "type": "TV_SERIES",
+      "year": "2012"
+    },
+    {
+      "id": "190",
+      "kinopoiskId": "1161271",
+      "nameRu": "Скандал",
+      "ratingAgeLimits": "18",
+      "ratingKinopoisk": "6.4",
+      "posterUrl": "https:\/\/kinopoiskapiunofficial.tech\/images\/posters\/kp\/1161271.jpg",
+      "type": "FILM",
+      "year": "2019"
+    },
+    {
+      "id": "191",
+      "kinopoiskId": "1162901",
+      "nameRu": "Самый громкий голос",
+      "ratingAgeLimits": "16",
+      "ratingKinopoisk": "7.4",
+      "posterUrl": "https:\/\/kinopoiskapiunofficial.tech\/images\/posters\/kp\/1162901.jpg",
+      "type": "MINI_SERIES",
+      "year": "2019"
+    }
+  ],
+  "total": 5
+}
