@@ -225,13 +225,13 @@ interface IApiAuthConfigSetter {
   storeCommit?: (what: EApiStoreCommitWhat, payload: IApiStoreOutPayload) => void,
 }
 
-enum EApiRouterPushName {
+export enum EApiRouterPushName {
   current = 'current',
   main = 'main',
   error = 'error',
 }
 
-enum EApiStoreCommitWhat {
+export enum EApiStoreCommitWhat {
   login = 'login',
   register = 'register',
   logout = 'logout',
