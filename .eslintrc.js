@@ -21,6 +21,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'import/extensions': 'off',
     '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
     'vue/multi-word-component-names': 'off',
     'vue/attribute-hyphenation': 'warn',
     'vue/attributes-order': 'warn',

@@ -4,7 +4,7 @@ Every day millions of people are looking for movies online and no one wants to c
 ## Description
 A super-duper pet project with which I "play" with different technologies in the web, as well as this is a great resource for watching films, series and anime.
 
-## Используемые технологии:
+## Used technologies:
 1. PHP8
 2. TypeScript
 3. Vue 3 (Composition Api) 

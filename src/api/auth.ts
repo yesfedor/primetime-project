@@ -166,7 +166,7 @@ interface IApiAuth {
   unmounted: () => void,
 
   // app
-  getAppById(id: number): Promise<void>,
+  getAppById(id: number): Promise<number>,
 
   // device
   getDeviceIcon: (device: string) => string,
@@ -390,7 +390,9 @@ export const Api = reactive<IApiAuth>({
   },
 
   // app
-  async getAppById(id) { },
+  async getAppById(id) {
+    return id
+  },
 
   // device
   getDeviceIcon(device) {
@@ -416,7 +418,7 @@ export const Api = reactive<IApiAuth>({
    },
 
   // client
-  async setClientId(fnStart = (appId, platform) => {}, fnEnd = (appId, platform, clientId) => {}) {
+  async setClientId(fnStart = (appId, platform) => { logger('log', appId, platform) }, fnEnd = (appId, platform, clientId) => { logger('log', appId, platform, clientId) }) {
     const appId = this.config.appId
     const platform = useInyDevice()
     fnStart(appId, platform)
@@ -555,7 +557,7 @@ export const Api = reactive<IApiAuth>({
       name: user.name,
       surname: user.surname,
       email: user.email,
-      gender: user.gender
+      gender: user.gender,
     }
     const fastLogin = this.getFastLogin()
     if (!fastLogin.find(item => item.uid === user.uid)) {
@@ -639,7 +641,7 @@ export const Api = reactive<IApiAuth>({
       return false
     }
     return userData
-  }
+  },
 })
 
 export function useAuth() {
