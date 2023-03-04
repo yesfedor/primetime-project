@@ -65,7 +65,7 @@ export default defineComponent({
     const { navigationDrawer } = useNavigationDrawer()
     const { t } = useI18n()
     const emptyFn = () => {/* empty */}
-    const menuItems = reactive([  
+    const menuItems = reactive([
       {
         subtitle: '',
         links: [

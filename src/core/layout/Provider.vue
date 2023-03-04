@@ -8,7 +8,7 @@
 import { useRoute } from 'vue-router'
 
 export default {
-  name: 'AppLayout',
+  name: 'AppCoreLayoutProvider',
   setup() {
     return {
       route: useRoute(),

@@ -10,7 +10,7 @@ export default {
     searchFilter: 'Navigator',
     feed: 'New episodes',
     subscription: 'Subscriptions',
-    history: 'История',
+    history: 'History',
   },
   home: {
     title: 'Homepage',
