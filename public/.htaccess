@@ -1,0 +1,62 @@
+# сессии на поддоменах
+php_value session.cookie_domain .iny.su
+
+# cross ajax
+Header set Access-Control-Allow-Origin *
+RewriteEngine On
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ $1 [R=200,L]
+
+# подавить ошибки php
+php_flag display_startup_errors off
+php_flag display_errors off
+php_flag html_errors off
+php_value docref_root 0
+php_value docref_ext 0
+
+# .php in .html
+RemoveHandler .html .htm
+AddType application/x-httpd-php .php .htm .html .phtml
+
+# индекс файл
+DirectoryIndex index.html
+
+# время
+<IfModule mod_setenvif.c>
+	SetEnv TZ Europe/Moscow
+</IfModule>
+ServerSignature Off
+AddDefaultCharset UTF-8
+
+# сжатие данных
+<ifModule mod_deflate.c>
+	AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml application/xhtml+xml text/css text/javascript application/javascript application/x-javascript
+</ifModule>
+
+# Bad Rquest
+ErrorDocument 400 /index.html
+# Authorization Required
+ErrorDocument 401 /index.html
+# Forbidden
+ErrorDocument 403 /index.html
+# Not found
+ErrorDocument 404 /index.html
+# Method Not Allowed
+ErrorDocument 405 /index.html
+# Request Timed Out
+ErrorDocument 408 /index.html
+# Request URI Too Long
+ErrorDocument 414 /index.html
+# Internal Server Error
+ErrorDocument 500 /index.html
+# Not Implemented
+ErrorDocument 501 /index.html
+# Bad Gateway 
+ErrorDocument 502 /index.html
+# Service Unavailable 
+ErrorDocument 503 /index.html
+# Gateway Timeout
+ErrorDocument 504 /index.html
+
+ServerSignature EMail
+SetEnv SERVER_ADMIN fedor@purplex.ru

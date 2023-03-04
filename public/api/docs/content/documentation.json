@@ -1,0 +1,220 @@
+{
+  "project-name": "INY Media",
+  "project-version": "1.5.5",
+  "project-path-api": "https://iny.su/api/",
+  "project-path": "https://iny.su/",
+  "project-path-content": {
+    "main": ["main.md"]
+  },
+  "content": {
+    "versions": {
+      "1.0": {
+        "label": "v1.0",
+        "filename": ["1_0"],
+        "objects": {
+          "app": {
+            "label": "App",
+            "filename": ["app"],
+            "methods": {
+              "create": {
+                "label": "Create",
+                "filename": ["create"]
+              },
+              "widgetAuth": {
+                "label": "widgetAuth",
+                "filename": ["widgetAuth"]
+              }
+            }
+          },
+          "cron": {
+            "label": "Cron",
+            "filename": ["cron"],
+            "methods": {
+              "userFeedLoader": {
+                "label": "userFeedLoader",
+                "filename": ["userFeedLoader"]
+              }
+            }
+          },
+          "device": {
+            "label": "Device",
+            "filename": ["device"],
+            "methods": {
+              "getClientId": {
+                "label": "getClientId",
+                "filename": ["getClientId"]
+              }
+            }
+          },
+          "file": {
+            "label": "File",
+            "filename": ["file"],
+            "methods": {
+              "imageUpload": {
+                "label": "imageUpload",
+                "filename": ["imageUpload"]
+              }
+            }
+          },
+          "mail": {
+            "label": "Mail",
+            "filename": ["mail"],
+            "methods": {
+              "mainRequest": {
+                "label": "mainRequest",
+                "filename": ["mainRequest"]
+              }
+            }
+          },
+          "telegram": {
+            "label": "Telegram",
+            "filename": ["telegram"],
+            "methods": {
+              "getCrypt": {
+                "label": "getCrypt",
+                "filename": ["getCrypt"]
+              }
+            }
+          },
+          "user": {
+            "label": "User",
+            "filename": ["user"],
+            "methods": {
+              "changeStatus": {
+                "label": "changeStatus",
+                "filename": ["changeStatus"]
+              },
+              "editSave": {
+                "label": "editSave",
+                "filename": ["editSave"]
+              },
+              "getPrivateInfo": {
+                "label": "getPrivateInfo",
+                "filename": ["getPrivateInfo"]
+              },
+              "getPublicInfo": {
+                "label": "getPublicInfo",
+                "filename": ["getPublicInfo"]
+              },
+              "login": {
+                "label": "login",
+                "filename": ["login"]
+              },
+              "refreshJwt": {
+                "label": "refreshJwt",
+                "filename": ["refreshJwt"]
+              },
+              "register": {
+                "label": "register",
+                "filename": ["register"]
+              },
+              "sessionsLogout": {
+                "label": "sessionsLogout",
+                "filename": ["sessionsLogout"]
+              },
+              "sessionsShow": {
+                "label": "sessionsShow",
+                "filename": ["sessionsShow"]
+              }
+            }
+          },
+          "utils": {
+            "label": "Utils",
+            "filename": ["utils"],
+            "methods": {
+              "time": {
+                "label": "time",
+                "filename": ["time"]
+              }
+            }
+          },
+          "watch": {
+            "label": "Watch",
+            "filename": ["watch"],
+            "methods": {
+              "fastSearch": {
+                "label": "fastSearch",
+                "filename": ["fastSearch"]
+              },
+              "fastSearchHistory": {
+                "label": "fastSearchHistory",
+                "filename": ["fastSearchHistory"]
+              },
+              "fastSearchHistoryByKeyword": {
+                "label": "fastSearchHistoryByKeyword",
+                "filename": ["fastSearchHistoryByKeyword"]
+              },
+              "fastSearchHistoryDelete": {
+                "label": "fastSearchHistoryDelete",
+                "filename": ["fastSearchHistoryDelete"]
+              },
+              "getDataByKpid": {
+                "label": "getDataByKpid",
+                "filename": ["getDataByKpid"]
+              },
+              "getFacts": {
+                "label": "getFacts",
+                "filename": ["getFacts"]
+              },
+              "getFeed": {
+                "label": "getFeed",
+                "filename": ["getFeed"]
+              },
+              "getNameByStaffId": {
+                "label": "getNameByStaffId",
+                "filename": ["getNameByStaffId"]
+              },
+              "getPopulars": {
+                "label": "getPopulars",
+                "filename": ["getPopulars"]
+              },
+              "getRecommendationsDataByKpid": {
+                "label": "getRecommendationsDataByKpid",
+                "filename": ["getRecommendationsDataByKpid"]
+              },
+              "getReviews": {
+                "label": "getReviews",
+                "filename": ["getReviews"]
+              },
+              "getStaffByKpid": {
+                "label": "getStaffByKpid",
+                "filename": ["getStaffByKpid"]
+              },
+              "getSubscriptions": {
+                "label": "getSubscriptions",
+                "filename": ["getSubscriptions"]
+              },
+              "getTrailerData": {
+                "label": "getTrailerData",
+                "filename": ["getTrailerData"]
+              },
+              "getTrand": {
+                "label": "getTrand",
+                "filename": ["getTrand"]
+              },
+              "getUserHistory": {
+                "label": "getUserHistory",
+                "filename": ["getUserHistory"]
+              },
+              "getUserRecord": {
+                "label": "getUserRecord",
+                "filename": ["getUserRecord"]
+              },
+              "searchByFilters": {
+                "label": "searchByFilters",
+                "filename": ["searchByFilters"]
+              },
+              "subscribeManager": {
+                "label": "subscribeManager",
+                "filename": ["subscribeManager"]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "vars": {
+    "linkVk": "https://vk.me/yesfedor"
+  }
+}

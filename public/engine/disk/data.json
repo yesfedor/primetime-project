@@ -1,0 +1,37 @@
+{
+    "appname":"INY Media",
+    "site-name":"INY Media",
+    "site-logo":"INY Media",
+    "routes": {
+        "/main": {
+            "access":"default",
+            "title":"INY Media - Онлайн кинотеатр",
+            "description":"INY Media - Онлайн кинотеатр.",
+            "keywords":"INY Media",
+            "ogtype":"website",
+            "ogsite_name":"INY Media",
+            "ogimage":"/file/ogimg/main.png?v=1",
+            "page":"main"
+        },
+        "/search-by-filter": {
+            "access":"default",
+            "title":"INY Media - Поиск по фильтрам",
+            "description":"localeStr",
+            "keywords":"localeStr",
+            "ogtype":"website",
+            "ogsite_name":"INY Media",
+            "ogimage":"/file/ogimg/main.png?v=1",
+            "page":"main"
+        },
+        "/auth": {
+            "access":"default",
+            "title":"INY Media - Авторизация",
+            "description":"localeStr",
+            "keywords":"localeStr",
+            "ogtype":"website",
+            "ogsite_name":"INY Media",
+            "ogimage":"/file/ogimg/main.png?v=1",
+            "page":"main"
+        }
+    }
+}

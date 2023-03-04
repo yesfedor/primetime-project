@@ -1,0 +1,17 @@
+{
+    "lang_code":"en",
+
+    "pInfoNavText":"Info",
+    "pInfoTitle":"Site information",
+    "string_not_found":"localization error",
+    "localeStr":"Example text",
+    "pageError403":"Access denied (403)",
+    "pageError404":"Page not found (404)",
+    "navLinkMainPage":"Home",
+    "themeСhange":"Switch theme",
+    "themeDark":"Dark",
+    "themeLight":"Light",
+    "langChange":"Switch language",
+    "langRu":"Russian",
+    "langEn":"English"
+}
