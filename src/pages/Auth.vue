@@ -9,10 +9,10 @@
       <v-col cols="12" md="8" lg="4" xl="3" class="bg-surface">
         <v-row class="px-1">
           <v-col cols="12" class="pt-4 pb-0">
-            <v-text-field prepend-icon="mdi-email" label="Email" clearable></v-text-field>
+            <v-text-field prepend-icon="mdi-email" :label="$t('auth.email')" clearable></v-text-field>
           </v-col>
           <v-col cols="12" class="pt-1 pb-0">
-            <v-text-field prepend-icon="mdi-eye-off" label="Password" clearable></v-text-field>
+            <v-text-field prepend-icon="mdi-eye-off" :label="$t('auth.password')" clearable></v-text-field>
           </v-col>
           <v-col cols="12" class="text-center pt-1 pb-4">
             <v-btn :rounded="4">{{ $t('auth.login') }}</v-btn>
