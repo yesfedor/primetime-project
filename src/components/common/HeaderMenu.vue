@@ -29,6 +29,9 @@
           <AppThemeToggle />
         </div>
       </v-list-item>
+      <v-list-item>
+        <AppLocaleSelect />
+      </v-list-item>
     </v-list>
   </v-menu>
 </template>
@@ -38,11 +41,13 @@ import { useUser } from '@/api/auth'
 import { RouteNamesEnum } from '@/router/router.types'
 import { defineComponent } from 'vue'
 import AppThemeToggle from '@/components/theme/Toggle.vue'
+import AppLocaleSelect from '@/components/locale/Select.vue'
 
 export default defineComponent({
-  name: 'AppAuthMenu',
+  name: 'AppHeaderMenu',
   components: {
     AppThemeToggle,
+    AppLocaleSelect,
   },
   setup() {
     const user = useUser()

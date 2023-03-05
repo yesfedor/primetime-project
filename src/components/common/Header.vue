@@ -5,7 +5,7 @@
       <AppLogo />
     </v-app-bar-title>
     <template #append>
-      <AppAuthMenu />
+      <AppHeaderMenu />
     </template>
   </v-app-bar>
 </template>
@@ -14,14 +14,14 @@
 import { defineComponent } from 'vue'
 import AppNavigationToggle from '@/components/navigation/Toggle.vue'
 import AppLogo from '@/components/common/Logo.vue'
-import AppAuthMenu from '@/components/auth/Menu.vue'
+import AppHeaderMenu from '@/components/common/HeaderMenu.vue'
 
 export default defineComponent({
   name: 'AppHeader',
   components: {
     AppNavigationToggle,
     AppLogo,
-    AppAuthMenu,
+    AppHeaderMenu,
   },
 })
 </script>

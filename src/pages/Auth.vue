@@ -11,11 +11,12 @@
           <v-col cols="12" class="pt-4 pb-0">
             <v-text-field prepend-icon="mdi-email" label="Email" clearable></v-text-field>
           </v-col>
-          <v-col cols="12" class="pt-1">
+          <v-col cols="12" class="pt-1 pb-0">
             <v-text-field prepend-icon="mdi-eye-off" label="Password" clearable></v-text-field>
           </v-col>
-          <v-col cols="12" class="text-center">
-            <v-btn class="rounded-0">Login</v-btn>
+          <v-col cols="12" class="text-center pt-1 pb-4">
+            <v-btn :rounded="4">{{ $t('auth.login') }}</v-btn>
+            <v-btn :rounded="4" variant="text">{{ $t('auth.register') }}</v-btn>
           </v-col>
         </v-row>
       </v-col>

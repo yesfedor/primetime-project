@@ -6,9 +6,16 @@ export default {
     logo: {
       title: 'INY Media',
     },
+    locales: {
+      label: 'Язык',
+      enUS: 'English',
+      ruRU: 'Русский',
+    },
   },
   auth: {
     title: 'Авторизация',
+    login: 'Войти',
+    register: 'Регистрация',
     email: 'Почта',
     password: 'Пароль',
     menu: {
