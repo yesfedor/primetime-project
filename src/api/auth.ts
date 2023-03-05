@@ -647,3 +647,7 @@ export const Api = reactive<IApiAuth>({
 export function useAuth() {
   return Api
 }
+
+export function useUser() {
+  return Api.user
+}

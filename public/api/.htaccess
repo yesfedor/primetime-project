@@ -1,0 +1,56 @@
+# основные опции
+Options All -ExecCGI -Indexes -Includes +FollowSymLinks
+
+# cross ajax
+Header set Access-Control-Allow-Origin *
+
+# подавить ошибки php
+php_flag display_startup_errors off
+php_flag display_errors off
+php_flag html_errors off
+php_value docref_root 0
+php_value docref_ext 0
+
+# индекс файл
+DirectoryIndex index.php
+
+# время
+<IfModule mod_setenvif.c>
+	SetEnv TZ Europe/Moscow
+</IfModule>
+ServerSignature Off
+AddDefaultCharset UTF-8
+# сжатие данных
+<ifModule mod_deflate.c>
+	AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml application/xhtml+xml text/css text/javascript application/javascript application/x-javascript
+</ifModule>
+
+ServerSignature EMail
+SetEnv SERVER_ADMIN fedorvladis@outlook.com
+
+RewriteRule ^(.*)$ index.php?%{REQUEST_URI} [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.css -f
+RewriteRule ^(.*)$ $1.css
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.js -f
+RewriteRule ^(.*)$ $1.js
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.xml -f
+RewriteRule ^(.*)$ $1.xml
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.mp4 -f
+RewriteRule ^(.*)$ $1.mp4
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.mp3 -f
+RewriteRule ^(.*)$ $1.mp3
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.docx -f
+RewriteRule ^(.*)$ $1.docx

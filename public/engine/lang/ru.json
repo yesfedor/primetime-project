@@ -1,0 +1,17 @@
+{
+    "lang_code":"ru",
+    
+    "pInfoNavText":"Информация",
+    "pInfoTitle":"Информация о сайте",
+    "string_not_found":"ошибка локализации",
+    "localeStr":"Пример текста",
+    "pageError403":"Ошибка доступа (403)",
+    "pageError404":"Документ не найден (404)",
+    "navLinkMainPage":"Главная",
+    "themeСhange":"Поменять тему",
+    "themeDark":"Темная",
+    "themeLight":"Светлая",
+    "langChange":"Сменить язык",
+    "langRu":"Русский",
+    "langEn":"Английский"
+}
