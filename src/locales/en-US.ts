@@ -14,6 +14,8 @@ export default {
   },
   auth: {
     title: 'Authorization',
+    next: 'Next',
+    logout: 'Logout',
     login: 'Login',
     register: 'Register',
     email: 'Email',

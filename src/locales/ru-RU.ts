@@ -14,6 +14,8 @@ export default {
   },
   auth: {
     title: 'Авторизация',
+    next: 'Далее',
+    logout: 'Выйти',
     login: 'Войти',
     register: 'Регистрация',
     email: 'Почта',

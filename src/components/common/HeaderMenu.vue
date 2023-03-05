@@ -6,7 +6,6 @@
   >
     <template v-slot:activator="{ props }">
       <v-btn
-        :to="user.isAuth ? false : { name: RouteNamesEnum.auth }"
         v-bind="props"
         :append-icon="user.isAuth ? 'mdi-account' : 'mdi-login'"
         color="primary"
@@ -20,7 +19,7 @@
       <v-list-item v-if="user.isAuth" :to="{ name: RouteNamesEnum.profile }">
         {{ `${user.data.name} ${user.data.surname}` }}
       </v-list-item>
-      <v-list-item v-else>
+      <v-list-item v-else :to="{ name: RouteNamesEnum.auth }">
         <small>{{ $t('auth.menu.auth_for_watch') }}</small>
       </v-list-item>
       <v-list-item>
@@ -32,14 +31,19 @@
       <v-list-item>
         <AppLocaleSelect />
       </v-list-item>
+      <v-list-item v-if="user.isAuth">
+        <v-btn class="d-block w-100" @click="logout">
+          {{ $t('auth.logout') }}
+        </v-btn>
+      </v-list-item>
     </v-list>
   </v-menu>
 </template>
 
 <script lang="ts">
-import { useUser } from '@/api/auth'
+import { defineComponent, computed } from 'vue'
+import { useAuth, useUser } from '@/api/auth'
 import { RouteNamesEnum } from '@/router/router.types'
-import { defineComponent } from 'vue'
 import AppThemeToggle from '@/components/theme/Toggle.vue'
 import AppLocaleSelect from '@/components/locale/Select.vue'
 
@@ -50,10 +54,12 @@ export default defineComponent({
     AppLocaleSelect,
   },
   setup() {
+    const auth = useAuth()
     const user = useUser()
     return {
+      logout: () => auth.logout(),
       RouteNamesEnum,
-      user,
+      user: computed(() => user),
     }
   },
 })
