@@ -1,28 +1,30 @@
 <template>
+  <v-btn
+    :append-icon="user.isAuth ? 'mdi-account' : 'mdi-login'"
+    color="primary"
+    variant="tonal"
+    @click="activatorAction"
+  >
+    <span v-if="user.isAuth">{{ user.data.name }}</span>
+    <span v-else>{{ $t('auth.menu.signin') }}</span>
+  </v-btn>
+
+
+
   <v-menu
     :close-on-content-click="false"
     location="bottom"
-    open-on-hover
   >
     <template v-slot:activator="{ props }">
       <v-btn
-        :to="user.isAuth ? false : { name: RouteNamesEnum.auth }"
         v-bind="props"
-        :append-icon="user.isAuth ? 'mdi-account' : 'mdi-login'"
+        icon="mdi-dots-vertical"
         color="primary"
         variant="text"
-      >
-        <span v-if="user.isAuth">{{ user.data.name }}</span>
-        <span v-else>{{ $t('auth.menu.signin') }}</span>
-      </v-btn>
+        @click="activatorAction"
+      />
     </template>
     <v-list min-width="200px">
-      <v-list-item v-if="user.isAuth" :to="{ name: RouteNamesEnum.profile }">
-        {{ `${user.data.name} ${user.data.surname}` }}
-      </v-list-item>
-      <v-list-item v-else>
-        <small>{{ $t('auth.menu.auth_for_watch') }}</small>
-      </v-list-item>
       <v-list-item>
         <div class="d-flex justify-space-between align-center">
           {{ $t('app.theme.label') }}
@@ -32,14 +34,20 @@
       <v-list-item>
         <AppLocaleSelect />
       </v-list-item>
+      <v-list-item v-if="user.isAuth">
+        <v-btn variant="tonal" class="d-block w-100" @click="logout">
+          {{ $t('auth.logout') }}
+        </v-btn>
+      </v-list-item>
     </v-list>
   </v-menu>
 </template>
 
 <script lang="ts">
-import { useUser } from '@/api/auth'
+import { defineComponent, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuth, useUser } from '@/api/auth'
 import { RouteNamesEnum } from '@/router/router.types'
-import { defineComponent } from 'vue'
 import AppThemeToggle from '@/components/theme/Toggle.vue'
 import AppLocaleSelect from '@/components/locale/Select.vue'
 
@@ -50,10 +58,19 @@ export default defineComponent({
     AppLocaleSelect,
   },
   setup() {
+    const authProvider = useAuth()
     const user = useUser()
+    const router = useRouter()
+
+    const activatorAction = () => {
+      return user.isAuth ? router.push({ name: RouteNamesEnum.profile }) : router.push({ name: RouteNamesEnum.auth })
+    }
+
     return {
+      logout: () => authProvider.logout(),
       RouteNamesEnum,
-      user,
+      user: computed(() => user),
+      activatorAction,
     }
   },
 })

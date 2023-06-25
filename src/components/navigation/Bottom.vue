@@ -8,7 +8,7 @@
       v-for="link in menuItems"
       :key="link.icon"
       :value="link.to"
-      :to="link.to"
+      :to="link.to || ''"
       class="app-navigation-bottom__item"
     >
       <v-icon>{{ link.icon }}</v-icon>

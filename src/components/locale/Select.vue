@@ -6,7 +6,9 @@
     item-value="key"
     item-title="label"
     return-object
-    variant="solo"
+    variant="outlined"
+    density="comfortable"
+    class="pt-2"
     @update:model-value="changeLanguage"
   />
 </template>

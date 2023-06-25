@@ -44,6 +44,10 @@ export default defineComponent({
     onMounted(() => {
       authProvider.mounted()
     })
+
+    return {
+      authProvider,
+    }
   },
 })
 </script>

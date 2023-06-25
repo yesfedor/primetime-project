@@ -143,7 +143,7 @@ interface IAuthError {
 
 export interface IUserAuthorizeResponse {
   status: number,
-  data: IAuthError | IUserResponceData,
+  data: IUserResponceData | IAuthError,
   title?: string,
   detail?: string,
   link?: string,
@@ -269,7 +269,7 @@ export const Api = reactive<IApiAuth>({
   },
 
   // config
-  config: {
+  config: reactive({
     // base
     appId: 0,
     guardIntervalOffset: 5 * 60 * 1000,
@@ -298,13 +298,13 @@ export const Api = reactive<IApiAuth>({
       logger('log', 'you have not installed callback for getters')
       logger('log', 'what: ', what, 'payload: ', payload)
     },
-  },
+  }),
 
   // user
-  user: {
+  user: reactive({
     isAuth: false,
-    data: getUserNone(),
-  },
+    data: reactive(getUserNone()),
+  }),
 
   setConfig(config) {
     if (!config?.appId) {
@@ -443,9 +443,14 @@ export const Api = reactive<IApiAuth>({
         message: 'logged',
         data: userData,
       })
+
+      this.setUserObject('login', userData)
+
       return { status: 1, data: userData }
     }
+
     this.config.storeCommit(EApiStoreCommitWhat.error, response.data)
+
     return { ...response.data }
   },
   async register(name, surname, email, gender, password) {
@@ -459,13 +464,20 @@ export const Api = reactive<IApiAuth>({
         message: 'logged',
         data: userData,
       })
+
+      this.setUserObject('login', userData)
+
       return { status: 1, data: userData }
     }
+
     this.config.storeCommit(EApiStoreCommitWhat.register, response.data)
+
     return { ...response.data }
   },
   async logout() {
     localStorage.setItem(this.config.localStorageName.jwt, 'logout')
+    this.user.isAuth = false
+    this.user.data = getUserNone()
     this.config.storeCommit(EApiStoreCommitWhat.login, { code: 0, message: 'logout' })
     this.config.routerPush(EApiRouterPushName.main, { code: 0, message: 'because the user logged out' })
   },
