@@ -13,7 +13,8 @@
               <v-text-field
                 v-model="loginData.username"
                 :label="$t('auth.email')"
-                prepend-icon="mdi-email"
+                prepend-inner-icon="mdi-email"
+                variant="outlined"
                 clearable
               />
             </v-col>
@@ -21,31 +22,54 @@
               <v-text-field
                 v-model="loginData.password"
                 :label="$t('auth.password')"
-                :prepend-icon="isPasswordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                :prepend-inner-icon="isPasswordVisible ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="isPasswordVisible ? 'text' : 'password'"
+                variant="outlined"
                 clearable
-                @click:prepend="isPasswordVisible = !isPasswordVisible"
+                @click:prepend-inner="isPasswordVisible = !isPasswordVisible"
               />
             </v-col>
           </template>
           <template v-if="action === 'register'">
             <v-col cols="12" class="pt-4 pb-0">
               <v-text-field
-                v-model="loginData.username"
+                v-model="registerData.name"
+                :label="$t('auth.name')"
+                variant="outlined"
+              />
+            </v-col>
+            <v-col cols="12" class="pt-1 pb-0">
+              <v-text-field
+                v-model="registerData.surname"
+                :label="$t('auth.surname')"
+                variant="outlined"
+              />
+            </v-col>
+            <v-col cols="12" class="pt-1 pb-0">
+              <v-text-field
+                v-model="registerData.email"
                 :label="$t('auth.email')"
-                prepend-icon="mdi-email"
+                prepend-inner-icon="mdi-email"
+                variant="outlined"
                 clearable
               />
             </v-col>
             <v-col cols="12" class="pt-1 pb-0">
               <v-text-field
-                v-model="loginData.password"
+                v-model="registerData.password"
                 :label="$t('auth.password')"
-                :prepend-icon="isPasswordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                :prepend-inner-icon="isPasswordVisible ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="isPasswordVisible ? 'text' : 'password'"
+                variant="outlined"
                 clearable
-                @click:prepend="isPasswordVisible = !isPasswordVisible"
+                @click:prepend-inner="isPasswordVisible = !isPasswordVisible"
               />
+            </v-col>
+            <v-col cols="12" class="pt-1 pb-0">
+              <v-radio-group inline>
+                <v-radio :label="$t('auth.male')" :value="IUserResponceGender.male" />
+                <v-radio :label="$t('auth.female')" :value="IUserResponceGender.female" />
+              </v-radio-group>
             </v-col>
           </template>
           <v-col cols="12" class="d-flex align-center justify-space-around pt-1 pb-4">
@@ -73,7 +97,11 @@
 
 <script lang="ts">
 import { IUserResponceGender, useAuth } from '@/api/auth'
+import { RouteNamesEnum } from '@/router/router.types'
+import router from '@/router'
 import { defineComponent, ref, reactive } from 'vue'
+import { useToast } from 'vue-toastification'
+import { useI18n } from 'vue-i18n'
 
 type TActions = 'login' | 'register'
 
@@ -82,6 +110,8 @@ export default defineComponent({
   setup() {
     const auth = useAuth()
     const isPasswordVisible = ref(false)
+    const toastr = useToast()
+    const { t } = useI18n()
     const loginData = reactive({
       username: '',
       password: '',
@@ -100,12 +130,29 @@ export default defineComponent({
 
     const onLogin = async () => {
       const result = await auth.login(loginData.username, loginData.password)
-      return result
+      if (result.status === 1) {
+        router.push({ name: RouteNamesEnum.home })
+        return result
+      }
+
+      toastr.info(t(`auth.errors.${result.status}`))
     }
+
     const onRegister = async () => {
+      if ([registerData.name, registerData.surname, registerData.email, registerData.gender, registerData.password].find((item) => !item)) {
+        return false
+      }
+
       const result = await auth.register(registerData.name, registerData.surname, registerData.email, registerData.gender, registerData.password)
-      return result
+
+      if (result.status === 1) {
+        router.push({ name: RouteNamesEnum.home })
+        return result
+      }
+
+      toastr.info(t(`auth.errors.${result.status}`))
     }
+
     const buttonHandler = (type: TActions) => {
       if (type === action.value) {
         if (type === 'login') {

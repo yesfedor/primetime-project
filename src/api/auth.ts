@@ -443,9 +443,14 @@ export const Api = reactive<IApiAuth>({
         message: 'logged',
         data: userData,
       })
+
+      this.setUserObject('login', userData)
+
       return { status: 1, data: userData }
     }
+
     this.config.storeCommit(EApiStoreCommitWhat.error, response.data)
+
     return { ...response.data }
   },
   async register(name, surname, email, gender, password) {
@@ -459,9 +464,14 @@ export const Api = reactive<IApiAuth>({
         message: 'logged',
         data: userData,
       })
+
+      this.setUserObject('login', userData)
+
       return { status: 1, data: userData }
     }
+
     this.config.storeCommit(EApiStoreCommitWhat.register, response.data)
+
     return { ...response.data }
   },
   async logout() {
