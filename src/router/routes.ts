@@ -123,11 +123,11 @@ export const routes: Array<RouteRecordRaw> = [
 
   // errors
   {
-    path: '/:pathMatch(.*)*',
+    path: '/:pathMatch(.*)',
     name: RouteNamesEnum.error404,
     component: () => import(/* webpackChunkName: "error" */ '@/pages/error/404.vue'),
     meta: {
-      layout: LayoutsNamesEnum.error,
+      layout: LayoutsNamesEnum.default,
     },
   },
 ]
