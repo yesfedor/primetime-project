@@ -1,5 +1,5 @@
 # сессии на поддоменах
-php_value session.cookie_domain .iny.su
+php_value session.cookie_domain .primetime.su
 
 # cross ajax
 Header set Access-Control-Allow-Origin *

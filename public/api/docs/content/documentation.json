@@ -1,8 +1,8 @@
 {
-  "project-name": "INY Media",
-  "project-version": "1.5.5",
-  "project-path-api": "https://iny.su/api/",
-  "project-path": "https://iny.su/",
+  "project-name": "PrimeTime",
+  "project-version": "1.0.0",
+  "project-path-api": "https://primetime.su/api/",
+  "project-path": "https://primetime.su/",
   "project-path-content": {
     "main": ["main.md"]
   },

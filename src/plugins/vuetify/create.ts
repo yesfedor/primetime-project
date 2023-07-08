@@ -27,7 +27,7 @@ export default createVuetify({
     },
   },
   theme: {
-    defaultTheme: AppThemesEnum.light,
+    defaultTheme: AppThemesEnum.dark,
     themes: {
       lightTheme,
       darkTheme,

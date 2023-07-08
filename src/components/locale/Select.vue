@@ -14,6 +14,7 @@
 </template>
 
 <script lang="ts">
+import { computed } from 'vue'
 import { defineComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 
@@ -29,6 +30,7 @@ export default defineComponent({
     const changeLanguage = (locale: ILanguageCodes) => {
       i18n.locale.value = locale.key
     }
+
     const languageCodes: ILanguageCodes[] = []
     i18n.availableLocales.forEach((item) => {
       const i18nKey = item.replace('-', '')
@@ -37,10 +39,11 @@ export default defineComponent({
         label: i18n.t(`app.locales.${i18nKey}`),
       })
     })
-    const currentLocale = {
+
+    const currentLocale = computed(() => ({
       key: i18n.locale,
       label: i18n.t(`app.locales.${i18n.locale.value.replace('-', '')}`),
-    }
+    }))
 
     return {
       currentLocale,

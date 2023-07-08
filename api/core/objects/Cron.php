@@ -18,7 +18,7 @@ function CronUserFeedLoader (int $limit = 500, int $offset = 0) {
     $telegram = $user[$i]['telegram'];
     $uid_crypt = $user[$i]['uid_crypt'];
 
-    $apiFeedPath = "https://iny.su/api/method/watch.getFeed?v=1.0&&jwt=system&client_id=system&system=807a4af6&uid=$uid&silent=0";
+    $apiFeedPath = "https://primetime.su/api/method/watch.getFeed?v=1.0&&jwt=system&client_id=system&system=807a4af6&uid=$uid&silent=0";
     $feedData = json_decode(file_get_contents($apiFeedPath), true);
 
     if ($feedData['total'] <= 0) {
@@ -102,7 +102,7 @@ function CronUserFeedLoaderSender (int $uid, int $telegram, $uid_crypt, int $kin
   }
 
   if (hash_equals($system_crypt['crypt'], $uid_crypt)) {
-    TelegramSendMessage($telegram, 'Привет. У сериала ' . $extendData['nameRu'] . ' вышла новая серия. Смотреть: ' . 'https://iny.su/watch' . $kinopoiskId);
+    TelegramSendMessage($telegram, 'Привет. У сериала ' . $extendData['nameRu'] . ' вышла новая серия. Смотреть: ' . 'https://primetime.su/watch' . $kinopoiskId);
   }
 
   return [

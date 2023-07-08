@@ -1,5 +1,5 @@
-# INY Media - Online chinema
-Every day millions of people are looking for movies online and no one wants to complicate their lives - and you are probably one of them!And if so then Iny Media is exactly the resource that you need.From the best films in the HD quality, literally one click separates you. We do not just free from the need to go to the cinema or study the television program - visitors to our resource have much more opportunities.
+# PrimeTime - Online chinema
+Every day millions of people are looking for movies online and no one wants to complicate their lives - and you are probably one of them!And if so then PrimeTime is exactly the resource that you need.From the best films in the HD quality, literally one click separates you. We do not just free from the need to go to the cinema or study the television program - visitors to our resource have much more opportunities.
 
 ## Description
 A super-duper pet project with which I "play" with different technologies in the web, as well as this is a great resource for watching films, series and anime.

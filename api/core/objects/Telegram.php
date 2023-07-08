@@ -16,7 +16,7 @@ function TelegramWebhook () {
 
     switch ($text) {
       case '/start':
-        TelegramSendMessage($chatId, 'Отправь мне код со своего профиля на https://iny.su/telegram-code, чтобы я мог присылать новые серии');
+        TelegramSendMessage($chatId, 'Отправь мне код со своего профиля на https://primetime.su/telegram-code, чтобы я мог присылать новые серии');
         break;
       case substr($text, 0, 5) === '/code':
         $textArray = explode(' ', $text);
@@ -36,7 +36,7 @@ function TelegramWebhook () {
             dbAddOne($query_update_telegram_chat_id, $var_update_telegram_chat_id);
             TelegramSendMessage($chatId, 'Привет, ' . $user_by_uid_crypt['name'] . '. Теперь ты будешь получать от меня нопоминания о новых сериях, не забудь подписаться на любимые сериалы!');
           } else {
-            TelegramSendMessage($chatId, 'Такого пользователя нет в базе https://iny.su, авторизуйтесь и получите свой код для бота тут https://iny.su/telegram-code');
+            TelegramSendMessage($chatId, 'Такого пользователя нет в базе https://primetime.su, авторизуйтесь и получите свой код для бота тут https://primetime.su/telegram-code');
           }
         }
         break;
