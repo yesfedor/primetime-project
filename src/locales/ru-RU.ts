@@ -4,7 +4,7 @@ export default {
       label: 'Тема',
     },
     logo: {
-      title: 'INY Media',
+      title: 'PrimeTime',
     },
     locales: {
       label: 'Язык',
