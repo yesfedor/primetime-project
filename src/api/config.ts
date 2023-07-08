@@ -1,6 +1,6 @@
 export const API_CONFIG = {
   protocol: 'https:',
-  host: 'iny.su',
+  host: 'primetime.su',
   pathname: 'api/method/',
 }
 

@@ -4,6 +4,11 @@
       <v-col cols="12">
         <h1>{{ $t('home.title') }}</h1>
       </v-col>
+      <v-col cols="4">
+        <v-card>
+          <VCardTitle>Text</VCardTitle>
+        </v-card>
+      </v-col>
     </v-row>
   </v-container>
 </template>

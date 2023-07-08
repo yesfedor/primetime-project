@@ -8,9 +8,6 @@
     <span v-if="user.isAuth">{{ user.data.name }}</span>
     <span v-else>{{ $t('auth.menu.signin') }}</span>
   </v-btn>
-
-
-
   <v-menu
     :close-on-content-click="false"
     location="bottom"
@@ -21,7 +18,6 @@
         icon="mdi-dots-vertical"
         color="primary"
         variant="text"
-        @click="activatorAction"
       />
     </template>
     <v-list min-width="200px">

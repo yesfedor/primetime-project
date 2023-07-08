@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "api-docs-gen": "node api-docs-generator-md.mjs"
   },
   "dependencies": {
     "@mdi/font": "5.9.55",

@@ -67,7 +67,7 @@ function getFilmByKpid($kpid) {
     if ($content['data']['type'] === 'MINI_SERIES') $contentType = 'мини-сериал';
 
     $p = [
-        'title' => 'Смотреть '.$contentType.' '.$content['data']['nameRu'].' ('.$content['data']['year'].') на INY Media',
+        'title' => 'Смотреть '.$contentType.' '.$content['data']['nameRu'].' ('.$content['data']['year'].') на PrimeTime',
         'description' => $content['data']['description'],
         'keywords' => $content['data']['description'],
         'ogtype' => 'website',
@@ -81,13 +81,13 @@ function getFilmByKpid($kpid) {
 }
 
 function getStaffByStaffId($staffId) {
-    $staff = json_decode(file_get_contents('https://iny.su/api/method/watch.getNameByStaffId?v=1.0&staff='.$staffId), true);
+    $staff = json_decode(file_get_contents('https://primetime.su/api/method/watch.getNameByStaffId?v=1.0&staff='.$staffId), true);
     return [
-        'title' => $staff['title'].' - профиль на INY Media',
+        'title' => $staff['title'].' - профиль на PrimeTime',
         'description'  => $staff['title'],
-        'keywords' => $staff['title'].', iny, iny media',
+        'keywords' => $staff['title'].', PrimeTime',
         'ogtype' => 'website',
-        'ogimage' => 'https://iny.su/web/file/ogimg/main/media.png',
+        'ogimage' => 'https://primetime.su/web/file/ogimg/main/media.png',
         'page' => 'main',
         'access' => 'default',
         'error' => 200

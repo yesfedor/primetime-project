@@ -1,7 +1,7 @@
 /**
  * @author Garanin Fedor, 2023
  * @yesfedor npm axios
- * @description Api для iny.su
+ * @description Api для primetime.su
 */
 
 import { reactive } from 'vue'

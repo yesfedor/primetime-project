@@ -1,6 +1,6 @@
 {
-    "name": "INY Media",
-    "short_name": "INY Media",
+    "name": "PrimeTime",
+    "short_name": "PrimeTime",
     "icons": [
         {
             "src": "/favicon/android-chrome-192x192.png?v=2",
@@ -15,6 +15,6 @@
     ],
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
-    "start_url": "https://iny.su",
+    "start_url": "https://primetime.su",
     "display": "standalone"
 }
