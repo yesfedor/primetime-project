@@ -48,6 +48,13 @@ export default {
     subscription: 'Subscriptions',
     history: 'History',
   },
+  search: {
+    autocomplete: {
+      empty: 'Look for something else',
+      no_result: 'Found nothing',
+      loading: 'Loading..',
+    },
+  },
   home: {
     title: 'Homepage',
   },

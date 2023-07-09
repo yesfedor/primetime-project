@@ -48,6 +48,13 @@ export default {
     subscription: 'Подписки',
     history: 'История',
   },
+  search: {
+    autocomplete: {
+      empty: 'Поищите что-нибудь ещё',
+      no_result: 'Ничего не нашли',
+      loading: 'Загрузка..',
+    },
+  },
   home: {
     title: 'Главная страница',
   },

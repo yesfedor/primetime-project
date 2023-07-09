@@ -182,6 +182,7 @@ interface IApiAuth {
   register(name: string, surname: string, email: string, gender: IUserResponceGender, password: string): Promise<IUserAuthorizeResponse>,
   logout(): void,
   refreshJwt(): Promise<boolean>,
+  getJwt(): string,
   restoreSession(): void,
   parseJwt(jwt: string): IUserResponceData | false,
   setUserObject(type: 'login' | 'register' | 'logout', payload: IUserResponceData): void,
@@ -527,6 +528,9 @@ export const Api = reactive<IApiAuth>({
       }
     }
     return false
+  },
+  getJwt() {
+    return localStorage.getItem(this.config.localStorageName.jwt) || ''
   },
   restoreSession() {
     const jwt = localStorage.getItem(this.config.localStorageName.jwt)
