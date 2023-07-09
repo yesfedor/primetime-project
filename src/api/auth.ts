@@ -175,7 +175,8 @@ interface IApiAuth {
   sessionDelete: (specifiedClientId: string) => Promise<any>,
 
   // client
-  setClientId(fnStart: (appId: number, platform: string) => void, fnEnd: (appId: number, platform: string, clientId: string) => void): void,
+  setClientId(fnStart: (appId: number, platform: string) => void, fnEnd: (appId: number, platform: string, clientId: string) => void): Promise<void>,
+  getClientId(): Promise<string>,
 
   login(username: number | string, password: string): Promise<IUserAuthorizeResponse>,
   register(name: string, surname: string, email: string, gender: IUserResponceGender, password: string): Promise<IUserAuthorizeResponse>,
@@ -423,14 +424,23 @@ export const Api = reactive<IApiAuth>({
     const appId = this.config.appId
     const platform = useInyDevice()
     fnStart(appId, platform)
-    axios
-      .get(API_PATH_METHOD + `device.getClientId?v=1.0&app_id=${appId}&platform=${platform}`)
-      .then((response) => {
-        useInyMiddleware(response)
-        const clientId = response.data.clientId
-        localStorage.setItem(this.config.localStorageName.clientId, clientId)
-        fnEnd(appId, platform, clientId)
+    const response = await axios.get(API_PATH_METHOD + `device.getClientId?v=1.0&app_id=${appId}&platform=${platform}`)
+    useInyMiddleware(response)
+    if (response?.data?.clientId) {
+      const clientId = response.data.clientId
+      localStorage.setItem(this.config.localStorageName.clientId, clientId)
+      fnEnd(appId, platform, clientId)
+    }
+  },
+
+  async getClientId() {
+    let userClientId = localStorage.getItem(this.config.localStorageName.clientId) || ''
+    if (!userClientId) {
+      await this.setClientId(() => {}, (appId, platform, clientId) => {
+        userClientId = clientId
       })
+    }
+    return userClientId
   },
 
   async login(username, password) {
