@@ -1,5 +1,17 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Montserrat', 'Roboto', sans-serif;
+@import 'vuetify/lib/styles/settings/_variables.scss';
+
+// functions
+@function lib-font-size($size: 0, $base: 16) {
+  @return ($size / $base) * 1rem;
 }
+
+// fonts 
+$font-montserrat-alt: "Montserrat-Alt1";
+
+//colors
+$color-black: black;
+$color-white: white;
+
+// pallet
+$logo-gradient-dark: linear-gradient(90deg, #ffffff 0%, #bcb9b2 10%, #86857f 70%, #7e7d78 100%);
+$logo-gradient-light: linear-gradient(90deg, #000000 0%, #3a3a3a 15%, #525151 70%, #7e7e7e 100%);

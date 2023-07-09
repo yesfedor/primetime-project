@@ -1,4 +1,8 @@
-@use 'vuetify/styles';
+@import 'vue-toastification/dist/index.css';
+@import '@/assets/styles/app/_fonts.scss';
 
-@import url('vue-toastification/dist/index.css');
-@import url('@/assets/styles/_override.scss');
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', 'Roboto', sans-serif;
+}
