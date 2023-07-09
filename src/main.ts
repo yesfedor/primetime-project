@@ -7,6 +7,10 @@ import { i18n } from '@/plugins/i18n/create'
 import { loadFonts } from '@/plugins/webfontloader'
 import Toast, { POSITION } from 'vue-toastification'
 
+// styles
+import 'vuetify/styles'
+import '@/assets/styles/_app.scss'
+
 loadFonts()
 
 createApp(App)

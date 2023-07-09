@@ -9,6 +9,15 @@ module.exports = defineConfig({
     resolve: {
       alias: {
         '@': path.join(__dirname, 'src/'),
+        '~': path.resolve(__dirname, 'src/'),
+      },
+    },
+  },
+
+  css: {
+    loaderOptions: {
+      sass: {
+        additionalData: '@import \'@/assets/styles/_override.scss\';',
       },
     },
   },

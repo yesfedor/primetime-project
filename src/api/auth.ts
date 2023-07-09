@@ -16,6 +16,7 @@ function logger (type: loggerType = 'log', ...args: any) {
   if (!isLogger) {
     return
   }
+  // eslint-disable-next-line
   console[type](msg, ...args)
 }
 
