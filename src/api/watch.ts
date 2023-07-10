@@ -34,6 +34,15 @@ export interface WatchApiFastSearchHistory {
 	queries: WatchApiFastSearchHistoryItem[]
 }
 
+export interface WatchApiContentItem extends WatchApiFastSearchItem {
+	id: string
+	ratingAgeLimits: string
+}
+
+export interface WatchApiGetUserHistory extends WatchApiFastSearch {
+	content: WatchApiContentItem[]
+}
+
 export const watchApi = {
 	async fastSearch(query: string, jwt: string, clientId: string) {
 		try {
@@ -70,7 +79,10 @@ export const watchApi = {
 	},
 	async getUserHistory(jwt: string, clientId: string) {
 		try {
-			await axios.get(API_PATH_METHOD + `watch.getUserHistory?v=1.0&jwt=${jwt}&client_id=${clientId}`)
+			const result = await axios.get(API_PATH_METHOD + `watch.getUserHistory?v=1.0&jwt=${jwt}&client_id=${clientId}`)
+			if (result.data?.total) {
+				return result.data as WatchApiGetUserHistory
+			}
 		} catch (e) {
 			return createError(e)
 		}

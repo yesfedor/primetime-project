@@ -1,13 +1,11 @@
 <template>
   <v-app>
-    <v-layout :full-height="true" class="layout layout--default">
-      <AppHeader />
-      <AppNavigationDrawer />
-      <v-main>
-        <slot />
-      </v-main>
-      <AppNavigationBottom />
-    </v-layout>
+    <AppHeader />
+    <AppNavigationDrawer />
+    <v-main>
+      <slot />
+    </v-main>
+    <AppNavigationBottom />
   </v-app>
 </template>
 

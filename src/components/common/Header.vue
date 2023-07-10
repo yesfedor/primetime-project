@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar :height="56">
+  <v-app-bar :height="56" flat app>
     <AppNavigationToggle />
     <v-app-bar-title>
       <AppLogo />
