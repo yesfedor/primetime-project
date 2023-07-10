@@ -68,4 +68,11 @@ export const watchApi = {
 			return createError(e)
 		}
 	},
+	async getUserHistory(jwt: string, clientId: string) {
+		try {
+			await axios.get(API_PATH_METHOD + `watch.getUserHistory?v=1.0&jwt=${jwt}&client_id=${clientId}`)
+		} catch (e) {
+			return createError(e)
+		}
+	},
 }

@@ -1,6 +1,10 @@
 export const UTM_SOURCE_KEY = 'source'
 
 export enum UTM_SOURCE {
+	// From auth page
+	authpage = 'authpage',
+	// From auth page with meta 'from'
+	authfrom = 'authfrom',
 	// From item in search page
 	searchpage = 'searchpage',
 	// From item in search hint
