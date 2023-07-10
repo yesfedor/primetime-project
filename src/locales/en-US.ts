@@ -58,4 +58,13 @@ export default {
   home: {
     title: 'Homepage',
   },
+  watch: {
+    type: {
+      FILM: 'movie',
+      VIDEO: 'video',
+      TV_SERIES: 'series',
+      MINI_SERIES: 'mini-series',
+      TV_SHOW: 'show',
+    },
+  },
 }

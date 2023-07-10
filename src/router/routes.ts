@@ -69,7 +69,7 @@ export const routes: Array<RouteRecordRaw> = [
 
   // watching
   {
-    path: '/film:kpid',
+    path: '/film/:kpid',
     name: RouteNamesEnum.film,
     component: () => import(/* webpackChunkName: "watch" */ '@/pages/Film.vue'),
     meta: {
@@ -77,7 +77,7 @@ export const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/watch:kpid',
+    path: '/watch/:kpid',
     name: RouteNamesEnum.watch,
     component: () => import(/* webpackChunkName: "watch" */ '@/pages/Watch.vue'),
     meta: {
@@ -85,7 +85,7 @@ export const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/trailer:kpid',
+    path: '/trailer/:kpid',
     name: RouteNamesEnum.trailer,
     component: () => import(/* webpackChunkName: "watch" */ '@/pages/Trailer.vue'),
     meta: {
@@ -95,7 +95,7 @@ export const routes: Array<RouteRecordRaw> = [
 
   // staff
   {
-    path: '/staff:staff',
+    path: '/staff/:staff',
     name: RouteNamesEnum.staff,
     component: () => import(/* webpackChunkName: "staff" */ '@/pages/Staff.vue'),
     meta: {
@@ -113,7 +113,7 @@ export const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/search-filter',
+    path: '/filter',
     name: RouteNamesEnum.searchFilter,
     component: () => import(/* webpackChunkName: "search" */ '@/pages/SearchFilter.vue'),
     meta: {

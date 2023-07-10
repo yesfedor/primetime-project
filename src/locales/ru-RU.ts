@@ -58,4 +58,13 @@ export default {
   home: {
     title: 'Главная страница',
   },
+  watch: {
+    type: {
+      FILM: 'фильм',
+      VIDEO: 'видео',
+      TV_SERIES: 'сериал',
+      MINI_SERIES: 'мини-сериал',
+      TV_SHOW: 'шоу',
+    },
+  },
 }
