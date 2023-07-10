@@ -98,16 +98,19 @@
 <script lang="ts">
 import { IUserResponceGender, useAuth } from '@/api/auth'
 import { RouteNamesEnum } from '@/router/router.types'
-import router from '@/router'
+import { useRouter, useRoute } from 'vue-router'
 import { defineComponent, ref, reactive } from 'vue'
 import { useToast } from 'vue-toastification'
 import { useI18n } from 'vue-i18n'
+import { UTM_SOURCE_KEY, UTM_SOURCE } from '@/const/utm'
 
 type TActions = 'login' | 'register'
 
 export default defineComponent({
   name: 'Auth',
   setup() {
+    const router = useRouter()
+    const route = useRoute()
     const auth = useAuth()
     const isPasswordVisible = ref(false)
     const toastr = useToast()
@@ -128,10 +131,27 @@ export default defineComponent({
       action.value = newAction
     }
 
+    const onSuccessRouterPush = () => {
+      if (typeof route.query?.from === 'string' && route.query.from.startsWith('/')) {
+        return router.push({
+          path: route.query.from,
+          query: {
+            [UTM_SOURCE_KEY]: UTM_SOURCE.authfrom,
+          },
+        })
+      }
+      return router.push({
+        name: RouteNamesEnum.home,
+        query: {
+          [UTM_SOURCE_KEY]: UTM_SOURCE.authpage,
+        },
+      })
+    }
+
     const onLogin = async () => {
       const result = await auth.login(loginData.username, loginData.password)
       if (result.status === 1) {
-        router.push({ name: RouteNamesEnum.home })
+        onSuccessRouterPush()
         return result
       }
 
@@ -146,7 +166,7 @@ export default defineComponent({
       const result = await auth.register(registerData.name, registerData.surname, registerData.email, registerData.gender, registerData.password)
 
       if (result.status === 1) {
-        router.push({ name: RouteNamesEnum.home })
+        onSuccessRouterPush()
         return result
       }
 

@@ -26,7 +26,7 @@
           @keyup.enter="openFullPage(searchField)"
         >
           <template #append-inner>
-            <v-progress-circular v-if="isLoading" indeterminate size="22" width="2"></v-progress-circular>
+            <v-progress-circular v-if="isLoading" indeterminate size="22" width="2" />
           </template>
         </v-text-field>
       </v-list-item>
@@ -66,7 +66,6 @@
             :class="{ 'd-none': !hint.nameRu }"
             class="text-truncate"
           >
-            <v-list-item-media></v-list-item-media>
             <v-list-item-title>{{ hint.nameRu }}</v-list-item-title>
             <v-list-item-subtitle class="d-flex align-center">
               <span>{{ $t(`watch.type.${hint.type}`) }}</span>

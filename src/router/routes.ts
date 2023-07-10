@@ -1,6 +1,15 @@
-import { RouteRecordRaw } from 'vue-router'
+import { RouteRecordRaw, RouteLocationNormalized } from 'vue-router'
 import { RouteNamesEnum } from '@/router/router.types'
 import { LayoutsNamesEnum } from '@/layouts/layouts.types'
+
+export function getFailRoute (to: RouteLocationNormalized) {
+  return {
+    name: RouteNamesEnum.auth,
+    query: {
+      from: to.fullPath,
+    },
+  }
+}
 
 export const routes: Array<RouteRecordRaw> = [
   // global
@@ -28,6 +37,7 @@ export const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "auth" */ '@/pages/Profile.vue'),
     meta: {
       layout: LayoutsNamesEnum.default,
+      isNeedAuth: true,
     },
   },
 
@@ -48,6 +58,7 @@ export const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "account" */ '@/pages/account/Feed.vue'),
     meta: {
       layout: LayoutsNamesEnum.default,
+      isNeedAuth: true,
     },
   },
   {
@@ -56,6 +67,7 @@ export const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "account" */ '@/pages/account/History.vue'),
     meta: {
       layout: LayoutsNamesEnum.default,
+      isNeedAuth: true,
     },
   },
   {
@@ -64,6 +76,7 @@ export const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "account" */ '@/pages/account/Subscriptions.vue'),
     meta: {
       layout: LayoutsNamesEnum.default,
+      isNeedAuth: true,
     },
   },
 
@@ -82,6 +95,7 @@ export const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "watch" */ '@/pages/Watch.vue'),
     meta: {
       layout: LayoutsNamesEnum.default,
+      isNeedAuth: true,
     },
   },
   {

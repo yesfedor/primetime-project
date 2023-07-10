@@ -11,6 +11,8 @@ export default {
       enUS: 'English',
       ruRU: 'Русский',
     },
+    loading: 'Загрузка..',
+    no_result: 'Found nothing',
   },
   auth: {
     title: 'Authorization',
@@ -66,5 +68,8 @@ export default {
       MINI_SERIES: 'mini-series',
       TV_SHOW: 'show',
     },
+  },
+  history: {
+    title: 'Your browsing history',
   },
 }
