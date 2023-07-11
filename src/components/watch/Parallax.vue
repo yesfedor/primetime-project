@@ -5,7 +5,7 @@
       class="app-watch-parallax__content d-flex fill-height"
     >
       <v-col v-if="!loading">
-        <span :class="customClass" class="d-block text-h4 font-weight-bold pa-3 pa-lg-5">
+        <span :class="customClass" class="d-block text-h4 font-weight-bold text-white pa-3 pa-lg-5">
           {{ $t(labelKey) }}
         </span>
       </v-col>

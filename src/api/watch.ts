@@ -2,15 +2,17 @@ import { API_PATH_METHOD } from '@/api/config'
 import axios from 'axios'
 
 function createError(e: unknown) {
-  // eslint-disable-next-line
-	console.error(e)
+	if (e) {
+		// eslint-disable-next-line
+		console.error(e)
+	}
 	return null
 }
 
 type WatchContentType = 'FILM' | 'VIDEO' | 'TV_SERIES' | 'MINI_SERIES' | 'TV_SHOW'
 
 export interface WatchApiFastSearchItem {
-	kinopoiskId: number
+	kinopoiskId: string
 	nameRu: string
 	posterUrl: string
 	ratingKinopoisk: string
@@ -47,6 +49,19 @@ export interface WatchApiGetTrands {
 	code: number
 	content: WatchApiContentItem[]
 	total: number
+}
+
+export interface WatchApiGetSubscriptions extends WatchApiFastSearch {
+	content: WatchApiContentItem[]
+}
+
+export type WatchApiSubscribeManagerType = 'subscribe' | 'unsubscribe'
+
+export interface WatchApiGetUserRecord {
+	kinopoiskId: 	number
+	status: WatchApiSubscribeManagerType
+	time: number
+	uid: number
 }
 
 export const watchApi = {
@@ -104,6 +119,36 @@ export const watchApi = {
 				return result.data as WatchApiGetTrands
 			}
 		} catch(e) {
+			return createError(e)
+		}
+	},
+	async getSubscriptions(jwt: string, clientId: string) {
+		try {
+			const result = await axios.get(API_PATH_METHOD + `watch.getSubscriptions?v=1.0&jwt=${jwt}&client_id=${clientId}`)
+			if (result.data?.total) {
+				return result.data as WatchApiGetSubscriptions
+			}
+		} catch (e) {
+			return createError(e)
+		}
+	},
+	async getUserRecord(kpid: number, jwt: string, clientId: string) {
+		try {
+			const result = await axios.get(API_PATH_METHOD + `watch.getUserRecord?v=1.0&kpid=${kpid}&jwt=${jwt}&client_id=${clientId}`)
+			if (result.data?.uid) {
+				return result.data as WatchApiGetUserRecord
+			}
+		} catch (e) {
+			return createError(e)
+		}
+	},
+	async subscribeManager(act: WatchApiSubscribeManagerType, kpid: number, jwt: string, clientId: string) {
+		try {
+			const result = await axios.get(API_PATH_METHOD + `watch.subscribeManager?v=1.0&act=${act}&kpid=${kpid}&jwt=${jwt}&client_id=${clientId}`)
+			if (result.data?.uid) {
+				return result.data as WatchApiGetUserRecord
+			}
+		} catch (e) {
 			return createError(e)
 		}
 	},

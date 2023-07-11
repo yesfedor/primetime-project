@@ -58,6 +58,15 @@ export default {
       loading: 'Loading..',
     },
   },
+  subscriptions: {
+    title: 'My subscriptions',
+    manager: {
+      action: {
+        subscribe: 'Subscribe',
+        unsubscribe: 'Unsubscribe',
+      },
+    },
+  },
   home: {
     title: 'Homepage',
   },

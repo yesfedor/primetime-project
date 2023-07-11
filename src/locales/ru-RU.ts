@@ -58,6 +58,15 @@ export default {
       loading: 'Загрузка..',
     },
   },
+  subscriptions: {
+    title: 'Мои подписки',
+    manager: {
+      action: {
+        subscribe: 'Подписаться',
+        unsubscribe: 'Вы подписаны',
+      },
+    },
+  },
   home: {
     title: 'Главная страница',
   },

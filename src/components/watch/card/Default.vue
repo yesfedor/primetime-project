@@ -7,7 +7,7 @@
 			height="260px"
 			cover
 		>
-			<v-card-title class="d-flex align-center text-primary text-body-1">
+			<v-card-title class="d-flex align-center text-white text-body-1">
 				<span class="text-capitalize">{{ $t(`watch.type.${item.type}`) }}</span>
 				<span class="px-2"> ● </span>
 				<span>{{ item.year }}</span>

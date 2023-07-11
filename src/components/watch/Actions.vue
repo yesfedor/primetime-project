@@ -1,10 +1,10 @@
 <template>
 	<v-menu location="left center">
 		<template #activator="{ props }">
-			<v-btn variant="text" icon="fa:fas fa-share-square" v-bind="props" @click.prevent></v-btn>
+			<v-btn variant="text" icon="mdi-dots-vertical" v-bind="props" @click.prevent></v-btn>
 		</template>
 		<v-list width="320" bg-color="secondary" class="me-lg-1">
-			<v-list-item class="align-center">
+			<v-list-item class="d-flex align-center justify-space-between w-100">
 				<v-btn
 					v-for="share in sharingInfo"
 					:key="share.payload"
@@ -12,6 +12,9 @@
 					variant="text"
 					@click="shareAction(share.payload)"
 				/>
+				<template #prepend>
+					<AppWatchSubscribeManager :kinopoisk-id="item.kinopoiskId" />
+				</template>
 			</v-list-item>
 		</v-list>
 	</v-menu>
@@ -27,6 +30,7 @@ import type { WatchApiContentItem } from '@/api/watch'
 import { UTM_SOURCE_KEY, UTM_SOURCE } from '@/const/utm'
 import { useI18n } from 'vue-i18n'
 import { API_SHARE } from '@/api/config'
+import AppWatchSubscribeManager from '@/components/watch/SubscribeManager.vue'
 
 interface Props {
 	item: WatchApiContentItem
@@ -51,10 +55,10 @@ const sharingInfo = [
 		icon: 'fa:fab fa-telegram',
 		payload: sharingType.telegram,
 	},
-	{
-		icon: 'fa:fab fa-twitter',
-		payload: sharingType.twitter,
-	},
+	// {
+	// 	icon: 'fa:fab fa-twitter',
+	// 	payload: sharingType.twitter,
+	// },
 	{
 		icon: 'fa:fas fa-link',
 		payload: sharingType.link,
