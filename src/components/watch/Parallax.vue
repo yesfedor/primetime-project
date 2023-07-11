@@ -9,7 +9,7 @@
           {{ $t(labelKey) }}
         </span>
       </v-col>
-      <v-progress-circular v-else indeterminate size="32" width="2" />
+      <v-progress-circular v-else color="white" indeterminate size="32" width="4" />
     </div>
   </v-parallax>
 </template>

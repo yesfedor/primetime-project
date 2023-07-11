@@ -61,5 +61,7 @@ const onChangeTab = (value: any) => {
   loadingTrands(selectedTab.value)
 }
 
-onMounted(() => loadingTrands())
+onMounted(() => {
+  loadingTrands()
+})
 </script>
