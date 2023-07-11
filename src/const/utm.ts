@@ -1,6 +1,8 @@
 export const UTM_SOURCE_KEY = 'source'
 
 export enum UTM_SOURCE {
+	// From share
+	shareapi = 'shareapi',
 	// From history page
 	watchcard = 'watchcard',
 	// From auth page

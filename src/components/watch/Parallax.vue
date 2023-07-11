@@ -15,8 +15,9 @@
 </template>
 
 <script lang="ts" setup>
-import { getPosterImageByKinopoiskid } from '@/utils/watch';
+// @ts-expect-error typescript error
 import { defineProps, toRefs } from 'vue'
+import { getPosterImageByKinopoiskid } from '@/utils/watch'
 
 interface Props {
   labelKey: string

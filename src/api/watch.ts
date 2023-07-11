@@ -52,6 +52,9 @@ export interface WatchApiGetTrands {
 export const watchApi = {
 	async fastSearch(query: string, jwt: string, clientId: string) {
 		try {
+			if (!query.length) {
+				return createError(null)
+			}
 			const result = await axios.get(API_PATH_METHOD + `watch.fastSearch?v=1.0&query=${query}&jwt=${jwt}&client_id=${clientId}`)
 			if (result?.data.code === 200 && result.data.total) {
 				return result.data as WatchApiFastSearch

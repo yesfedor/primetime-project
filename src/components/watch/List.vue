@@ -7,6 +7,7 @@
 </template>
 
 <script lang="ts" setup>
+// @ts-expect-error typescript error
 import { defineProps, toRefs } from 'vue'
 import type { WatchApiContentItem } from '@/api/watch'
 import { WATCH_CARDS_SIZES } from '@/const/watch'
