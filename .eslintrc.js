@@ -14,7 +14,7 @@ module.exports = {
   rules: {
     'no-console': 'warn',
     'no-debugger': 'warn',
-    semi: 'off',
+    semi: ['error', 'never'],
     'comma-dangle': ['warn', 'always-multiline'],
     'no-multiple-empty-lines': 'off',
     quotes: ['error', 'single', { avoidEscape: true }],

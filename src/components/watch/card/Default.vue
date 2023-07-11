@@ -7,11 +7,11 @@
 			height="260px"
 			cover
 		>
-			<v-card-title class="text-primary">
+			<v-card-title class="d-flex align-center text-white text-body-1">
 				<span class="text-capitalize">{{ $t(`watch.type.${item.type}`) }}</span>
 				<span class="px-2"> ● </span>
 				<span>{{ item.year }}</span>
-				<template  v-if="item.ratingKinopoisk !== 'null'">
+				<template v-if="item.ratingKinopoisk && item.ratingKinopoisk !== 'null' && item.ratingKinopoisk !== '0.0'">
 					<span class="px-2"> ● </span>
 					<div class="d-inline-flex align-center">
 						<v-icon icon="mdi-star" size="16" class="pe-2" /> {{ item.ratingKinopoisk }}
@@ -23,7 +23,7 @@
 			<v-list-item :prepend-avatar="item.posterUrl">
 				<v-list-item-title>{{ item.nameRu }}</v-list-item-title>
 				<template #append>
-					<AppWatchActions :kinopoisk-id="item.kinopoiskId" />
+					<AppWatchActions :item="item" />
 				</template>
 			</v-list-item>
 		</v-list>
@@ -31,6 +31,7 @@
 </template>
 
 <script lang="ts" setup>
+// @ts-expect-error typescript error
 import { defineProps, toRefs } from 'vue'
 import type { WatchApiContentItem } from '@/api/watch'
 import { RouteNamesEnum } from '@/router/router.types'

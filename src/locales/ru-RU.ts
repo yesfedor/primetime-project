@@ -51,16 +51,29 @@ export default {
     history: 'История',
   },
   search: {
+    title: 'Поищите что-нибудь',
     autocomplete: {
       empty: 'Поищите что-нибудь ещё',
       no_result: 'Ничего не нашли',
       loading: 'Загрузка..',
     },
   },
+  subscriptions: {
+    title: 'Мои подписки',
+    manager: {
+      action: {
+        subscribe: 'Подписаться',
+        unsubscribe: 'Вы подписаны',
+      },
+    },
+  },
   home: {
     title: 'Главная страница',
   },
   watch: {
+    share: {
+      title: '{type} {title} ({year}) смотрите на PrimeTime',
+    },
     type: {
       FILM: 'фильм',
       VIDEO: 'видео',

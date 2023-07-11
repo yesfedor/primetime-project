@@ -51,16 +51,29 @@ export default {
     history: 'History',
   },
   search: {
+    title: 'Look for something',
     autocomplete: {
       empty: 'Look for something else',
-      no_result: 'Found nothing',
+      no_result: 'Nothing found',
       loading: 'Loading..',
+    },
+  },
+  subscriptions: {
+    title: 'My subscriptions',
+    manager: {
+      action: {
+        subscribe: 'Subscribe',
+        unsubscribe: 'Unsubscribe',
+      },
     },
   },
   home: {
     title: 'Homepage',
   },
   watch: {
+    share: {
+      title: '{type} {title} ({year}) watch on PrimeTime',
+    },
     type: {
       FILM: 'movie',
       VIDEO: 'video',

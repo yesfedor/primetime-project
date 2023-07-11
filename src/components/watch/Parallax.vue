@@ -5,18 +5,19 @@
       class="app-watch-parallax__content d-flex fill-height"
     >
       <v-col v-if="!loading">
-        <span :class="customClass" class="d-block text-h4 font-weight-bold pa-3 pa-lg-5">
+        <span :class="customClass" class="d-block text-h4 font-weight-bold text-white pa-3 pa-lg-5">
           {{ $t(labelKey) }}
         </span>
       </v-col>
-      <v-progress-circular v-else indeterminate size="32" width="2" />
+      <v-progress-circular v-else color="white" indeterminate size="32" width="4" />
     </div>
   </v-parallax>
 </template>
 
 <script lang="ts" setup>
-import { getPosterImageByKinopoiskid } from '@/utils/watch';
+// @ts-expect-error typescript error
 import { defineProps, toRefs } from 'vue'
+import { getPosterImageByKinopoiskid } from '@/utils/watch'
 
 interface Props {
   labelKey: string
