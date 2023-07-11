@@ -72,4 +72,12 @@ export default {
   history: {
     title: 'Your browsing history',
   },
+  trands: {
+    title: 'In trend',
+    filters: {
+      all: 'best',
+      film: 'movies',
+      tv_series: 'series',
+    },
+  },
 }

@@ -1,12 +1,10 @@
 <template>
   <div class="app-history">
-    <v-parallax v-if="firstHistoryItem" :src="firstHistoryItem.posterUrl" :style="parallaxStyles">
-      <div class="app-history__parallax-content d-flex align-end justify-start fill-height">
-        <v-col>
-          <span class="d-block text-h4 font-weight-bold pa-3 pa-lg-5">{{ $t('history.title') }}</span>
-        </v-col>
-      </div>
-    </v-parallax>
+    <AppWatchParallax
+      :poster-url="firstHistoryItem && firstHistoryItem.posterUrl || ''"
+      :loading="loadingUserHistory"
+      label-key="history.title"
+    />
     <v-container>
       <AppWatchList v-if="userHistory.length" :list="userHistory" />
       <v-row v-else>
@@ -25,10 +23,7 @@ import type { WatchApiContentItem } from '@/api/watch'
 import { watchApi } from '@/api/watch'
 import { useAuth } from '@/api/auth'
 import AppWatchList from '@/components/watch/List.vue'
-
-const parallaxStyles = {
-  height: '260px',
-}
+import AppWatchParallax from '@/components/watch/Parallax.vue'
 
 const authProvider = useAuth()
 
@@ -52,12 +47,3 @@ onMounted(() => {
   loadUserHistory()
 })
 </script>
-
-<style lang="scss">
-.app-history {
-  min-height: 500vh;
-  &__parallax-content {
-    backdrop-filter: blur(16px);
-  }
-}
-</style>
