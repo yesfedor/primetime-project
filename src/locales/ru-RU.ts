@@ -72,4 +72,12 @@ export default {
   history: {
     title: 'Ваша история просмотров',
   },
+  trands: {
+    title: 'В тренде',
+    filters: {
+      all: 'лучшее',
+      film: 'фильмы',
+      tv_series: 'сериалы',
+    },
+  },
 }

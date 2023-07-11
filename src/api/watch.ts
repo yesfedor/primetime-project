@@ -43,6 +43,12 @@ export interface WatchApiGetUserHistory extends WatchApiFastSearch {
 	content: WatchApiContentItem[]
 }
 
+export interface WatchApiGetTrands {
+	code: number
+	content: WatchApiContentItem[]
+	total: number
+}
+
 export const watchApi = {
 	async fastSearch(query: string, jwt: string, clientId: string) {
 		try {
@@ -84,6 +90,17 @@ export const watchApi = {
 				return result.data as WatchApiGetUserHistory
 			}
 		} catch (e) {
+			return createError(e)
+		}
+	},
+	async getTrands(filter?: string) {
+		try {
+			const act = filter ? filter : 'ALL' 
+			const result = await axios.get(API_PATH_METHOD + `watch.getTrand?v=1.0&act=${act}`)
+			if (result.data?.total) {
+				return result.data as WatchApiGetTrands
+			}
+		} catch(e) {
 			return createError(e)
 		}
 	},

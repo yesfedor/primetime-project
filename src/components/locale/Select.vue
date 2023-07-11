@@ -14,8 +14,7 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue'
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 interface ILanguageCodes {

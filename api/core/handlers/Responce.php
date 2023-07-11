@@ -10,7 +10,7 @@ function ResponceWithJSON ($response=[], $response_code=200) {
   if ($response_code == 419) $response_code = 200;
   http_response_code($response_code);
 
-  echo json_encode($response, JSON_UNESCAPED_UNICODE + JSON_NUMERIC_CHECK);
+  echo json_encode($response, JSON_UNESCAPED_UNICODE);
 
   return true;
 }
