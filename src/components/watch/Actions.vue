@@ -17,9 +17,10 @@
 
 <script lang="ts" setup>
 import { defineProps, toRefs } from 'vue'
+import type { WatchApiContentItem } from '@/api/watch'
 
 interface Props {
-	kinopoiskId: number
+	kinopoiskId: WatchApiContentItem['kinopoiskId']
 }
 
 const props = defineProps<Props>()

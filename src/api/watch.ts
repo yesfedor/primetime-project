@@ -10,7 +10,7 @@ function createError(e: unknown) {
 type WatchContentType = 'FILM' | 'VIDEO' | 'TV_SERIES' | 'MINI_SERIES' | 'TV_SHOW'
 
 export interface WatchApiFastSearchItem {
-	kinopoiskId: number
+	kinopoiskId: number | string
 	nameRu: string
 	posterUrl: string
 	ratingKinopoisk: string
