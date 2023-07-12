@@ -1,5 +1,5 @@
 <template>
-  <div>404</div>
+  <v-container fluid></v-container>
 </template>
 
 <script lang="ts">

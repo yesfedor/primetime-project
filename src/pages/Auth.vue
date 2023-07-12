@@ -1,12 +1,12 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row class="mt-3 mt-lg-5">
       <v-col cols="12" class="text-center">
         <h1>{{ $t('auth.title') }}</h1>
       </v-col>
     </v-row>
     <v-row class="d-flex justify-center align-center mt-3 mt-lg-5">
-      <v-col cols="12" md="8" lg="4" xl="3" class="bg-surface">
+      <v-col cols="12" md="8" lg="4" xl="3" class="bg-surface px-3 py-10 px-md-6 px-lg-9 py-lg-12">
         <v-row class="px-1">
           <template v-if="action === 'login'">
             <v-col cols="12" class="pt-4 pb-0">

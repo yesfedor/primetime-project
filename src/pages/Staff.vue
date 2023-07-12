@@ -1,3 +1,3 @@
 <template>
-  <v-container>Staff</v-container>
+  <v-container fluid>Staff</v-container>
 </template>

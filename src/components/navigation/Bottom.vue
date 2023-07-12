@@ -9,6 +9,7 @@
       :key="link.icon"
       :value="link.to"
       :to="link.to || ''"
+      :active="isActiveItem(link.to.name)"
       class="app-navigation-bottom__item"
     >
       <v-icon>{{ link.icon }}</v-icon>
@@ -18,13 +19,23 @@
 
 <script lang="ts">
 import { RouteNamesEnum } from '@/router/router.types'
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'AppNavigationBottom',
   setup() {
     const { t } = useI18n()
+
+    const route = useRoute()
+
+    const isActiveItem = computed(() => {
+      return (name: string) => {
+        return route.name === name
+      }
+    })
+
     const menuItems = reactive([
       {
         icon: 'mdi-home-variant-outline',
@@ -54,6 +65,7 @@ export default defineComponent({
     ])
     return {
       menuItems,
+      isActiveItem,
     }
   },
 })

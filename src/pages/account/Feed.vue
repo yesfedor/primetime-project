@@ -1,3 +1,3 @@
 <template>
-  <v-container>Feed</v-container>
+  <v-container fluid>Feed</v-container>
 </template>

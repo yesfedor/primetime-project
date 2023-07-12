@@ -1,3 +1,3 @@
 <template>
-  <v-container>Profile</v-container>
+  <v-container fluid>Profile</v-container>
 </template>

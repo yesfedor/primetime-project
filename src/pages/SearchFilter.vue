@@ -1,3 +1,3 @@
 <template>
-  <v-container>SearchFilter</v-container>
+  <v-container fluid>SearchFilter</v-container>
 </template>

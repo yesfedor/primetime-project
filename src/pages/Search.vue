@@ -1,14 +1,17 @@
 <template>
   <div class="app-search">
     <AppWatchParallax
-      :poster-url="firstItem && firstItem.posterUrl || ''"
+      :poster-url="cardFirstItem && cardFirstItem.posterUrl || ''"
       :loading="loadingSearch"
       label-key="search.title"
     />
-    <v-container>
+    <v-container fluid>
       <v-col cols="12" md="6" lg="3" class="ps-0">
         <v-text-field
           v-model:model-value="searchField"
+          :loading="isLoading || loadingSearch"
+          :placeholder="$t('search.title')"
+          bg-color="surface"
           type="search"
           append-inner-icon="mdi-magnify"
           clearable
@@ -16,47 +19,38 @@
           @keyup.enter="changedSearchField"
         />
       </v-col>
-      <AppWatchList v-if="search.length" :list="search" />
-      <v-row v-else>
-        <v-col class="text-center">
-          <h2>{{ loadingSearch ? $t('app.loading') : $t('app.no_result') }}</h2>
-          <v-progress-circular v-if="loadingSearch" indeterminate size="32" width="4" class="mt-5" />
-        </v-col>
-      </v-row>
+      <AppWatchList :list="cardList" :is-loading="isLoading" />
     </v-container>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import type { WatchApiContentItem } from '@/api/watch'
+import { ref } from 'vue'
 import { watchApi } from '@/api/watch'
+import type { WatchApiContentItem } from '@/api/watch'
+import { useWatchList } from '@/composables/useWatchList'
 import { useAuth } from '@/api/auth'
 import AppWatchList from '@/components/watch/List.vue'
 import AppWatchParallax from '@/components/watch/Parallax.vue'
+import { useRouter, useRoute } from 'vue-router'
 import { RouteNamesEnum } from '@/router/router.types'
 import { UTM_SOURCE_KEY, UTM_SOURCE } from '@/const/utm'
 
 const authProvider = useAuth()
 
 const loadingSearch = ref(false)
-const search = ref<WatchApiContentItem[]>([])
 const searchField = ref('')
 const lastSearchPhrase = ref('')
 
-const loadSearch = async () => {
-  loadingSearch.value = true
-  lastSearchPhrase.value = searchField.value
-  const result = await watchApi.fastSearch(searchField.value, authProvider.getJwt(), await authProvider.getClientId())
-  if (result?.total) {
-    search.value = result.content as WatchApiContentItem[]
-  }
-  loadingSearch.value = false
-}
-
-const firstItem = computed(() => {
-  return search.value.length ? search.value[0] : false
+const { refreshList, cardFirstItem, cardList, isLoading } = useWatchList<WatchApiContentItem>({
+  async loadFn() {
+    lastSearchPhrase.value = searchField.value
+    const result = await watchApi.fastSearch(searchField.value, authProvider.getJwt(), await authProvider.getClientId())
+    if (result?.total) {
+      return result.content as WatchApiContentItem[]
+    }
+    return []
+  },
 })
 
 const router = useRouter()
@@ -73,13 +67,13 @@ const changedSearchField = () => {
       [UTM_SOURCE_KEY]: UTM_SOURCE.searchbox,
     },
   })
-  loadSearch()
+  refreshList()
 }
 
 const route = useRoute()
 if (typeof route.params.search === 'string') {
   const searchText = decodeURIComponent(route.params.search)
   searchField.value = searchText
-  loadSearch()
+  refreshList()
 }
 </script>

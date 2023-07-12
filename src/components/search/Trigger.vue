@@ -19,9 +19,10 @@
           :model-value="searchField"
           :placeholder="$t('search.autocomplete.empty')"
           :loading="isLoading"
-          variant="outlined"
+          variant="solo-filled"
           type="search"
           hide-details
+          clearable
           @update:model-value="updateSearch"
           @keyup.enter="openFullPage(searchField)"
         >
@@ -30,7 +31,7 @@
           </template>
         </v-text-field>
       </v-list-item>
-      <v-list-item v-if="listDataType === 'empty' && searchHistoryHints.length" class="pa-0 pt-3">
+      <v-list-item v-if="listDataType === 'empty' && searchHistoryHints.length" class="px-0 py-2">
         <v-list width="320" class="pa-0">
           <v-list-item
             v-for="hint in searchHistoryHints"
@@ -195,7 +196,7 @@ watch(authProvider.user, (user) => {
   }
 })
 
-const getRouteToWatchPage = (kinopoiskId: number) => {
+const getRouteToWatchPage = (kinopoiskId: string) => {
   return {
     name: RouteNamesEnum.watch,
     params: {
