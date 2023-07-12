@@ -19,7 +19,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-const dialog = ref(true)
+const dialog = ref(false)
 setTimeout(() => {
 	dialog.value = false
 }, 2500)

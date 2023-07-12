@@ -1,3 +1,3 @@
 <template>
-  <v-container>Trailer</v-container>
+  <v-container fluid>Trailer</v-container>
 </template>

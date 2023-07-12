@@ -23,10 +23,10 @@
           {{ item.subtitle }}
         </v-list-subheader>
         <v-list-item
-          v-for="(link, indexLink) in item.links"
-          :key="indexLink + '-' + indexMenu"
+          v-for="link in item.links"
+          :key="`${link.to}`"
           :value="link"
-          exact
+          :active="isActiveItem(link.to.name)"
           :to="link.to ? link.to : undefined"
           color="primary"
           @click="link.click ? link.click : undefined"
@@ -58,12 +58,22 @@ import { defineComponent, computed } from 'vue'
 import { useNavigationDrawer, navigationDrawerWidthEnum } from '@/composables/useNavigationDrawer'
 import { RouteNamesEnum } from '@/router/router.types'
 import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'AppNavigationDrawer',
   setup() {
     const { navigationDrawer } = useNavigationDrawer()
     const { t } = useI18n()
+
+    const route = useRoute()
+
+    const isActiveItem = computed(() => {
+      return (name: string) => {
+        return route.name === name
+      }
+    })
+
     const emptyFn = () => {/* empty */}
     const menuItems = computed(() => {
       return [
@@ -120,6 +130,7 @@ export default defineComponent({
       navigationDrawerWidthEnum,
       navigationDrawer,
       menuItems,
+      isActiveItem,
     }
   },
 })

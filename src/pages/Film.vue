@@ -1,3 +1,3 @@
 <template>
-  <v-container>Film</v-container>
+  <div></div>
 </template>
