@@ -2,11 +2,13 @@ import { RouteRecordRaw, RouteLocationNormalized } from 'vue-router'
 import { RouteNamesEnum } from '@/router/router.types'
 import { LayoutsNamesEnum } from '@/layouts/layouts.types'
 
+export const AUTH_FROM_KEY = 'from'
+
 export function getFailRoute (to: RouteLocationNormalized) {
   return {
     name: RouteNamesEnum.auth,
     query: {
-      from: to.fullPath,
+      [AUTH_FROM_KEY]: to.fullPath,
     },
   }
 }

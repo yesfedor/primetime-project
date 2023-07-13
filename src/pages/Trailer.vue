@@ -33,6 +33,7 @@ import { UTM_SOURCE_KEY, UTM_SOURCE } from '@/const/utm'
 import { watchApi } from '@/api/watch'
 import type { WatchApiExpandedItem } from '@/api/watch'
 import { useI18n } from 'vue-i18n'
+import { AUTH_FROM_KEY } from '@/router/routes'
 import { RouteNamesEnum } from '@/router/router.types'
 
 const router = useRouter()
@@ -64,11 +65,19 @@ const trailerType = computed(() => {
   return ''
 })
 
+const resolvedAuthUrl = router.resolve({
+  name: RouteNamesEnum.watch,
+  params: {
+    kpid: route.params.kpid,
+  },
+})
+
 watch(popupIsOpen, (popupState) => {
   if (!popupState) {
     router.push({
       name: RouteNamesEnum.auth,
       query: {
+        [AUTH_FROM_KEY]: resolvedAuthUrl.href,
         [UTM_SOURCE_KEY]: UTM_SOURCE.trailerpage,
       },
     })

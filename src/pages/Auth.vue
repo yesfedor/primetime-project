@@ -102,6 +102,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { defineComponent, ref, reactive } from 'vue'
 import { useToast } from 'vue-toastification'
 import { useI18n } from 'vue-i18n'
+import { AUTH_FROM_KEY } from '@/router/routes'
 import { UTM_SOURCE_KEY, UTM_SOURCE } from '@/const/utm'
 
 type TActions = 'login' | 'register'
@@ -132,9 +133,9 @@ export default defineComponent({
     }
 
     const onSuccessRouterPush = () => {
-      if (typeof route.query?.from === 'string' && route.query.from.startsWith('/')) {
+      if (typeof route.query[AUTH_FROM_KEY] === 'string' && route.query[AUTH_FROM_KEY].startsWith('/')) {
         return router.push({
-          path: route.query.from,
+          path: route.query[AUTH_FROM_KEY],
           query: {
             [UTM_SOURCE_KEY]: UTM_SOURCE.authfrom,
           },
