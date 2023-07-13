@@ -20,6 +20,33 @@ export interface WatchApiFastSearchItem {
 	year: string
 }
 
+export interface WatchApiExpandedItem {
+	[key: string]: string
+	countries: string
+	description: string
+	endYear: string
+	filmLength: string
+	genres: string
+	id: string
+	imdbId: string
+	kinopoiskId: string
+	nameEn: string
+	nameRu: string
+	posterUrl: string
+	posterUrlPreview: string
+	ratingAgeLimits: string
+	ratingFilmCritics: string
+	ratingFilmCriticsVoteCount: string
+	ratingKinopoisk: string
+	ratingKinopoiskVoteCount: string
+	shortDescription: string
+	slogan: string
+	startYear: string
+	trailer_src: string
+	type: string
+	year: string
+}
+
 export interface WatchApiFastSearch {
 	code: number
 	content: WatchApiFastSearchItem[]
@@ -149,6 +176,16 @@ export const watchApi = {
 				return result.data as WatchApiGetUserRecord
 			}
 		} catch (e) {
+			return createError(e)
+		}
+	},
+	async getTrailerData(kpid: string) {
+		try {
+			const result = await axios.get(API_PATH_METHOD + `watch.getTrailerData?v=1.0&kpid=${kpid}`)
+			if (result.data?.kinopoiskId) {
+				return result.data as WatchApiExpandedItem
+			}
+		} catch(e) {
 			return createError(e)
 		}
 	},
