@@ -93,4 +93,7 @@ export default {
       tv_series: 'сериалы',
     },
   },
+  trailer: {
+    descripton: 'Описание: ',
+  },
 }

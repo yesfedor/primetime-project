@@ -15,4 +15,6 @@ export enum UTM_SOURCE {
 	searchhint = 'searchhint',
 	// From search text field 
 	searchbox = 'searchbox',
+	// From trailer page
+	trailerpage = 'trailerpage'
 }
