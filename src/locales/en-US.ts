@@ -31,6 +31,7 @@ export default {
       auth_for_watch: 'Signin for viewing',
     },
     errors: {
+      419: 'Please repeat the request',
       1001: 'Enter your real name',
       1002: 'Enter the real name',
       1003: 'Enter your real date of birth, you should be more than 13 years old',
