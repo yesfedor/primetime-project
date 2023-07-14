@@ -72,13 +72,28 @@ interface IAuthAnswerDefault {
 }
 
 function useInyMiddleware(response: IAuthAnswerDefault) {
-  if (response?.data?.status === 419) {
-    logger('error', 'Fatal error / Reloading page')
-    Api.setClientId(() => {}, () => {
-      document.location.reload()
-    })
-    return response.data
+  let tryToReset = false
+  const reseter = async () => {
+    if (navigator.onLine) {
+      logger('error', 'Fatal error / Reloading page')
+      await Api.setClientId(() => {}, () => {
+        tryToReset = true
+      })
+    }
   }
+
+  try {
+    if (response?.data?.status === 419) {
+      reseter()
+    }
+  } catch (e) {
+    reseter()
+  }
+
+  if (tryToReset) {
+    window.location.reload()
+  }
+
   return response.data
 }
 
@@ -447,6 +462,7 @@ export const Api = reactive<IApiAuth>({
   async login(username, password) {
     const clientId = localStorage.getItem(this.config.localStorageName.clientId)
     const response = await axios.get(API_PATH_METHOD + `user.login?v=1.0&email=${username}&password=${password}&client_id=${clientId}`)
+    useInyMiddleware(response)
     const userData = this.parseJwt(response.data.jwt)
     if (userData) {
       localStorage.setItem(this.config.localStorageName.jwt, response.data.jwt)
@@ -468,6 +484,7 @@ export const Api = reactive<IApiAuth>({
   async register(name, surname, email, gender, password) {
     const clientId = localStorage.getItem(this.config.localStorageName.clientId)
     const response = await axios.get(API_PATH_METHOD + `user.register?v=1.0&client_id=${clientId}&name=${name}&surname=${surname}&email=${email}&gender=${gender}&password=${password}`)
+    useInyMiddleware(response)
     const userData = this.parseJwt(response.data.jwt)
     if (userData) {
       localStorage.setItem(this.config.localStorageName.jwt, response.data.jwt)

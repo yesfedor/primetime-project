@@ -37,7 +37,7 @@ export default defineComponent({
         key: item,
         label: i18n.t(`app.locales.${i18nKey}`),
       })
-    })
+    })    
 
     const currentLocale = computed(() => ({
       key: i18n.locale,

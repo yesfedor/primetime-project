@@ -1,11 +1,12 @@
 <template>
-	<v-card link :to="toWatchPage">
-		<v-img
+	<v-card link :to="toWatchPage" class="app-watch-card">
+		<v-parallax
 			:src="item.posterUrl"
-			class="align-end"
+			scale="0.8"
 			gradient="0deg, rgba(0,0,0,.85) 0%, rgba(0,0,0,.15) 100%"
 			height="260px"
 			cover
+			class="align-end"
 		>
 			<v-card-title class="d-flex align-center text-white text-body-1">
 				<span class="text-capitalize">{{ $t(`watch.type.${item.type}`) }}</span>
@@ -18,7 +19,7 @@
 					</div>
 				</template>
 			</v-card-title>
-		</v-img>
+		</v-parallax>
 		<v-list>
 			<v-list-item :prepend-avatar="item.posterUrl">
 				<v-list-item-title>{{ item.nameRu }}</v-list-item-title>
