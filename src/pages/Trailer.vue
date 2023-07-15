@@ -62,7 +62,7 @@ const loadTrailerData = async () => {
   const kpid = route.params?.kpid
   if (!kpid || typeof kpid === 'object') {
     trailerIsLoading.value = false
-    return
+    return false
   }
   const result = await watchApi.getTrailerData(kpid)
   if (result?.kinopoiskId) {
@@ -94,9 +94,6 @@ const resolvedAuthUrl = router.resolve({
   name: RouteNamesEnum.watch,
   params: {
     kpid: route.params.kpid,
-    query: {
-      [UTM_SOURCE_KEY as string]: UTM_SOURCE.trailerpage,
-    },
   },
 })
 
