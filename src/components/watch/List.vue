@@ -1,6 +1,6 @@
 <template>
 	<v-row>
-		<v-col v-if="isShowError" cols="12" class="text-center">
+		<v-col v-if="isShowLoading" cols="12" class="text-center">
 			<h2>{{ isLoading ? $t('app.loading') : $t('app.no_result') }}</h2>
 			<v-progress-circular v-if="isLoading" indeterminate size="32" width="4" class="mt-5" />
 		</v-col>
@@ -47,8 +47,8 @@ interface Props {
 const props = defineProps<Props>()
 const { list, isLoading, cardsSizes, useSkeleton } = toRefs(props)
 
-const isShowError = computed(() => {
-	if (useSkeleton) {
+const isShowLoading = computed(() => {
+	if (useSkeleton.value) {
 		return false
 	}
 	return isLoading.value || !list.value.length

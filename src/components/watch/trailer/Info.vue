@@ -8,7 +8,7 @@
         <v-icon>mdi-star</v-icon>
         <span class="text-h6">{{ item.ratingKinopoisk }}</span>
       </div>
-      <span :aria-label="$t('trailer.info.rating.viewersCount')" class="text-h6 app-trailer-info__views">{{ item.ratingKinopoiskVoteCount }}</span>
+      <span :aria-label="$t('trailer.info.viewersCount')" class="text-h6 app-trailer-info__views">{{ item.ratingKinopoiskVoteCount }}</span>
     </div>
     <div class="d-flex flex-column flex-sm-row align-start align-sm-center justify-start mt-2">
       <div v-if="genresList" class="d-flex">
