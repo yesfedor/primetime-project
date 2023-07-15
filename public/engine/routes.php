@@ -97,7 +97,7 @@ function getStaffByStaffId($staffId) {
 $p = appRoute($data['routes'][$url_page]);
 
 // watch data
-preg_match('/(\/watch)([0-9-_]{1,})/', $url_page, $p_pregWatch);
+preg_match('/(\/watch\/)([0-9-_]{1,})/', $url_page, $p_pregWatch);
 
 if ($p_pregWatch[2]) {
     $p = getFilmByKpid($p_pregWatch[2]);
@@ -105,7 +105,7 @@ if ($p_pregWatch[2]) {
 }
 
 // watch data
-preg_match('/(\/trailer)([0-9-_]{1,})/', $url_page, $p_pregTrailer);
+preg_match('/(\/trailer\/)([0-9-_]{1,})/', $url_page, $p_pregTrailer);
 
 if ($p_pregTrailer[2]) {
     $p = getFilmByKpid($p_pregTrailer[2]);

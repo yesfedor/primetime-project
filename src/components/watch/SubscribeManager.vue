@@ -1,27 +1,24 @@
 <template>
-	<v-tooltip :text="$t(`subscriptions.manager.action.${managerStatusAlt}`)" location="bottom">
-		<template v-slot:activator="{ props }">
-			<v-btn
-				v-if="authProvider.user.isAuth"
-				:loading="fetchLoading"
-				:disabled="fetchLoading"
-				:variant="showText ? 'tonal' : 'text'"
-				:icon="!showText"
-				v-bind="props"
-				@click.stop="managerAction"
-			>
-				<span v-if="showText">
-					{{ $t(`subscriptions.manager.action.${managerStatusAlt}`) }}
-				</span>
-				<v-icon v-else :icon="managerStatusIcon" />		
-			</v-btn>
-		</template>
-	</v-tooltip>
+	<v-btn
+		v-if="authProvider.user.isAuth"
+		:loading="fetchLoading"
+		:disabled="fetchLoading"
+		:variant="variant"
+		:icon="!showText"
+		:color="color"
+		v-bind="props"
+		@click.stop="managerAction"
+	>
+		<span v-if="showText">
+			{{ $t(`subscriptions.manager.action.${managerStatusAlt}`) }}
+		</span>
+		<v-icon v-else :icon="managerStatusIcon" />		
+	</v-btn>
 </template>
 
 <script lang="ts" setup>
 // @ts-expect-error typescript error
-import { defineProps, toRefs, ref, computed, onMounted } from 'vue'
+import { defineProps, toRefs, ref, computed, onMounted, watch } from 'vue'
 import { watchApi, WatchApiSubscribeManagerType } from '@/api/watch'
 import { useAuth } from '@/api/auth'
 
@@ -53,6 +50,9 @@ const managerStatusIcon = computed(() => {
 const authProvider = useAuth()
 const fetchLoading = ref(false)
 const fetchStatus = async () => {
+	if (!kinopoiskId.value) {
+		return
+	}
 	fetchLoading.value = true
 	const result = await watchApi.getUserRecord(Number(kinopoiskId.value), authProvider.getJwt(), await authProvider.getClientId())
 	if (result?.kinopoiskId) {
@@ -60,6 +60,10 @@ const fetchStatus = async () => {
 	}
 	fetchLoading.value = false
 }
+
+watch(kinopoiskId, () => {
+	fetchStatus()
+})
 
 const managerAction = async () => {
 	fetchLoading.value = true
@@ -71,6 +75,17 @@ const managerAction = async () => {
 		fetchLoading.value = false
 	}, 500)
 }
+
+const variant = computed(() => {
+	if (showText) {
+		return isSubscribe.value ? 'outlined' : 'flat'
+	}
+	return 'text'
+})
+
+const color = computed(() => {
+	return 'primary'
+})
 
 onMounted(() => {
 	fetchStatus()

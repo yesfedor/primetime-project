@@ -69,6 +69,7 @@ export default {
     },
   },
   home: {
+    seo_title: 'PrimeTime - онлайн-кинотеатр',
     title: 'Homepage',
   },
   watch: {
@@ -100,5 +101,11 @@ export default {
       minutes: 'm',
       hours: 'h',
     },
+  },
+  player: {
+    select: 'Выбрать плеер',
+  },
+  watch_info: {
+    description: 'Описание:',
   },
 }

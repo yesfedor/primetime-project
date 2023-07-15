@@ -29,16 +29,20 @@
 import { onMounted, ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { UTM_SOURCE_KEY, UTM_SOURCE } from '@/const/utm'
+import { useTitle } from '@vueuse/core'
 import { watchApi } from '@/api/watch'
 import type { WatchApiExpandedItem } from '@/api/watch'
 import { useI18n } from 'vue-i18n'
 import { AUTH_FROM_KEY } from '@/router/routes'
 import { RouteNamesEnum } from '@/router/router.types'
 import AppTraierInfo from '@/components/watch/trailer/Info.vue'
+import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter.helper'
 
 const router = useRouter()
 const route = useRoute()
 const { t } = useI18n()
+useTitle(t('app.loading'))
+
 const popupIsOpen = ref(true)
 const trailerIsLoading = ref(false)
 const trailerData = ref<WatchApiExpandedItem | null>(null)
@@ -52,6 +56,11 @@ const loadTrailerData = async () => {
   }
   const result = await watchApi.getTrailerData(kpid)
   if (result?.trailer_src) {
+    useTitle(t('watch.share.title', {
+      type: capitalizeFirstLetter(t(`watch.type.${result.type}`)),
+      title: result.nameRu || result.nameEn,
+      year: result.startYear && result.endYear ? `${result.startYear} - ${result.endYear}` : result.year,
+    }))
     trailerData.value = result
   }
   trailerIsLoading.value = false

@@ -96,10 +96,11 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, ref, reactive } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { useTitle } from '@vueuse/core'
 import { IUserResponceGender, useAuth } from '@/api/auth'
 import { RouteNamesEnum } from '@/router/router.types'
-import { useRouter, useRoute } from 'vue-router'
-import { defineComponent, ref, reactive } from 'vue'
 import { useToast } from 'vue-toastification'
 import { useI18n } from 'vue-i18n'
 import { AUTH_FROM_KEY } from '@/router/routes'
@@ -113,9 +114,13 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const auth = useAuth()
-    const isPasswordVisible = ref(false)
     const toastr = useToast()
+
+    const isPasswordVisible = ref(false)
+    
     const { t } = useI18n()
+    useTitle(t('search.title'))
+
     const loginData = reactive({
       username: '',
       password: '',

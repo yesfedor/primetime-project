@@ -9,6 +9,14 @@ function createError(e: unknown) {
 	return null
 }
 
+export enum WatchContentTypeEnum {
+	FILM = 'FILM',
+	VIDEO = 'VIDEO',
+	TV_SERIES = 'TV_SERIES',
+	MINI_SERIES = 'MINI_SERIES',
+	TV_SHOW = 'TV_SHOW',
+}
+
 type WatchContentType = 'FILM' | 'VIDEO' | 'TV_SERIES' | 'MINI_SERIES' | 'TV_SHOW'
 
 export interface WatchApiFastSearchItem {
@@ -21,7 +29,6 @@ export interface WatchApiFastSearchItem {
 }
 
 export interface WatchApiExpandedItem {
-	[key: string]: string
 	countries: string
 	description: string
 	endYear: string
@@ -82,6 +89,11 @@ export interface WatchApiGetSubscriptions extends WatchApiFastSearch {
 	content: WatchApiContentItem[]
 }
 
+export interface WatchApiGetRecommendationsDataByKpid {
+	items: WatchApiContentItem[]
+	total: number
+}
+
 export type WatchApiSubscribeManagerType = 'subscribe' | 'unsubscribe'
 
 export interface WatchApiGetUserRecord {
@@ -89,6 +101,51 @@ export interface WatchApiGetUserRecord {
 	status: WatchApiSubscribeManagerType
 	time: number
 	uid: number
+}
+
+export interface WatchApiGetFacts {
+	code: number
+	content: {
+		id: number
+		text: string
+	}[]
+	total: number
+}
+
+export interface WatchApiGetReviewsItem {
+	reviewDescription: string
+	reviewTitle: string
+	reviewType: string
+}
+
+export interface WatchApiGetReviews {
+	code: number
+	items: {
+		NEGATIVE: WatchApiGetReviewsItem[]
+		NEUTRAL: WatchApiGetReviewsItem[]
+		POSITIVE: WatchApiGetReviewsItem[]
+		UNKNOWN: WatchApiGetReviewsItem[]
+	}
+	total: number
+}
+
+export interface WatchApiGetStaffItem {
+	description: string
+	nameEn: string
+	nameRu: string
+	posterUrl: string
+	professionText: string
+	staffId: string
+}
+
+export interface WatchApiGetStaffByKpid {
+	code: number
+	staff: {
+		ACTOR: WatchApiGetStaffItem[]
+		DESIGN: WatchApiGetStaffItem[]
+		PRODUCER: WatchApiGetStaffItem[]
+		WRITER: WatchApiGetStaffItem[]
+	}
 }
 
 export const watchApi = {
@@ -186,6 +243,56 @@ export const watchApi = {
 				return result.data as WatchApiExpandedItem
 			}
 		} catch(e) {
+			return createError(e)
+		}
+	},
+	async getRecommendationsDataByKpid(kpid: string) {
+		try {
+			const result = await axios.get(API_PATH_METHOD + `watch.getRecommendationsDataByKpid?v=1.0&kpid=${kpid}`)
+			if (result.data?.total) {
+				return result.data as WatchApiGetRecommendationsDataByKpid
+			}
+		} catch (e) {
+			return createError(e)
+		}
+	},
+	async getFacts(kpid: string) {
+		try {
+			const result = await axios.get(API_PATH_METHOD + `watch.getFacts?v=1.0&kpid=${kpid}`)
+			if (result.data?.total) {
+				return result.data as WatchApiGetFacts
+			}
+		} catch (e) {
+			return createError(e)
+		}
+	},
+	async getReviews(kpid: string) {
+		try {
+			const result = await axios.get(API_PATH_METHOD + `watch.getReviews?v=1.0&kpid=${kpid}`)
+			if (result.data?.total) {
+				return result.data as WatchApiGetReviews
+			}
+		} catch (e) {
+			return createError(e)
+		}
+	},
+	async getStaffByKpid(kpid: string) {
+		try {
+			const result = await axios.get(API_PATH_METHOD + `watch.getStaffByKpid?v=1.0&kpid=${kpid}`)
+			if (result.data?.code) {
+				return result.data as WatchApiGetStaffByKpid
+			}
+		} catch (e) {
+			return createError(e)
+		}
+	},
+	async getDataByKpid(kpid: string, jwt: string) {
+		try {
+			const result = await axios.get(API_PATH_METHOD + `watch.getDataByKpid?v=1.0&kpid=${kpid}&jwt=${jwt}`)
+			if (result.data?.id) {
+				return result.data as WatchApiExpandedItem
+			}
+		} catch (e) {
 			return createError(e)
 		}
 	},

@@ -1,5 +1,6 @@
 <template>
   <v-menu
+    v-model:model-value="menu"
     :close-on-content-click="false"
     location="left top"
     content-class="app-search-trigger-menu"
@@ -64,8 +65,9 @@
             :prepend-avatar="getPosterImageByKinopoiskid(hint.kinopoiskId)"
             :to="getRouteToWatchPage(hint.kinopoiskId)"
             link
-            :class="{ 'd-none': !hint.nameRu }"
+            :class="{ 'd-none': !hint.nameRu || !hint.posterUrl }"
             class="text-truncate"
+            @click="menu = false"
           >
             <v-list-item-title>{{ hint.nameRu }}</v-list-item-title>
             <v-list-item-subtitle class="d-flex align-center">
@@ -89,13 +91,15 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import { watchDebounced } from '@vueuse/core'
-import type { WatchApiFastSearchItem, WatchApiFastSearchHistoryItem} from '@/api/watch'
+import type { WatchApiFastSearchItem, WatchApiFastSearchHistoryItem } from '@/api/watch'
 import { watchApi } from '@/api/watch'
 import { useAuth } from '@/api/auth'
 import router from '@/router'
 import { RouteNamesEnum } from '@/router/router.types'
 import { getPosterImageByKinopoiskid } from '@/utils/watch'
 import { UTM_SOURCE_KEY, UTM_SOURCE } from '@/const/utm'
+
+const menu = ref(false)
 
 const authProvider = useAuth()
 
@@ -143,6 +147,7 @@ watchDebounced(searchField, async (query: string) => {
 }, { debounce: 500, maxWait: 1500 })
 
 const openFullPage = (search: string) => {
+  menu.value = false
   searchField.value = ''
   router.push({
     name: RouteNamesEnum.search,
