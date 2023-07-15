@@ -1,24 +1,31 @@
 <template>
   <v-dialog
     v-model:model-value="popupIsOpen"
+    scroll-strategy="block"
     fullscreen
     absolute
+    content-class="app-trailer-page"
   >
-    <v-container fluid class="fill-height bg-black">
+    <v-container fluid class="fill-height bg-black app-trailer-page__wrapper wrapper">
       <v-row v-if="!isShowError && trailerData">
-        <v-col cols="12" md="8">
-          <h1 class="text-h4">
+        <v-col offset-md="1" align-self="center" cols="12" md="5" class="wrapper__info">
+          <h1 class="text-h6 text-md-4">
             <span class="text-capitalize">{{ trailerType }}</span>
             <span>{{ trailerData.nameRu }}</span>
           </h1>
-          <p>
-            <span class="text-h6">{{ $t('trailer.descripton') }}</span>
-            <span>{{ trailerData.description }}</span>
-          </p>
+          <text-clamp :text='trailerData.description' :max-lines='trailerDescriptionLines'>
+            <template #before>
+              <span class="text-h6">{{ $t('trailer.descripton') }}</span>
+            </template>
+          </text-clamp>
           <AppTraierInfo :item="trailerData" />
+          <div class="text-h6 text-md-4 mt-2 d-flex align-center justify-space-between">
+            <span class="mr-2">{{ $t('trailer.actions.register') }}</span>
+            <v-btn class="mt-1 mt-md-0" @click="routeToAuthPage">{{ $t('auth.register') }}</v-btn>
+          </div>
         </v-col>
-        <v-col cols="12" md="4">
-          <v-img :src="trailerData.posterUrl" />
+        <v-col cols="12" md="6" class="wrapper__image">
+          <v-img width="100%" aspect-ratio="16/9" gradient="0deg, rgba(0,0,0,.85) 0%, rgba(0,0,0,.15) 100%"  :src="trailerData.posterUrl" :alt="trailerData.nameRu" />
         </v-col>
       </v-row>
     </v-container>
@@ -37,7 +44,10 @@ import { AUTH_FROM_KEY } from '@/router/routes'
 import { RouteNamesEnum } from '@/router/router.types'
 import AppTraierInfo from '@/components/watch/trailer/Info.vue'
 import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter.helper'
+import TextClamp from 'vue3-text-clamp'
+import { useDisplay } from 'vuetify/lib/framework.mjs'
 
+const display = useDisplay()
 const router = useRouter()
 const route = useRoute()
 const { t } = useI18n()
@@ -67,12 +77,28 @@ const loadTrailerData = async () => {
 }
 
 const isShowError = computed(() => trailerIsLoading.value || !trailerData.value)
+const trailerDescriptionLines = computed(() => {
+  if (display.mdAndUp.value) {
+    return false
+  }
+  return 3
+})
 const trailerType = computed(() => {
   if (trailerData.value) {
     return t(`watch.type.${trailerData.value.type}`) + ': '
   }
   return ''
 })
+
+const routeToAuthPage = () => {
+  router.push({
+    name: RouteNamesEnum.auth,
+    query: {
+      [AUTH_FROM_KEY]: resolvedAuthUrl.href,
+      [UTM_SOURCE_KEY]: UTM_SOURCE.trailerpage,
+    },
+  })
+}
 
 const resolvedAuthUrl = router.resolve({
   name: RouteNamesEnum.watch,
@@ -83,15 +109,25 @@ const resolvedAuthUrl = router.resolve({
 
 watch(popupIsOpen, (popupState) => {
   if (!popupState) {
-    router.push({
-      name: RouteNamesEnum.auth,
-      query: {
-        [AUTH_FROM_KEY]: resolvedAuthUrl.href,
-        [UTM_SOURCE_KEY]: UTM_SOURCE.trailerpage,
-      },
-    })
+    routeToAuthPage()
   }
 })
 
 onMounted(() => loadTrailerData())
 </script>
+
+<style lang="scss">
+.app-trailer-page {
+  overflow: hidden !important;
+  & &__wrapper.wrapper {
+    .wrapper__content, .wrapper__image {
+      height: 600px;
+    }
+    .wrapper__image {
+      img {
+        object-fit: none;
+      }
+    }
+  }
+}
+</style>

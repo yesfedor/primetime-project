@@ -1,6 +1,8 @@
 import { useI18n } from 'vue-i18n'
 
 export function prettyCinemaDuration (duration: string) {
+  if (!Number(duration)) return
+
   const { t } = useI18n()
   const date = new Date(0)
 

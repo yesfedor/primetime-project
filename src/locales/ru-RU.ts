@@ -98,8 +98,15 @@ export default {
   trailer: {
     descripton: 'Описание: ',
     duration: {
-      minutes: 'м',
-      hours: 'ч',
+      minutes: 'мин',
+      hours: 'час',
+    },
+    info: {
+      rating: 'рейтинг',
+      viewersCount: 'Колличество отзывов',
+    },
+    actions: {
+      register: 'Для просмотра авторизируйтесь',
     },
   },
   player: {
