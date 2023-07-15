@@ -97,6 +97,17 @@ export default {
   },
   trailer: {
     descripton: 'Descripton: ',
+    duration: {
+      minutes: 'min',
+      hours: 'h',
+    },
+    info: {
+      rating: 'rating',
+      viewersCount: 'count reviews',
+    },
+    actions: {
+      register: 'Login to view',
+    },
   },
   player: {
     select: 'Выбрать плеер',

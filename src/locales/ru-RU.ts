@@ -97,6 +97,17 @@ export default {
   },
   trailer: {
     descripton: 'Описание: ',
+    duration: {
+      minutes: 'мин',
+      hours: 'час',
+    },
+    info: {
+      rating: 'рейтинг',
+      viewersCount: 'Колличество отзывов',
+    },
+    actions: {
+      register: 'Для просмотра авторизируйтесь',
+    },
   },
   player: {
     select: 'Выбрать плеер',
