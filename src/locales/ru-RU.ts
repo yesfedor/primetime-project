@@ -97,4 +97,10 @@ export default {
   trailer: {
     descripton: 'Описание: ',
   },
+  player: {
+    select: 'Выбрать плеер',
+  },
+  watch_info: {
+    description: 'Описание:',
+  },
 }

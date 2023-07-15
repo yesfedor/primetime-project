@@ -1,22 +1,19 @@
 <template>
-	<v-tooltip :text="$t(`subscriptions.manager.action.${managerStatusAlt}`)" location="bottom">
-		<template v-slot:activator="{ props }">
-			<v-btn
-				v-if="authProvider.user.isAuth"
-				:loading="fetchLoading"
-				:disabled="fetchLoading"
-				:variant="showText ? 'tonal' : 'text'"
-				:icon="!showText"
-				v-bind="props"
-				@click.stop="managerAction"
-			>
-				<span v-if="showText">
-					{{ $t(`subscriptions.manager.action.${managerStatusAlt}`) }}
-				</span>
-				<v-icon v-else :icon="managerStatusIcon" />		
-			</v-btn>
-		</template>
-	</v-tooltip>
+	<v-btn
+		v-if="authProvider.user.isAuth"
+		:loading="fetchLoading"
+		:disabled="fetchLoading"
+		:variant="variant"
+		:icon="!showText"
+		:color="color"
+		v-bind="props"
+		@click.stop="managerAction"
+	>
+		<span v-if="showText">
+			{{ $t(`subscriptions.manager.action.${managerStatusAlt}`) }}
+		</span>
+		<v-icon v-else :icon="managerStatusIcon" />		
+	</v-btn>
 </template>
 
 <script lang="ts" setup>
@@ -71,6 +68,17 @@ const managerAction = async () => {
 		fetchLoading.value = false
 	}, 500)
 }
+
+const variant = computed(() => {
+	if (showText) {
+		return isSubscribe.value ? 'outlined' : 'flat'
+	}
+	return 'text'
+})
+
+const color = computed(() => {
+	return 'primary'
+})
 
 onMounted(() => {
 	fetchStatus()
