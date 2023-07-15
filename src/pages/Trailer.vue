@@ -6,7 +6,7 @@
     absolute
     content-class="app-trailer-page"
   >
-    <v-container fluid class="fill-height bg-black app-trailer-page__wrapper wrapper">
+    <v-container fluid class="fill-height bg-black app-trailer-page__wrapper wrapper px-5">
       <v-row v-if="!isShowError && trailerData">
         <v-col offset-md="1" align-self="center" cols="12" md="5" class="wrapper__info">
           <h1 class="text-h6 text-md-4">
@@ -43,8 +43,8 @@ import { useI18n } from 'vue-i18n'
 import { AUTH_FROM_KEY } from '@/router/routes'
 import { RouteNamesEnum } from '@/router/router.types'
 import AppTraierInfo from '@/components/watch/trailer/Info.vue'
-import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter.helper'
 import TextClamp from 'vue3-text-clamp'
+import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter.helper'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 
 const display = useDisplay()
@@ -65,7 +65,7 @@ const loadTrailerData = async () => {
     return
   }
   const result = await watchApi.getTrailerData(kpid)
-  if (result?.trailer_src) {
+  if (result?.kinopoiskId) {
     useTitle(t('watch.share.title', {
       type: capitalizeFirstLetter(t(`watch.type.${result.type}`)),
       title: result.nameRu || result.nameEn,
@@ -79,7 +79,7 @@ const loadTrailerData = async () => {
 const isShowError = computed(() => trailerIsLoading.value || !trailerData.value)
 const trailerDescriptionLines = computed(() => {
   if (display.mdAndUp.value) {
-    return false
+    return 6
   }
   return 3
 })
@@ -88,6 +88,16 @@ const trailerType = computed(() => {
     return t(`watch.type.${trailerData.value.type}`) + ': '
   }
   return ''
+})
+
+const resolvedAuthUrl = router.resolve({
+  name: RouteNamesEnum.watch,
+  params: {
+    kpid: route.params.kpid,
+    query: {
+      [UTM_SOURCE_KEY as string]: UTM_SOURCE.trailerpage,
+    },
+  },
 })
 
 const routeToAuthPage = () => {
@@ -99,13 +109,6 @@ const routeToAuthPage = () => {
     },
   })
 }
-
-const resolvedAuthUrl = router.resolve({
-  name: RouteNamesEnum.watch,
-  params: {
-    kpid: route.params.kpid,
-  },
-})
 
 watch(popupIsOpen, (popupState) => {
   if (!popupState) {
