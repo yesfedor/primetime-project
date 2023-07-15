@@ -21,8 +21,8 @@ import { ref } from 'vue'
 
 const dialog = ref(false)
 setTimeout(() => {
-	dialog.value = false
-}, 2500)
+	dialog.value = true
+}, 1500)
 </script>
 
 <style lang="scss">
