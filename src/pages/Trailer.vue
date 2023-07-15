@@ -13,7 +13,7 @@
             <span class="text-capitalize">{{ trailerType }}</span>
             <span>{{ trailerData.nameRu }}</span>
           </h1>
-          <text-clamp :text='trailerData.description' :max-lines='trailerDescriptionLines'>
+          <text-clamp :text="trailerData.description" :max-lines="trailerDescriptionLines">
             <template #before>
               <span class="text-h6">{{ $t('trailer.descripton') }}</span>
             </template>
@@ -79,7 +79,7 @@ const loadTrailerData = async () => {
 const isShowError = computed(() => trailerIsLoading.value || !trailerData.value)
 const trailerDescriptionLines = computed(() => {
   if (display.mdAndUp.value) {
-    return false
+    return 0
   }
   return 3
 })
