@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 // @ts-expect-error typescript error
-import { defineProps, toRefs, ref, computed, onMounted } from 'vue'
+import { defineProps, toRefs, ref, computed, onMounted, watch } from 'vue'
 import { watchApi, WatchApiSubscribeManagerType } from '@/api/watch'
 import { useAuth } from '@/api/auth'
 
@@ -50,6 +50,9 @@ const managerStatusIcon = computed(() => {
 const authProvider = useAuth()
 const fetchLoading = ref(false)
 const fetchStatus = async () => {
+	if (!kinopoiskId.value) {
+		return
+	}
 	fetchLoading.value = true
 	const result = await watchApi.getUserRecord(Number(kinopoiskId.value), authProvider.getJwt(), await authProvider.getClientId())
 	if (result?.kinopoiskId) {
@@ -57,6 +60,10 @@ const fetchStatus = async () => {
 	}
 	fetchLoading.value = false
 }
+
+watch(kinopoiskId, () => {
+	fetchStatus()
+})
 
 const managerAction = async () => {
 	fetchLoading.value = true
