@@ -96,5 +96,9 @@ export default {
   },
   trailer: {
     descripton: 'Descripton: ',
+    duration: {
+      minutes: 'm',
+      hours: 'h',
+    },
   },
 }

@@ -15,11 +15,10 @@
             <span class="text-h6">{{ $t('trailer.descripton') }}</span>
             <span>{{ trailerData.description }}</span>
           </p>
-          <p>
-            <span class="text-h6">{{ trailerData.ratingKinopoisk }}</span>
-          </p>
+          <AppTraierInfo :item="trailerData" />
         </v-col>
         <v-col cols="12" md="4">
+          <v-img :src="trailerData.posterUrl" />
         </v-col>
       </v-row>
     </v-container>
@@ -35,6 +34,7 @@ import type { WatchApiExpandedItem } from '@/api/watch'
 import { useI18n } from 'vue-i18n'
 import { AUTH_FROM_KEY } from '@/router/routes'
 import { RouteNamesEnum } from '@/router/router.types'
+import AppTraierInfo from '@/components/watch/trailer/Info.vue'
 
 const router = useRouter()
 const route = useRoute()

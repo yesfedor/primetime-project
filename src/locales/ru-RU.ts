@@ -96,5 +96,9 @@ export default {
   },
   trailer: {
     descripton: 'Описание: ',
+    duration: {
+      minutes: 'м',
+      hours: 'ч',
+    },
   },
 }
