@@ -69,6 +69,7 @@ export default {
     },
   },
   home: {
+    seo_title: 'PrimeTime - онлайн-кинотеатр',
     title: 'Главная страница',
   },
   watch: {

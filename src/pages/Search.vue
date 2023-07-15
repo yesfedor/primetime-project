@@ -26,15 +26,20 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { useTitle } from '@vueuse/core'
 import { watchApi } from '@/api/watch'
 import type { WatchApiContentItem } from '@/api/watch'
 import { useWatchList } from '@/composables/useWatchList'
 import { useAuth } from '@/api/auth'
+import { useI18n } from 'vue-i18n'
 import AppWatchList from '@/components/watch/List.vue'
 import AppWatchParallax from '@/components/watch/Parallax.vue'
 import { useRouter, useRoute } from 'vue-router'
 import { RouteNamesEnum } from '@/router/router.types'
 import { UTM_SOURCE_KEY, UTM_SOURCE } from '@/const/utm'
+
+const i18n = useI18n()
+useTitle(i18n.t('search.title'))
 
 const authProvider = useAuth()
 

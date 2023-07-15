@@ -16,7 +16,7 @@
 				/>
 			</v-col>
 			<template v-else>
-				<v-col v-for="item in list" :key="item.id" v-bind="bindCardsSizes">
+				<v-col v-for="item in list" :key="item.id" :class="{ 'd-none': !item.nameRu || !item.posterUrl }" v-bind="bindCardsSizes">
 					<AppWatchCardDefault :item="item" />
 				</v-col>
 			</template>
