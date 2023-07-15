@@ -12,12 +12,17 @@
 </template>
 
 <script lang="ts" setup>
+import { useI18n } from 'vue-i18n'
+import { useTitle } from '@vueuse/core'
 import { useAuth } from '@/api/auth'
 import { watchApi } from '@/api/watch'
 import type { WatchApiContentItem } from '@/api/watch'
 import { useWatchList } from '@/composables/useWatchList'
 import AppWatchList from '@/components/watch/List.vue'
 import AppWatchParallax from '@/components/watch/Parallax.vue'
+
+const { t } = useI18n()
+useTitle(t('subscriptions.title'))
 
 const authProvider = useAuth()
 

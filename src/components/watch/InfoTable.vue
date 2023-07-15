@@ -1,10 +1,12 @@
 <template>
 	<v-row class="app-watch-info-table">
 		<v-col cols="9" class="d-flex align-center">
-			<h1 class="text-h5 text-lg-h4">
-				<span class="text-truncate text-capitalize pe-2">{{ $t(`watch.type.${data.type}`) }}</span>
-				<span>{{ data.nameRu || data.nameEn }}</span>
-			</h1>
+			<v-skeleton-loader :loading="isLoading" width="100%" type="list-item" class="bg-background">
+				<h1 class="text-h5 text-lg-h4">
+					<span class="text-truncate text-capitalize pe-2">{{ $t(`watch.type.${data.type}`) }}</span>
+					<span>{{ data.nameRu || data.nameEn }}</span>
+				</h1>
+			</v-skeleton-loader>
 		</v-col>
 		<v-col cols="3" class="d-flex align-center justify-end">
 			<span v-if="data.ratingAgeLimits" class="text-h5 text-lg-h4">{{ `${data.ratingAgeLimits}+` }}</span>

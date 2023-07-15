@@ -31,11 +31,17 @@
 <script lang="ts" setup>
 import { ref, Ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { useTitle } from '@vueuse/core'
+import { useI18n } from 'vue-i18n'
 import { watchApi, WatchApiGetRecommendationsDataByKpid } from '@/api/watch'
 import { useAuth } from '@/api/auth'
 import AppWatchPlayer from '@/components/watch/Player.vue'
 import AppWatchInfoTable from '@/components/watch/InfoTable.vue'
 import AppWatchList from '@/components/watch/List.vue'
+import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter.helper'
+
+const i18n = useI18n()
+useTitle(i18n.t('app.loading'))
 
 const route = useRoute()
 const authProvider = useAuth()
@@ -49,6 +55,11 @@ const getWatchDataByKpid = async () => {
   watchIsLoading.value = true
   const result = await watchApi.getDataByKpid(kpid.value, authProvider.getJwt())
   if (result?.id) {
+  useTitle(i18n.t('watch.share.title', {
+    type: capitalizeFirstLetter(i18n.t(`watch.type.${result.type}`)),
+    title: result.nameRu || result.nameEn,
+    year: Number(result.startYear) && Number(result.endYear) ? `${result.startYear} - ${result.endYear}` : result.year,
+  }))
     watchData.value = result
   }
   watchIsLoading.value = false

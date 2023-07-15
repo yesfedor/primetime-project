@@ -65,7 +65,7 @@
             :prepend-avatar="getPosterImageByKinopoiskid(hint.kinopoiskId)"
             :to="getRouteToWatchPage(hint.kinopoiskId)"
             link
-            :class="{ 'd-none': !hint.nameRu }"
+            :class="{ 'd-none': !hint.nameRu || !hint.posterUrl }"
             class="text-truncate"
             @click="menu = false"
           >
@@ -91,7 +91,7 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import { watchDebounced } from '@vueuse/core'
-import type { WatchApiFastSearchItem, WatchApiFastSearchHistoryItem} from '@/api/watch'
+import type { WatchApiFastSearchItem, WatchApiFastSearchHistoryItem } from '@/api/watch'
 import { watchApi } from '@/api/watch'
 import { useAuth } from '@/api/auth'
 import router from '@/router'

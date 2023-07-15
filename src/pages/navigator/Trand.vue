@@ -22,12 +22,17 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useTitle } from '@vueuse/core'
 import { watchApi } from '@/api/watch'
 import type { WatchApiContentItem } from '@/api/watch'
 import { WATCH_TRANDS_TABS } from '@/const/watch'
 import { useWatchList } from '@/composables/useWatchList'
 import AppWatchList from '@/components/watch/List.vue'
 import AppWatchParallax from '@/components/watch/Parallax.vue'
+
+const { t } = useI18n()
+useTitle(t('trands.title'))
 
 const selectedTab = ref(WATCH_TRANDS_TABS[0].act)
 
