@@ -86,7 +86,6 @@ if (file_get_contents('php://input')) {
 }
 
 try {
-  ExceptionJsonExtreme('AppRouter', $_POST);
   AppRouter($appUrl, $_POST);
 } catch (Exception $e) {
   ExceptionJsonExtreme('AppRouter', $e);
