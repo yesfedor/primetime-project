@@ -1,10 +1,10 @@
 <template>
 	<v-card link :to="toWatchPage" class="app-watch-card">
-		<v-parallax
+		<v-img
 			:src="item.posterUrl"
+			:height="height"
 			scale="0.8"
 			gradient="0deg, rgba(0,0,0,.85) 0%, rgba(0,0,0,.15) 100%"
-			height="260px"
 			cover
 			class="align-end"
 		>
@@ -19,7 +19,7 @@
 					</div>
 				</template>
 			</v-card-title>
-		</v-parallax>
+		</v-img>
 		<v-list>
 			<v-list-item :prepend-avatar="item.posterUrl">
 				<v-list-item-title>{{ item.nameRu }}</v-list-item-title>
@@ -38,6 +38,7 @@ import type { WatchApiContentItem } from '@/api/watch'
 import { RouteNamesEnum } from '@/router/router.types'
 import { UTM_SOURCE_KEY, UTM_SOURCE } from '@/const/utm'
 import AppWatchActions from '@/components/watch/Actions.vue'
+import { useWatchHeight } from '@/composables/useWatchHeight'
 
 interface Props {
 	item: WatchApiContentItem
@@ -45,6 +46,8 @@ interface Props {
 
 const props = defineProps<Props>()
 const { item } = toRefs(props)
+
+const { height } = useWatchHeight()
 
 const toWatchPage = {
 	name: RouteNamesEnum.watch,
