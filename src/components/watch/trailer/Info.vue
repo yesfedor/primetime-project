@@ -3,7 +3,6 @@
     <div v-if="Number(item.ratingKinopoisk)" class="d-flex align-center justify-start">
       <div
         :aria-label="$t('trailer.info.rating')"
-        :class="ratingClass"
         class="d-flex align-center jusitfy-center mr-2 app-trailer-info__rating"
       >
         <v-icon>mdi-star</v-icon>
@@ -44,16 +43,6 @@ interface Props {
 const props = defineProps<Props>()
 const { item } = toRefs(props)
 
-const ratingClass = computed(() => {
-  const movieRating = Number(item.value.ratingKinopoisk)
-  if (movieRating > 7) {
-    return '--green'
-  }
-  if (movieRating > 4) {
-    return '--yellow'
-  }
-  return '--red'
-})
 const genresList = computed(() => transferStringToList(item.value.genres, ',', 3))
 const countriesList = computed(() => transferStringToList(item.value.countries, ',', 3))
 const prettyDuration = computed(() => prettyCinemaDuration(item.value.filmLength))
