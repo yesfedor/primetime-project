@@ -59,6 +59,8 @@ import { useNavigationDrawer, navigationDrawerWidthEnum } from '@/composables/us
 import { RouteNamesEnum } from '@/router/router.types'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
+import { useAuth, IUserResponceAccess } from '@/api/auth'
+
 
 export default defineComponent({
   name: 'AppNavigationDrawer',
@@ -67,6 +69,7 @@ export default defineComponent({
     const { t } = useI18n()
 
     const route = useRoute()
+    const authProvider = useAuth()
 
     const isActiveItem = computed(() => {
       return (name: string) => {
@@ -76,7 +79,7 @@ export default defineComponent({
 
     const emptyFn = () => {/* empty */}
     const menuItems = computed(() => {
-      return [
+      const menuItems = [
         {
           subtitle: '',
           links: [
@@ -124,6 +127,22 @@ export default defineComponent({
           ],
         },
       ]
+
+      if (authProvider.user.data.access === IUserResponceAccess.author) {
+        menuItems.push({
+          subtitle: '',
+            links: [
+              {
+                icon: 'mdi-shield-key',
+                label: t('navigation.admin'),
+                to: { name: RouteNamesEnum.adminDashboard },
+                click: emptyFn,
+              },
+            ],
+        })
+      }
+
+      return menuItems
     })
 
     return {
