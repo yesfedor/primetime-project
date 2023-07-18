@@ -44,6 +44,7 @@ export default {
     },
   },
   navigation: {
+    admin: 'Admin Panel',
     home: 'Home',
     trand: 'In trend',
     searchFilter: 'Navigator',

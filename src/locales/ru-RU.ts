@@ -44,6 +44,7 @@ export default {
     },
   },
   navigation: {
+    admin: 'Админка',
     home: 'Главная',
     trand: 'В тренде',
     searchFilter: 'Навигатор',
