@@ -942,3 +942,39 @@ function WatchGetTrailerData ($kpid) {
   // $data['trailer_src'] = WatchGetTrailer($kpid);
   return $data;
 }
+
+function WatchAdminViewed($jwt) {
+  if (!UserJwtIsValid($jwt)) return ['code' => 404];
+  $user = UserJwtDecode($jwt)['data'];
+  $user_db = UserGetByUid($user['uid']);
+
+  if (!UserCheckPasswordByJwt($jwt)) return ['code' => 404];
+  if ($user_db['access'] !== 'author') return ['code' => 404];
+
+  $limit = 500;
+  $query = "SELECT * FROM `WatchHistory` WHERE uid != :uid ORDER BY id DESC LIMIT $limit";
+  $var = [
+    ':uid' => 0
+  ];
+
+  function createItem($uid, $kpid) {
+    $user = UserGetPublicByUid($uid);
+    $trailer = WatchGetTrailerData($kpid);
+
+    return [
+      'user' => $user,
+      'trailer' => $trailer
+    ];
+  }
+
+  $history = dbGetAll($query, $var);
+  $countHistory = count($history);
+  
+  $result = [];
+  for ($i = 0; $i < $countHistory; $i++) {
+    $result[$i] = createItem($history[$i]['uid'], $history[$i]['kinopoiskId']);
+    $result[$i]['time'] = $history[$i]['time'];
+  }
+
+  return $result;
+}
