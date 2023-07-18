@@ -36,6 +36,10 @@ export enum RouteNamesEnum {
   search = 'search',
   searchFilter = 'searchFilter',
 
+  // admin
+  adminDashboard = 'adminDashboard',
+  adminViewed = 'adminViewed',
+
   // errors
   error404 = 'error404',
 }

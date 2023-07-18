@@ -1,3 +1,4 @@
+import { IUserResponceData } from '@/api/auth'
 import { API_PATH_METHOD } from '@/api/config'
 import axios from 'axios'
 
@@ -148,6 +149,12 @@ export interface WatchApiGetStaffByKpid {
 	}
 }
 
+export interface WatchApiGAdminViewed {
+	user: IUserResponceData,
+	trailer: WatchApiExpandedItem,
+	time: string | number,
+}
+
 export const watchApi = {
 	async fastSearch(query: string, jwt: string, clientId: string) {
 		try {
@@ -291,6 +298,16 @@ export const watchApi = {
 			const result = await axios.get(API_PATH_METHOD + `watch.getDataByKpid?v=1.0&kpid=${kpid}&jwt=${jwt}`)
 			if (result.data?.id) {
 				return result.data as WatchApiExpandedItem
+			}
+		} catch (e) {
+			return createError(e)
+		}
+	},
+	async adminViewed(jwt: string) {
+		try {
+			const result = await axios.get(API_PATH_METHOD + `watch.adminViewed?v=1.0&jwt=${jwt}`)
+			if (result.data?.length) {
+				return result.data as WatchApiGAdminViewed[]
 			}
 		} catch (e) {
 			return createError(e)

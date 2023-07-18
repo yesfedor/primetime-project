@@ -659,6 +659,20 @@ $methods = [
       ]
     ]
   ],
+  'watch.adminViewed' => [
+    'in_active' => true,
+    'beforeMethods' => [],
+    'objects' => ['User', 'Watch'],
+    'title' => 'Watch',
+    'detail' => '',
+    'link' => '/watch',
+    'props' => [
+      'jwt' => [
+        'required' => true,
+        'type' => 'String'
+      ],
+    ]
+  ],
   'utils.time' => [
     'in_active' => true,
     'beforeMethods' => [],

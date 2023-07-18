@@ -1,6 +1,7 @@
 import { RouteRecordRaw, RouteLocationNormalized } from 'vue-router'
 import { RouteNamesEnum } from '@/router/router.types'
 import { LayoutsNamesEnum } from '@/layouts/layouts.types'
+import { IUserResponceAccess } from '@/api/auth'
 
 export const AUTH_FROM_KEY = 'from'
 
@@ -134,6 +135,28 @@ export const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "search" */ '@/pages/SearchFilter.vue'),
     meta: {
       layout: LayoutsNamesEnum.default,
+    },
+  },
+  
+  // admin
+  {
+    path: '/admin',
+    name: RouteNamesEnum.adminDashboard,
+    component: () => import(/* webpackChunkName: "admin" */ '@/pages/admin/Dashboard.vue'),
+    meta: {
+      layout: LayoutsNamesEnum.default,
+      isNeedAuth: true,
+      access: IUserResponceAccess.author,
+    },
+  },
+  {
+    path: '/admin/viewed',
+    name: RouteNamesEnum.adminViewed,
+    component: () => import(/* webpackChunkName: "admin-viewed" */ '@/pages/admin/Viewed.vue'),
+    meta: {
+      layout: LayoutsNamesEnum.default,
+      isNeedAuth: true,
+      access: IUserResponceAccess.author,
     },
   },
 
