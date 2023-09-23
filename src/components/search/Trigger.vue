@@ -20,6 +20,7 @@
           :model-value="searchField"
           :placeholder="$t('search.autocomplete.empty')"
           :loading="isLoading"
+          :autofocus="true"
           variant="solo-filled"
           type="search"
           hide-details
