@@ -13,15 +13,37 @@
 						allowfullscreen
 						title="Player"
 						frameborder="0"
+            :style="`filter: brightness(${playerBrightness})`"
 					></iframe>
 				</v-responsive>
+        <v-item-group class="px-6 my-4">
+            <v-row align="center">
+              <v-btn
+                variant="text"
+                icon="mdi-brightness-6"
+                @click="playerBrightnessExpanded = !playerBrightnessExpanded"
+              />
+              <v-slide-x-transition mode="in-out" >
+                <v-slider
+                  v-show="playerBrightnessExpanded"
+                  v-model="playerBrightness"
+                  class="align-center justify-center"
+                  :min="0"
+                  :max="2"
+                  :step="0.05"
+                  hide-details
+                  thumb-label
+                />
+              </v-slide-x-transition>
+            </v-row>
+        </v-item-group>
 			</v-col>
 		</v-row>
 	</v-responsive>
 </template>
 
 <script lang="ts" setup>
-import { defineProps, toRefs } from 'vue'
+import {defineProps, ref, toRefs} from 'vue'
 import { usePlayer } from '@/composables/usePlayer'
 
 interface Props {
@@ -33,6 +55,9 @@ const props = defineProps<Props>()
 const { kinopoiskId, isLoading } = toRefs(props)
 
 const { playerSrc } = usePlayer(kinopoiskId)
+
+const playerBrightness = ref(1)
+const playerBrightnessExpanded = ref(false)
 </script>
 
 <style lang="scss">
