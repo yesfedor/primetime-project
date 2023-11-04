@@ -310,6 +310,40 @@ $methods = [
       ]
     ]
   ],
+  'watch.getDataBySlug' => [
+    'in_active' => true,
+    'beforeMethods' => [],
+    'objects' => ['Watch', 'User'],
+    'title' => 'Watch',
+    'detail' => '',
+    'link' => '/watch',
+    'props' => [
+      'slug' => [
+        'required' => true,
+        'type' => 'String',
+        'default' => ''
+      ],
+      'jwt' => [
+        'required' => true,
+        'type' => 'String'
+      ]
+    ]
+  ],
+  'watch.getKpidBySlug' => [
+    'in_active' => true,
+    'beforeMethods' => [],
+    'objects' => ['Watch'],
+    'title' => 'Watch',
+    'detail' => '',
+    'link' => '/watch',
+    'props' => [
+      'slug' => [
+        'required' => true,
+        'type' => 'String',
+        'default' => ''
+      ],
+    ]
+  ],
   'watch.getTrailerData' => [
     'in_active' => true,
     'beforeMethods' => [],
@@ -739,6 +773,26 @@ $methods = [
     'title' => 'API User Cron Loader',
     'detail' => 'Loading feed to cache from user',
     'link' => '/cron.userFeedLoader',
+    'props' => [
+      'limit' => [
+        'required' => true,
+        'type' => 'Int',
+        'default' => 0,
+      ],
+      'offset' => [
+        'required' => false,
+        'type' => 'Int',
+        'default' => 0,
+      ]
+    ]
+  ],
+  'cron.watchSetSlug' => [
+    'in_active' => true,
+    'beforeMethods' => [],
+    'objects' => ['Cron', 'Watch', 'User'],
+    'title' => 'API Watch Set Slug',
+    'detail' => 'Set mass slugs',
+    'link' => '/cron.watchSetSlug',
     'props' => [
       'limit' => [
         'required' => true,

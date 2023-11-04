@@ -33,7 +33,7 @@
 
 <script lang="ts" setup>
 // @ts-expect-error typescript error
-import { defineProps, toRefs } from 'vue'
+import {computed, defineProps, toRefs} from 'vue'
 import type { WatchApiContentItem } from '@/api/watch'
 import { RouteNamesEnum } from '@/router/router.types'
 import { UTM_SOURCE_KEY, UTM_SOURCE } from '@/const/utm'
@@ -52,7 +52,7 @@ const { height } = useWatchHeight()
 const toWatchPage = {
 	name: RouteNamesEnum.watch,
 	params: {
-		kpid: item.value.kinopoiskId,
+		kpid: item.value?.slug || item.value.kinopoiskId,
 	},
 	query: {
 		[UTM_SOURCE_KEY]: UTM_SOURCE.watchcard,
