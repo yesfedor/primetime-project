@@ -38,6 +38,7 @@ export interface WatchApiExpandedItem {
 	id: string
 	imdbId: string
 	kinopoiskId: string
+  slug: string
 	nameEn: string
 	nameRu: string
 	posterUrl: string
@@ -73,6 +74,7 @@ export interface WatchApiFastSearchHistory {
 
 export interface WatchApiContentItem extends WatchApiFastSearchItem {
 	id: string
+  slug?: string
 	ratingAgeLimits: string
 }
 
@@ -204,7 +206,7 @@ export const watchApi = {
 	},
 	async getTrands(filter?: string) {
 		try {
-			const act = filter ? filter : 'ALL' 
+			const act = filter ? filter : 'ALL'
 			const result = await axios.get(API_PATH_METHOD + `watch.getTrand?v=1.0&act=${act}`)
 			if (result.data?.total) {
 				return result.data as WatchApiGetTrands
@@ -303,6 +305,16 @@ export const watchApi = {
 			return createError(e)
 		}
 	},
+  async getDataBySlug(slug: string, jwt: string) {
+    try {
+      const result = await axios.get(API_PATH_METHOD + `watch.getDataBySlug?v=1.0&slug=${slug}&jwt=${jwt}`)
+      if (result.data?.id) {
+        return result.data as WatchApiExpandedItem
+      }
+    } catch (e) {
+      return createError(e)
+    }
+  },
 	async adminViewed(jwt: string) {
 		try {
 			const result = await axios.get(API_PATH_METHOD + `watch.adminViewed?v=1.0&jwt=${jwt}`)

@@ -50,6 +50,36 @@ function appRoute($pageData) {
     } else return $pError404;
 }
 
+function getFilmBySlug($kpid) {
+  $ch = curl_init();
+  $headers = array('accept: application/json', 'x-api-key: 91d00358-6586-40e6-9d4e-9d9070547812');
+
+  curl_setopt($ch, CURLOPT_URL, 'https://primetime.su/api/method/watch.getKpidBySlug?v=1.0&site=test&slug=' . $kpid); # URL to post to
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); # return into a variable
+  curl_setopt($ch, CURLOPT_HTTPHEADER, $headers); # custom headers, see above
+  $data = curl_exec($ch); # run!
+  curl_close($ch);
+  $content = json_decode($data, true);
+
+  $contentType = $content['data']['type'];
+  if ($content['data']['type'] === 'FILM') $contentType = 'фильм';
+  if ($content['data']['type'] === 'TV_SERIES') $contentType = 'сериал';
+  if ($content['data']['type'] === 'MINI_SERIES') $contentType = 'мини-сериал';
+
+  $p = [
+    'title' => 'Смотреть '.$contentType.' '.$content['data']['nameRu'].' - PrimeTime',
+    'description' => $content['data']['description'],
+    'keywords' => $content['data']['description'],
+    'ogtype' => 'website',
+    'ogimage' => $content['data']['posterUrl'],
+    'page' => 'main',
+    'access' => 'default',
+    'error' => 200
+  ];
+
+  return $p;
+}
+
 function getFilmByKpid($kpid) {
     $ch = curl_init();
     $headers = array('accept: application/json', 'x-api-key: 91d00358-6586-40e6-9d4e-9d9070547812');
@@ -96,14 +126,21 @@ function getStaffByStaffId($staffId) {
 
 $p = appRoute($data['routes'][$url_page]);
 
-// watch data
-preg_match('/(\/watch\/)([0-9-_]{1,})/', $url_page, $p_pregWatch);
+// watch data : kpid
+preg_match('/(\/watch\/)([A-z0-9-_]{1,})/', $url_page, $p_pregWatch);
 
 if ($p_pregWatch[2]) {
     $p = getFilmByKpid($p_pregWatch[2]);
     http_response_code(200);
 }
 
+// watch data : slug
+preg_match('/(\/watch\/)([0-9]{1,}-[A-z0-9-_]{1,})/', $url_page, $p_pregWatchSlug);
+
+if ($p_pregWatchSlug[2]) {
+  $p = getFilmBySlug($p_pregWatchSlug[2]);
+  http_response_code(200);
+}
 // watch data
 preg_match('/(\/trailer\/)([0-9-_]{1,})/', $url_page, $p_pregTrailer);
 

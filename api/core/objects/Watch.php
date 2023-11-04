@@ -1,9 +1,11 @@
 <?php
+require_once(DIR . '/core/helpers/Slug.php');
+
 function WatchAddContentByData (array $contentPDOFromat) {
   if (!$contentPDOFromat[':kinopoiskId']) return false;
-  $query = "INSERT INTO WatchContent (`id`, `kinopoiskId`, `imdbId`, `nameRu`, `nameEn`, `posterUrl`, `posterUrlPreview`, `ratingKinopoisk`,
+  $query = "INSERT INTO WatchContent (`id`, `slug`, `kinopoiskId`, `imdbId`, `nameRu`, `nameEn`, `posterUrl`, `posterUrlPreview`, `ratingKinopoisk`,
             `ratingKinopoiskVoteCount`, `ratingFilmCritics`, `ratingFilmCriticsVoteCount`, `year`, `filmLength`, `slogan`, `description`,
-            `shortDescription`, `type`, `ratingAgeLimits`, `startYear`, `endYear`, `countries`, `genres`) VALUES (NULL, :kinopoiskId,
+            `shortDescription`, `type`, `ratingAgeLimits`, `startYear`, `endYear`, `countries`, `genres`) VALUES (NULL, :slug, :kinopoiskId,
             :imdbId, :nameRu, :nameEn, :posterUrl, :posterUrlPreview, :ratingKinopoisk, :ratingKinopoiskVoteCount, :ratingFilmCritics,
             :ratingFilmCriticsVoteCount, :year, :filmLength, :slogan, :description, :shortDescription, :type, :ratingAgeLimits,
             :startYear, :endYear, :countries, :genres)";
@@ -58,7 +60,14 @@ function WatchAddDbIfExitsByKpid (int $kpid) {
   }
   $genres = implode(',', $genres);
 
+  $nameForSlug = $kinopoiskApiUnofficialData['nameRu'] ? $kinopoiskApiUnofficialData['nameRu'] : $kinopoiskApiUnofficialData['nameEn'];
+  if (mb_strlen($nameForSlug)) {
+    $prefix = mb_substr($kinopoiskApiUnofficialData['kinopoiskId'], 0, 3) . '-';
+    $slug = SlugCreateByText($prefix . $nameForSlug);
+  }
+
   $contentPDOFromat = [
+    ':slug' => $slug,
     ':kinopoiskId' => ($kinopoiskApiUnofficialData['kinopoiskId'] ? $kinopoiskApiUnofficialData['kinopoiskId'] : 0),
     ':imdbId' => ($kinopoiskApiUnofficialData['imdbId'] ? $kinopoiskApiUnofficialData['imdbId'] : 'tt0'),
     ':nameRu' => ($kinopoiskApiUnofficialData['nameRu'] ? $kinopoiskApiUnofficialData['nameRu'] : 'Empty'),
@@ -81,7 +90,7 @@ function WatchAddDbIfExitsByKpid (int $kpid) {
     ':countries' => ($countries ? $countries : ''),
     ':genres' => ($genres ? $genres : '')
   ];
-  
+
   return WatchAddContentByData($contentPDOFromat);
 }
 
@@ -101,6 +110,45 @@ function WatchGetByKpid (int $kpid, string $jwt = '') {
   if ($user and $user['uid'] and $user['access'] !== 'co-author') WatchHistoryAdd($kpid, $user['uid']);
 
   return dbGetOne($query, $var);
+}
+
+function WatchGetDataBySlug (string $slug, string $jwt = '') {
+  if ($jwt !== '') {
+      if (!UserJwtIsValid($jwt)) return ['code' => 404];
+      $user = UserJwtDecode($jwt)['data'];
+  }
+
+  $query = "SELECT * FROM WatchContent WHERE slug = :slug";
+  $var = [
+      ':slug' => $slug
+  ];
+
+  $content = dbGetOne($query, $var);
+
+  if (!$content['kinopoiskId']) {
+    return null;
+  }
+
+  if ($user and $user['uid'] and $user['access'] !== 'co-author') WatchHistoryAdd($content['kinopoiskId'], $user['uid']);
+
+  return $content;
+}
+
+function WatchGetKpidBySlug (string $slug) {
+  $query = "SELECT * FROM WatchContent WHERE slug = :slug";
+  $var = [
+    ':slug' => $slug
+  ];
+
+  $content = dbGetOne($query, $var);
+
+  if (!$content['kinopoiskId']) {
+    return null;
+  }
+
+  return [
+    'data' => $content
+  ];
 }
 
 function WatchAddSimilarsByData (int $kpid, array $contentFromat) {
@@ -201,7 +249,7 @@ function WatchGetSimilarsByKpid (int $kpid) {
   }
   $kinopoiskIdList = $similars['kinopoiskIdList'];
 
-  $query = "SELECT id, kinopoiskId, nameRu, ratingAgeLimits, ratingKinopoisk, posterUrl, type, year FROM WatchContent WHERE kinopoiskId IN ($kinopoiskIdList) and kinopoiskId != :kinopoiskId";
+  $query = "SELECT id, slug, kinopoiskId, nameRu, ratingAgeLimits, ratingKinopoisk, posterUrl, type, year FROM WatchContent WHERE kinopoiskId IN ($kinopoiskIdList) and kinopoiskId != :kinopoiskId";
   $var = [
     ':kinopoiskId' => $kpid
   ];
@@ -223,7 +271,7 @@ function WatchUserRecord (int $kpid, string $jwt) {
     ':kinopoiskId' => $kpid
   ];
   $status = dbGetOne($query, $var);
-  
+
   if (!$status['id']) return [
     'uid' => (int) $user['uid'],
     'kinopoiskId' => (int) $kpid,
@@ -284,7 +332,7 @@ function WatchSubscribeManager (string $act, int $kpid, string $jwt) {
 }
 
 function WatchFastSearchHistory (string $jwt) {
-  if (!$jwt) return false; 
+  if (!$jwt) return false;
   if (!UserJwtIsValid($jwt)) return false;
   $user = UserJwtDecode($jwt)['data'];
   if (!$user['uid']) return false;
@@ -306,7 +354,7 @@ function WatchFastSearchHistory (string $jwt) {
 }
 
 function WatchFastSearchHistoryDelete (int $id, string $jwt) {
-  if (!$jwt) return false; 
+  if (!$jwt) return false;
   if (!UserJwtIsValid($jwt)) return false;
   $user = UserJwtDecode($jwt)['data'];
   if (!$user['uid']) return false;
@@ -354,7 +402,7 @@ function WatchFastSearchHistoryByKeyword (string $keyword, string $jwt = '') {
 }
 
 function WatchFastSearchAddMetric (string $searchQuery, string $jwt = '') {
-  if (!$jwt) return false; 
+  if (!$jwt) return false;
   if (!UserJwtIsValid($jwt)) return false;
   $user = UserJwtDecode($jwt)['data'];
   if (!$user['uid']) return false;
@@ -394,7 +442,7 @@ function WatchFastSearch (string $query, int $limit = 200, string $jwt = '0.0.0'
   $query = rawurlencode($query);
   $url = 'https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword='.$query.'&page=1';
   $result = [];
-  
+
   if (!mb_strlen($query) >= 3) {
     $result['code'] = 404;
     $result['content'] = [];
@@ -469,7 +517,7 @@ function WatchGetSubscriptions (string $jwt) {
   }
   $kinopoiskIdList = implode(',', $kinopoiskIdList);
 
-  $query_content = "SELECT id, kinopoiskId, nameRu, ratingAgeLimits, ratingKinopoisk, posterUrl, type, year FROM WatchContent WHERE kinopoiskId IN ($kinopoiskIdList) and kinopoiskId != :kinopoiskId ORDER BY FIELD(kinopoiskId, $kinopoiskIdList)";
+  $query_content = "SELECT id, slug, kinopoiskId, nameRu, ratingAgeLimits, ratingKinopoisk, posterUrl, type, year FROM WatchContent WHERE kinopoiskId IN ($kinopoiskIdList) and kinopoiskId != :kinopoiskId ORDER BY FIELD(kinopoiskId, $kinopoiskIdList)";
   $var_content = [
     ':kinopoiskId' => 0
   ];
@@ -550,7 +598,7 @@ function WatchHistoryGet ($jwt) {
   }
   $kinopoiskIdList = implode(',', $kinopoiskIdList);
 
-  $query_content = "SELECT id, kinopoiskId, nameRu, ratingAgeLimits, ratingKinopoisk, posterUrl, type, year FROM WatchContent WHERE kinopoiskId IN ($kinopoiskIdList) and kinopoiskId != :kinopoiskId ORDER BY FIELD(kinopoiskId, $kinopoiskIdList)";
+  $query_content = "SELECT id, slug, kinopoiskId, nameRu, ratingAgeLimits, ratingKinopoisk, posterUrl, type, year FROM WatchContent WHERE kinopoiskId IN ($kinopoiskIdList) and kinopoiskId != :kinopoiskId ORDER BY FIELD(kinopoiskId, $kinopoiskIdList)";
   $var_content = [
     ':kinopoiskId' => 0
   ];
@@ -601,7 +649,7 @@ function WatchGetTrand ($act = 'ALL') {
   }
   $kinopoiskIdList = implode(',', $kinopoiskIdList);
 
-  $query_content = "SELECT id, kinopoiskId, nameRu, ratingAgeLimits, ratingKinopoisk, posterUrl, type, year FROM WatchContent WHERE kinopoiskId IN ($kinopoiskIdList) and kinopoiskId != :kinopoiskId $dynamic_act ORDER BY FIELD(kinopoiskId, $kinopoiskIdList) LIMIT $limitOverStack";
+  $query_content = "SELECT id, slug, kinopoiskId, nameRu, ratingAgeLimits, ratingKinopoisk, posterUrl, type, year FROM WatchContent WHERE kinopoiskId IN ($kinopoiskIdList) and kinopoiskId != :kinopoiskId $dynamic_act ORDER BY FIELD(kinopoiskId, $kinopoiskIdList) LIMIT $limitOverStack";
   $var_content = array_merge([
     ':kinopoiskId' => 0
   ], $dynamcic_var);
@@ -969,7 +1017,7 @@ function WatchAdminViewed($jwt) {
 
   $history = dbGetAll($query, $var);
   $countHistory = count($history);
-  
+
   $result = [];
   for ($i = 0; $i < $countHistory; $i++) {
     $result[$i] = createItem($history[$i]['uid'], $history[$i]['kinopoiskId']);

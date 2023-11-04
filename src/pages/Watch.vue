@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="app-watch">
+  <v-container :key="resolveRouterParam" fluid class="app-watch">
     <v-row>
       <v-col cols="12" md="12" lg="9">
         <v-row class="app-watch-primary">
@@ -33,7 +33,7 @@ import { ref, Ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useTitle } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
-import { watchApi, WatchApiGetRecommendationsDataByKpid } from '@/api/watch'
+import {watchApi, WatchApiExpandedItem, WatchApiGetRecommendationsDataByKpid} from '@/api/watch'
 import { useAuth } from '@/api/auth'
 import AppWatchPlayer from '@/components/watch/Player.vue'
 import AppWatchInfoTable from '@/components/watch/InfoTable.vue'
@@ -46,14 +46,35 @@ useTitle(i18n.t('app.loading'))
 const route = useRoute()
 const authProvider = useAuth()
 
-const kpid = computed(() => route.params.kpid + '')
-
 // watchData
-const watchData = ref({})
+const watchData = ref<WatchApiExpandedItem | { [key: string]: string }>({})
 const watchIsLoading = ref(false)
+
+const resolveRouterParam = computed(() => route.params.kpid + '')
+const kpid = computed(() => {
+  if (watchData.value?.kinopoiskId) {
+    return watchData.value.kinopoiskId
+  }
+  return '0'
+})
+
+const getWatchDataBySlug = async () => {
+  watchIsLoading.value = true
+  const result = await watchApi.getDataBySlug(resolveRouterParam.value, authProvider.getJwt())
+  if (result?.id) {
+    useTitle(i18n.t('watch.share.title', {
+      type: capitalizeFirstLetter(i18n.t(`watch.type.${result.type}`)),
+      title: result.nameRu || result.nameEn,
+      year: Number(result.startYear) && Number(result.endYear) ? `${result.startYear} - ${result.endYear}` : result.year,
+    }))
+    watchData.value = result
+  }
+  watchIsLoading.value = false
+}
+
 const getWatchDataByKpid = async () => {
   watchIsLoading.value = true
-  const result = await watchApi.getDataByKpid(kpid.value, authProvider.getJwt())
+  const result = await watchApi.getDataByKpid(resolveRouterParam.value, authProvider.getJwt())
   if (result?.id) {
   useTitle(i18n.t('watch.share.title', {
     type: capitalizeFirstLetter(i18n.t(`watch.type.${result.type}`)),
@@ -84,16 +105,26 @@ const getRecommendationsData = async () => {
   recommendationsDataIsLoading.value = false
 }
 
-const init = () => {
-  getWatchDataByKpid()
-  getRecommendationsData()
+function reset() {
+  watchData.value = {}
+  recommendationsData.value = []
 }
 
-watch(kpid, () => {
-  init()
+const init = async () => {
+  if (resolveRouterParam.value.includes('-')) {
+    await getWatchDataBySlug()
+  } else {
+    await getWatchDataByKpid()
+  }
+  await getRecommendationsData()
+}
+
+watch(resolveRouterParam, async () => {
+  reset()
+  await init()
 })
 
-onMounted(() => {
-  init()
+onMounted(async () => {
+  await init()
 })
 </script>
