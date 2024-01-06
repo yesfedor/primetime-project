@@ -166,6 +166,19 @@ export interface WatchApiGAdminViewed {
 	time: string | number,
 }
 
+export interface WatchApiItemsByStaffItem {
+  id: string
+  kinopoiskId: string
+  nameRu: string
+  ratingKinopoisk: string
+}
+
+export interface WatchApiItemsByStaff {
+  code: number
+  title: string
+  items: WatchApiItemsByStaffItem[]
+}
+
 export const watchApi = {
 	async fastSearch(query: string, jwt: string, clientId: string) {
 		try {
@@ -319,6 +332,16 @@ export const watchApi = {
       const result = await axios.get(API_PATH_METHOD + `watch.getDataBySlug?v=1.0&slug=${slug}&jwt=${jwt}`)
       if (result.data?.id) {
         return result.data as WatchApiExpandedItem
+      }
+    } catch (e) {
+      return createError(e)
+    }
+  },
+  async getNameByStaffId(staff: string) {
+    try {
+      const result = await axios.get(API_PATH_METHOD + `watch.getNameByStaffId?v=1.0&staff=${staff}`)
+      if (result.data?.title) {
+        return result.data as WatchApiItemsByStaff
       }
     } catch (e) {
       return createError(e)
