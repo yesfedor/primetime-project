@@ -13,6 +13,7 @@
               :facts="facts"
               :is-loading="watchIsLoading || staffLoading"
             />
+            <AppWatchReviews :items="reviews" />
           </v-col>
         </v-row>
       </v-col>
@@ -43,13 +44,14 @@ import {
   watchApi,
   WatchApiExpandedItem,
   WatchApiGetFacts,
-  WatchApiGetRecommendationsDataByKpid,
+  WatchApiGetRecommendationsDataByKpid, WatchApiGetReviews,
   WatchApiGetStaffByKpid,
 } from '@/api/watch'
 import { useAuth } from '@/api/auth'
 import AppWatchPlayer from '@/components/watch/Player.vue'
 import AppWatchInfoTable from '@/components/watch/InfoTable.vue'
 import AppWatchList from '@/components/watch/List.vue'
+import AppWatchReviews from '@/components/watch/Reviews.vue'
 import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter.helper'
 
 const i18n = useI18n()
@@ -141,6 +143,19 @@ const getFacts = async () => {
   factsLoading.value = false
 }
 
+// reviews
+const reviews = ref<WatchApiGetReviews['items'] | null>(null)
+const reviewsLoading = ref(false)
+
+const getReviews = async () => {
+  reviewsLoading.value = true
+  const reviewsData = await watchApi.getReviews(kpid.value)
+  if (reviewsData?.items) {
+    reviews.value = reviewsData.items
+  }
+  reviewsLoading.value = false
+}
+
 function reset() {
   watchData.value = {}
   recommendationsData.value = []
@@ -155,6 +170,7 @@ const init = async () => {
   await getRecommendationsData()
   await getStaff()
   await getFacts()
+  await getReviews()
 }
 
 watch(resolveRouterParam, async () => {

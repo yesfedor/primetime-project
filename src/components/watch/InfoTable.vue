@@ -110,8 +110,8 @@ const tableData = computed(() => {
           value += ' мин.'
           break
         case 'year':
-          if (data.value?.startYear && data.value?.endYear) {
-            value = `${data.value.startYear} - ${data.value.endYear}`
+          if (data.value?.startYear && data.value?.endYear && data.value?.startYear !== '0') {
+            value = `с ${data.value.startYear} по ${data.value.endYear !== '0' ? data.value.endYear : 'н. в.'}`
           }
           break
       }
