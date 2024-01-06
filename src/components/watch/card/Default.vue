@@ -8,7 +8,7 @@
 			cover
 			class="align-end"
 		>
-			<v-card-title class="d-flex align-center text-white text-body-1">
+			<v-card-title class="d-flex align-center text-white text-body-2">
 				<span class="text-capitalize">{{ $t(`watch.type.${item.type}`) }}</span>
 				<span class="px-2"> ● </span>
 				<span>{{ item.year }}</span>
@@ -20,9 +20,9 @@
 				</template>
 			</v-card-title>
 		</v-img>
-		<v-list>
+		<v-list class="py-1">
 			<v-list-item :prepend-avatar="item.posterUrl">
-				<v-list-item-title>{{ item.nameRu }}</v-list-item-title>
+				<v-list-item-title class="text-body-2">{{ item.nameRu }}</v-list-item-title>
 				<template #append>
 					<AppWatchActions :item="item" />
 				</template>

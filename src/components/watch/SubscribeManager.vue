@@ -7,12 +7,13 @@
 		:icon="!showText"
 		:color="color"
 		v-bind="props"
+    class="px-3"
 		@click.stop="managerAction"
 	>
 		<span v-if="showText">
 			{{ $t(`subscriptions.manager.action.${managerStatusAlt}`) }}
 		</span>
-		<v-icon v-else :icon="managerStatusIcon" />		
+		<v-icon v-else :icon="managerStatusIcon" />
 	</v-btn>
 </template>
 

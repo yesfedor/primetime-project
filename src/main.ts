@@ -9,6 +9,7 @@ import Toast, { POSITION } from 'vue-toastification'
 
 // styles
 import 'vuetify/styles'
+import 'swiper/css'
 import '@/assets/styles/_app.scss'
 
 loadFonts()

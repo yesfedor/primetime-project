@@ -9,6 +9,7 @@
 				variant="flat"
 				color="primary"
 				v-bind="props"
+        class="px-3"
 			>
 				{{ $t('player.select') }}
 			</v-btn>

@@ -141,6 +141,15 @@ export interface WatchApiGetStaffItem {
 	staffId: string
 }
 
+enum WatchApiGetStaffTypes {
+	ACTOR = 'ACTOR',
+	DESIGN = 'DESIGN',
+	PRODUCER = 'PRODUCER',
+	WRITER = 'WRITER'
+}
+
+export type WatchApiGetStaffType = keyof typeof WatchApiGetStaffTypes
+
 export interface WatchApiGetStaffByKpid {
 	code: number
 	staff: {
