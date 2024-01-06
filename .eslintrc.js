@@ -18,6 +18,7 @@ module.exports = {
     'comma-dangle': ['warn', 'always-multiline'],
     'no-multiple-empty-lines': 'off',
     quotes: ['error', 'single', { avoidEscape: true }],
+    'prefer-const': 'off',
     'import/prefer-default-export': 'off',
     'import/extensions': 'off',
     '@typescript-eslint/no-empty-function': 'off',
@@ -26,11 +27,12 @@ module.exports = {
     'vue/attribute-hyphenation': 'warn',
     'vue/attributes-order': 'warn',
     'vue/max-attributes-per-line': 'off',
-    'vue/no-confusing-v-for-v-if': 'error',
     'vue/order-in-components': 'warn',
     'vue/prop-name-casing': 'warn',
     'vue/no-dupe-keys': ['error', {
       groups: [],
     }],
+    '@typescript-eslint/no-unused-vars': 'off',
+    'vue/no-ref-as-operand': 'off',
   },
 }

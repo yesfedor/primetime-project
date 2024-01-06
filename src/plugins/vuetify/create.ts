@@ -10,6 +10,7 @@ import { fa } from 'vuetify/iconsets/fa'
 import * as components from 'vuetify/components'
 import * as componentsLabs from 'vuetify/labs/components'
 import * as directives from 'vuetify/directives'
+
 // Themes
 import { AppThemesEnum } from '@/plugins/vuetify/types'
 import { lightTheme } from '@/plugins/vuetify/theme/light'

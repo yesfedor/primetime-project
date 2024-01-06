@@ -13,8 +13,10 @@ export enum UTM_SOURCE {
 	searchpage = 'searchpage',
 	// From item in search hint
 	searchhint = 'searchhint',
-	// From search text field 
+	// From search text field
 	searchbox = 'searchbox',
 	// From trailer page
-	trailerpage = 'trailerpage'
+	trailerpage = 'trailerpage',
+	// From watch page
+	watchbox = 'watchbox'
 }

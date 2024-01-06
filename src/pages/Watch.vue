@@ -7,13 +7,19 @@
             <AppWatchPlayer :kinopoisk-id="kpid" :is-loading="watchIsLoading" />
           </v-col>
           <v-col cols="12" class="app-watch-primary__info-table">
-            <AppWatchInfoTable :data="watchData" :is-loading="watchIsLoading" />
+            <AppWatchInfoTable
+              :data="watchData"
+              :staff="staff"
+              :facts="facts"
+              :is-loading="watchIsLoading || staffLoading"
+            />
           </v-col>
         </v-row>
       </v-col>
       <v-col cols="12" md="12" lg="3">
         <v-row class="app-watch-secondary">
           <v-col cols="12" class="app-watch-secondary__recommendations">
+            <h2 class="text-h6 mb-3">Далее к просмотру</h2>
             <AppWatchList
               :list="recommendationsData"
               :is-loading="recommendationsDataIsLoading"
@@ -33,7 +39,13 @@ import { ref, Ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useTitle } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
-import {watchApi, WatchApiExpandedItem, WatchApiGetRecommendationsDataByKpid} from '@/api/watch'
+import {
+  watchApi,
+  WatchApiExpandedItem,
+  WatchApiGetFacts,
+  WatchApiGetRecommendationsDataByKpid,
+  WatchApiGetStaffByKpid,
+} from '@/api/watch'
 import { useAuth } from '@/api/auth'
 import AppWatchPlayer from '@/components/watch/Player.vue'
 import AppWatchInfoTable from '@/components/watch/InfoTable.vue'
@@ -105,6 +117,30 @@ const getRecommendationsData = async () => {
   recommendationsDataIsLoading.value = false
 }
 
+// staff
+const staff = ref<WatchApiGetStaffByKpid['staff'] | null>(null)
+const staffLoading = ref(false)
+const getStaff = async () => {
+  staffLoading.value = true
+  const staffData = await watchApi.getStaffByKpid(kpid.value)
+  if (staffData?.staff) {
+    staff.value = staffData.staff
+  }
+  staffLoading.value = false
+}
+
+// facts
+const facts = ref<WatchApiGetFacts['content'] | null>(null)
+const factsLoading = ref(false)
+const getFacts = async () => {
+  factsLoading.value = true
+  const factsData = await watchApi.getFacts(kpid.value)
+  if (factsData?.content.length) {
+    facts.value = factsData.content
+  }
+  factsLoading.value = false
+}
+
 function reset() {
   watchData.value = {}
   recommendationsData.value = []
@@ -117,6 +153,8 @@ const init = async () => {
     await getWatchDataByKpid()
   }
   await getRecommendationsData()
+  await getStaff()
+  await getFacts()
 }
 
 watch(resolveRouterParam, async () => {

@@ -9,7 +9,7 @@
 						:src="playerSrc"
 						width="100%"
 						height="100%"
-						class="app-watch-player__frame"
+						class="app-watch-player__frame rounded-lg"
 						allowfullscreen
 						title="Player"
 						frameborder="0"

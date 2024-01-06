@@ -4,7 +4,7 @@
     :exact="false"
     :ripple="false"
     variant="text"
-    class="app-logo px-0"
+    class="app-logo px-0 text-body-1 text-uppercase"
   >
     {{ $t('app.logo.title') }}
   </v-btn>
@@ -20,17 +20,12 @@ export default defineComponent({
 
 <style lang="scss">
 .app-logo {
-  font-size: lib-font-size(18) !important;
   font-weight: map-get($font-weights, 'meduim');
   font-family: $font-montserrat-alt !important;
   letter-spacing: 4px !important;
 
   .v-btn__overlay, &:hover .v-btn__overlay {
     opacity: 0;
-  }
-
-  @media #{map-get($display-breakpoints, "md-and-up")} {
-    font-size: lib-font-size(20) !important;
   }
 }
 </style>
