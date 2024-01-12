@@ -2,14 +2,14 @@ import { ref, Ref, computed } from 'vue'
 import { API_CONFIG } from '@/api/config'
 
 export enum PlayerAlias {
-	bazon = 'bazon',
 	svetacdn = 'svetacdn',
+  voidboost = 'voidboost',
 }
 
 type PlayerAliasStrings = keyof typeof PlayerAlias
 
 const playerLocaleStorageKey = 'player-alias'
-const playerAliasDefault = PlayerAlias.svetacdn
+const playerAliasDefault = PlayerAlias.voidboost
 const playerAlias = ref(localStorage.getItem(playerLocaleStorageKey) ?? playerAliasDefault) as Ref<PlayerAliasStrings>
 
 export function usePlayer(kinopoiskId: Ref<string> | null) {
@@ -20,9 +20,10 @@ export function usePlayer(kinopoiskId: Ref<string> | null) {
 		switch(playerAlias.value) {
 			case PlayerAlias.svetacdn:
 				return `//player.svetacdn.in/LDSZJq4uCNvY?kp_id=${kinopoiskId.value}&domain=${API_CONFIG.host}`
-			case PlayerAlias.bazon:
+			case PlayerAlias.voidboost:
+        return `//voidboost.tv/embed/${kinopoiskId.value}`
 			default:
-				return `https://v1619875985.bazon.site/kp/${kinopoiskId.value}`
+				return `//player.svetacdn.in/LDSZJq4uCNvY?kp_id=${kinopoiskId.value}&domain=${API_CONFIG.host}`
 		}
 	})
 
