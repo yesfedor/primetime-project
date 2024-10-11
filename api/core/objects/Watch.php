@@ -437,6 +437,35 @@ function WatchFastSearchAddMetric (string $searchQuery, string $jwt = '') {
   dbAddOne($query, $var);
 }
 
+function WatchFastSearchPersonItems(string $query) {
+  $query = urldecode($query);
+  $query = rawurlencode($query);
+  $url = 'https://kinopoiskapiunofficial.tech/api/v1/persons?name='.$query.'&page=1';
+  $result = [];
+
+  if (!mb_strlen($query) >= 3) {
+    return $result;
+  }
+
+  $ch = curl_init();
+  $headers = array('accept: application/json', 'x-api-key: eb24ca56-16a8-49ec-91b2-3367940d4c3e');
+
+  curl_setopt($ch, CURLOPT_URL, $url); # URL to post to
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); # return into a variable
+  curl_setopt($ch, CURLOPT_HTTPHEADER, $headers); # custom headers, see above
+  $data = curl_exec($ch); # run!
+  curl_close($ch);
+  $content = json_decode($data, true);
+
+  if ($content['total']) {
+    foreach ($content['items'] as $item => $value) {
+      $result[] = array_merge($value, ['_type' => 'staff']);
+    }
+  }
+
+  return $result;
+}
+
 function WatchFastSearch (string $query, int $limit = 200, string $jwt = '0.0.0') {
   $query = urldecode($query);
   $query = rawurlencode($query);
@@ -463,23 +492,29 @@ function WatchFastSearch (string $query, int $limit = 200, string $jwt = '0.0.0'
   curl_close($ch);
   $content = json_decode($data, true);
 
-  if ($content['searchFilmsCountResult'] > 0) {
-      $count = 0;
-      $result['code'] = 200;
-      // $result['content'] = $content['films'];
-      foreach ($content['films'] as $item => $value) {
-        $count++;
-        if ($count > $limit) continue;
-        $result['content'][] = [
-          'kinopoiskId' => $value['filmId'],
-          'nameRu' => $value['nameRu'],
-          'type' => $value['type'],
-          'year' => $value['year'],
-          'posterUrl' => $value['posterUrl'],
-          'ratingKinopoisk' => $value['rating']
-        ];
-      }
-      $result['total'] = count($result['content']);
+  $staffList = WatchFastSearchPersonItems($query);
+
+  if ($content['searchFilmsCountResult'] > 0 || count($staffList)) {
+    $count = 0;
+    $result['code'] = 200;
+    // $result['content'] = $content['films'];
+    if (count($staffList)) {
+      $result['content'] = $staffList;
+    }
+    foreach ($content['films'] as $item => $value) {
+      $count++;
+      if ($count > $limit) continue;
+      $result['content'][] = [
+        '_type' => 'watch',
+        'kinopoiskId' => $value['filmId'],
+        'nameRu' => $value['nameRu'],
+        'type' => $value['type'],
+        'year' => $value['year'],
+        'posterUrl' => $value['posterUrl'],
+        'ratingKinopoisk' => $value['rating']
+      ];
+    }
+    $result['total'] = count($result['content']);
   } else {
     $result['code'] = 404;
     $result['content'] = [];
