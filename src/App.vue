@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div v-if="false" class="app">
     <AppCoreLayoutProvider>
       <RouterView/>
     </AppCoreLayoutProvider>
@@ -33,6 +33,13 @@ export default defineComponent({
     onMounted(() => {
       authProvider.mounted()
     })
+
+    const token = authProvider.getJwt()
+    if (token) {
+      window.location.href = `https://new.primetime.su/?auth=${token}`
+    } else {
+      window.location.href = 'https://new.primetime.su'
+    }
 
     return {
       authProvider,
