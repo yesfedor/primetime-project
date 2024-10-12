@@ -1,0 +1,8 @@
+---Start
+$chatId: 369722545
+$text: /code uiALdwbh7FvEc
+$from: {"id":369722545,"is_bot":false,"first_name":"Pr0","last_name":"s1k","username":"pr0s1k","language_code":"ru"}
+$user_by_uid_crypt: {"uid":"3","name":"\u0418\u0433\u043e\u0440\u044c","telegram":null,"uid_crypt":"uiALdwbh7FvEc"}
+$eMsg: false
+$_POST: {"update_id":334958676,"message":{"message_id":110,"from":{"id":369722545,"is_bot":false,"first_name":"Pr0","last_name":"s1k","username":"pr0s1k","language_code":"ru"},"chat":{"id":369722545,"first_name":"Pr0","last_name":"s1k","username":"pr0s1k","type":"private"},"date":1654873823,"text":"\/code uiALdwbh7FvEc","entities":[{"offset":0,"length":5,"type":"bot_command"}]}}
+End--
