@@ -14,7 +14,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
-      name: ${{ (github.ref == 'refs/heads/dev' && 'Development') || (github.ref == 'refs/heads/stage' && 'Staging') || (github.ref == 'refs/heads/main' && 'Production') }}
+      name: ${{ (github.ref == 'refs/heads/dev' && 'Development') || (github.ref == 'refs/heads/master' && 'Production') }}
 
     steps:
       - name: Checkout code
