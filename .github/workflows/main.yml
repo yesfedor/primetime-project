@@ -52,10 +52,10 @@ jobs:
             git pull;
             rm -rf html;
             cp public html -r;
-            export NVM_DIR=\"$HOME/.nvm\";
+            export NVM_DIR=\"~/.nvm\";
             [ -s \"$NVM_DIR/nvm.sh\" ] && \. \"$NVM_DIR/nvm.sh\";
-            nvm use;
-            node deploy.js;
+            . nvm use;
+            . node deploy.js;
           "
           EOT
 
