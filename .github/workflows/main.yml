@@ -1,45 +1,58 @@
-name: 🚀 Deploy website on push
+name: Deploy
+
 on:
   push:
-    branches: [ master ]
-jobs:
-  web-deploy:
-    name: 🎉 Deploy
-    runs-on: ubuntu-latest
-    steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v2
+    branches:
+      - dev
+      - stage
+      - main
 
-    - name: Use Node.js 18
-      uses: actions/setup-node@v2
-      with:
-        node-version: '18'
-      
-    - name: 🔨 Build Project
-      run: |
-        npm install
-        npm run build
-    
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.3.2
-      with:
-        server: ${{ secrets.ftp_server }}
-        username: ${{ secrets.ftp_username }}
-        password: ${{ secrets.ftp_password }}
-        server-dir: ${{ secrets.ftp_server_dir }}
-        local-dir: dist/
-  web-deploy-api:
-    name: 🎉 Deploy
+env:
+  DOCKER_COMPOSE_VERSION: 1.29.2
+
+jobs:
+  deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: ${{ (github.ref == 'refs/heads/dev' && 'Development') || (github.ref == 'refs/heads/stage' && 'Staging') || (github.ref == 'refs/heads/main' && 'Production') }}
+
     steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v2
-    
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.3.2
-      with:
-        server: ${{ secrets.ftp_server }}
-        username: ${{ secrets.ftp_username }}
-        password: ${{ secrets.ftp_password }}
-        server-dir: ${{ secrets.ftp_api_dir }}
-        local-dir: api/core/
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Load SSH key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Prepare
+        id: set-env
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
+            echo "::set-output name=ENVIRONMENT_NAME::dev"
+          elif [ "${{ github.ref }}" == "refs/heads/stage" ]; then
+            echo "::set-output name=ENVIRONMENT_NAME::stage"
+          elif [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            echo "::set-output name=ENVIRONMENT_NAME::production"
+          fi
+
+      - name: Deploying
+        run: |
+          ssh -T ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} /bin/bash <<'EOT'
+          if ! docker ps | grep -q "php-film"; then
+            echo "The container "php-film" is inactive"
+            exit 1
+          fi
+
+          docker exec -it php-film bash -c "
+            cd /var/www/;
+            git reset --hard;
+            node deploy.js;
+          "
+          EOT
+
+        env:
+          PORT: ${{ steps.set-env.outputs.PORT }}
+          ENVIRONMENT_NAME: ${{ steps.set-env.outputs.ENVIRONMENT_NAME }}
