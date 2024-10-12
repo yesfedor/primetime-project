@@ -3,8 +3,8 @@ name: Deploy
 on:
   push:
     branches:
-      - dev
-      - stage
+#      - dev
+#      - stage
       - master
 
 env:
@@ -52,6 +52,7 @@ jobs:
             git pull;
             rm -rf html;
             cp public html -r;
+            nvm use;
             node deploy.js;
           "
           EOT
