@@ -1,1 +1,1 @@
-console.info('@@@ deploy js available')
+console.info('@@@ deploy js available @@@')
