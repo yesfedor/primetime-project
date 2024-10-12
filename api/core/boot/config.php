@@ -1,10 +1,10 @@
 <?php
 // DataBase settings
 $config['db'] = [
-  'host' => 'localhost',
-  'dbname' => 'cc38255_prime',
-  'user' => 'cc38255_prime',
-  'password' => 'P36taBf1N8Rt9GF6'
+  'host' => 'db.iny.su:3333',
+  'dbname' => 'prime',
+  'user' => 'prime',
+  'password' => 'hidden'
 ];
 
 // Host setings
