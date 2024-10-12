@@ -48,10 +48,7 @@ jobs:
             git pull &&
             rm -rf html &&
             cp public html -r &&
-            export NVM_DIR=\"~/.nvm\" &&
-            [ -s \"$NVM_DIR/nvm.sh\" ] && \. \"$NVM_DIR/nvm.sh\" &&
-            . nvm use &&
-            . node deploy.js &&
+            ~/.nvm/versions/node/v18.20.3/bin/node deploy.js &&
             rm -rf core &&
             cp engine core -r;
           "
