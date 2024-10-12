@@ -4,7 +4,7 @@ $config['db'] = [
   'host' => 'db.iny.su:3333',
   'dbname' => 'prime',
   'user' => 'prime',
-  'password' => 'hidden'
+  'password' => '{password}'
 ];
 
 // Host setings
