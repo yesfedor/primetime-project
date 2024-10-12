@@ -34,7 +34,7 @@ jobs:
             echo "::set-output name=ENVIRONMENT_NAME::dev"
           elif [ "${{ github.ref }}" == "refs/heads/stage" ]; then
             echo "::set-output name=ENVIRONMENT_NAME::stage"
-          elif [ "${{ github.ref }}" == "refs/heads/main" ]; then
+          elif [ "${{ github.ref }}" == "refs/heads/master" ]; then
             echo "::set-output name=ENVIRONMENT_NAME::production"
           fi
 
