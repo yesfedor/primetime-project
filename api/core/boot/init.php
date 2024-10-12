@@ -15,7 +15,7 @@ function cors() {
           header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
       if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
           header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
-  
+
       exit(0);
   }
 }
@@ -23,7 +23,7 @@ function cors() {
 cors();
 
 if ($_GET['api'] == 'test') {
-  ini_set('error_reporting', E_ALL); 
+  ini_set('error_reporting', E_ALL);
   ini_set('display_errors', 1);
   ini_set('display_startup_errors', 1);
 }
@@ -32,6 +32,12 @@ function debug ($bug) {
   echo '<pre>';
   print_r($bug);
   echo '</pre>';
+}
+
+if (!function_exists('str_contains')) {
+  function str_contains($haystack, $needle) {
+    return $needle !== '' && mb_strpos($haystack, $needle) !== false;
+  }
 }
 
 function ExceptionJsonExtreme ($moduleName, Exception $e) {
