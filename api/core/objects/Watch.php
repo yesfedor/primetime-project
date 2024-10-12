@@ -463,6 +463,8 @@ function WatchFastSearchPersonItems(string $query) {
     }
   }
 
+  $result = array_slice($result, 0, 3);
+
   return $result;
 }
 
