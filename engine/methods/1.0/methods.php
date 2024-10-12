@@ -528,7 +528,7 @@ $methods = [
         'required' => true,
         'type' => 'Int',
         'default' => 2,
-      ],
+      ]
     ]
   ],
   'watch.fastSearchHistory' => [
