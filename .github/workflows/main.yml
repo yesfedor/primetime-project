@@ -49,6 +49,8 @@ jobs:
           docker exec -it php-film bash -c "
             cd /var/www/;
             git reset --hard;
+            rm -rf html;
+            cp public html;
             node deploy.js;
           "
           EOT
