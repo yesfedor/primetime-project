@@ -47,15 +47,17 @@ jobs:
           fi
 
           docker exec php-film bash -c "
-            cd /var/www/;
-            git reset --hard;
-            git pull;
-            rm -rf html;
-            cp public html -r;
-            export NVM_DIR=\"~/.nvm\";
-            [ -s \"$NVM_DIR/nvm.sh\" ] && \. \"$NVM_DIR/nvm.sh\";
-            . nvm use;
-            . node deploy.js;
+            cd /var/www/ &&
+            git reset --hard &&
+            git pull &&
+            rm -rf html &&
+            cp public html -r &&
+            export NVM_DIR=\"~/.nvm\" &&
+            [ -s \"$NVM_DIR/nvm.sh\" ] && \. \"$NVM_DIR/nvm.sh\" &&
+            . nvm use &&
+            . node deploy.js &&
+            rm -rf core &&
+            cp engine core -r;
           "
           EOT
 

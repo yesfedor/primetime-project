@@ -2,10 +2,8 @@
 node_modules
 /html
 
-# local env files
-.env.local
-.env.*.local
-.env
+# local config files
+config.json
 
 # Log files
 npm-debug.log*
