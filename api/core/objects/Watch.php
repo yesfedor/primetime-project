@@ -614,7 +614,7 @@ function WatchHistoryGet ($jwt) {
 
   if (!$user['uid']) return ['code' => 404];
 
-  $query_history = "SELECT DISTINCT kinopoiskId FROM WatchHistory WHERE uid = :uid ORDER BY time DESC";
+  $query_history = "SELECT DISTINCT kinopoiskId, time FROM WatchHistory WHERE uid = :uid ORDER BY time DESC";
   $var_history = [
     ':uid' => $user['uid']
   ];
