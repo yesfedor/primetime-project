@@ -3,9 +3,9 @@ name: Deploy
 on:
   push:
     branches:
-      - dev
-      - stage
-      - main
+#      - dev
+#      - stage
+      - master
 
 env:
   DOCKER_COMPOSE_VERSION: 1.29.2
@@ -52,6 +52,7 @@ jobs:
             git pull;
             rm -rf html;
             cp public html -r;
+            nvm use;
             node deploy.js;
           "
           EOT
