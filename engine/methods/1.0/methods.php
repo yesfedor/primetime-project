@@ -523,7 +523,12 @@ $methods = [
       'client_id' => [
         'required' => false,
         'type' => 'String'
-      ]
+      ],
+      'staff-limit' => [
+        'required' => true,
+        'type' => 'Int',
+        'default' => 2,
+      ],
     ]
   ],
   'watch.fastSearchHistory' => [

@@ -437,7 +437,7 @@ function WatchFastSearchAddMetric (string $searchQuery, string $jwt = '') {
   dbAddOne($query, $var);
 }
 
-function WatchFastSearchPersonItems(string $query) {
+function WatchFastSearchPersonItems(string $query, int $limit = 3) {
   $query = urldecode($query);
   $query = rawurlencode($query);
   $url = 'https://kinopoiskapiunofficial.tech/api/v1/persons?name='.$query.'&page=1';
@@ -459,16 +459,16 @@ function WatchFastSearchPersonItems(string $query) {
 
   if ($content['total']) {
     foreach ($content['items'] as $item => $value) {
-      $result[] = array_merge($value, ['_type' => 'staff']);
+      $result[] = array_merge(['_type' => 'staff'], $value);
     }
   }
 
-  $result = array_slice($result, 0, 3);
+  $result = array_slice($result, 0, $limit);
 
   return $result;
 }
 
-function WatchFastSearch (string $query, int $limit = 200, string $jwt = '0.0.0') {
+function WatchFastSearch (string $query, int $limit = 200, string $jwt = '0.0.0', int $staffLimit = 4) {
   $query = urldecode($query);
   $query = rawurlencode($query);
   $url = 'https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword='.$query.'&page=1';
@@ -494,12 +494,12 @@ function WatchFastSearch (string $query, int $limit = 200, string $jwt = '0.0.0'
   curl_close($ch);
   $content = json_decode($data, true);
 
-  $staffList = WatchFastSearchPersonItems($query);
+  $staffList = WatchFastSearchPersonItems($query, $staffLimit);
 
   if ($content['searchFilmsCountResult'] > 0 || count($staffList)) {
     $count = 0;
     $result['code'] = 200;
-    // $result['content'] = $content['films'];
+
     if (count($staffList)) {
       $result['content'] = $staffList;
     }
