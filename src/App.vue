@@ -35,7 +35,7 @@ export default defineComponent({
     })
 
     const token = authProvider.getJwt()
-    if (token) {
+    if (token && token !== 'logout') {
       window.location.href = `https://new.primetime.su/?auth=${token}`
     } else {
       window.location.href = 'https://new.primetime.su'
