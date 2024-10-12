@@ -46,11 +46,12 @@ jobs:
             exit 1
           fi
 
-          docker exec -it php-film bash -c "
+          docker exec php-film bash -c "
             cd /var/www/;
             git reset --hard;
+            git pull;
             rm -rf html;
-            cp public html;
+            cp public html -r;
             node deploy.js;
           "
           EOT
