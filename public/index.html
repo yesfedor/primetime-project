@@ -1,68 +1,22 @@
-<?php
-$public = $_SERVER['DOCUMENT_ROOT'];
-$core = $public.'/engine/core.php';
-include_once($core);
-http_response_code($p['error']);
-?>
 <!DOCTYPE html>
-<html scheme lang>
+<html>
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- Standart tag -->
-    <title><?= $p['title'] ?></title>
-    <meta name="description" content="<?= $p['description'] ?>">
-    <meta name="keywords" content="<?= $p['keywords'] ?>">
-    <!-- Standart tag -->
-    <!-- OpenGraph -->
-    <meta property="og:title" content="<?= $p['title'] ?>">
-    <meta property="og:type" content="<?= $p['ogtype'] ?>">
-    <meta property="og:description" content="<?= $p['description'] ?>">
-    <meta property="og:site_name" content="<?= $data['site-name'] ?>">
-    <meta property="og:url" content="<?= appGetUrl() ?>">
-    <meta property="og:image" content="<?= $p['ogimage'] ?>">
-    <link rel="image_src" href="<?= $p['ogimage'] ?>" />
-    <meta name="twitter:image" content="<?= $p['ogimage'] ?>">
-    <!-- OpenGraph -->
-    <!-- favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png?v=13a7b">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png?v=13a7b">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png?v=13a7b">
-    <link rel="manifest" href="/favicon/site.webmanifest?v=13a7b">
-    <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg?v=13a7b" color="#121212">
-    <link rel="shortcut icon" href="/favicon/favicon.ico?v=13a7b">
-    <meta name="apple-mobile-web-app-title" content="PrimeTime">
-    <meta name="application-name" content="PrimeTime">
-    <meta name="msapplication-TileColor" content="#000000">
-    <meta name="msapplication-TileImage" content="/favicon/mstile-144x144.png?v=13a7b">
-    <meta name="msapplication-config" content="/favicon/browserconfig.xml?v=13a7b">
-    <meta name="theme-color" content="#ffffff">
-    <!-- favicon -->
-    <!-- Yandex.Metrika counter -->
-    <meta name="yandex-verification" content="2ae7d132d6ef0042" />
-    <script type="text/javascript" >
-      (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-      m[i].l=1*new Date();
-      for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-      k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-      (window, document, "script", "https://cdn.jsdelivr.net/npm/yandex-metrica-watch/tag.js", "ym");
-
-      ym(94316253, "init", {
-          clickmap:true,
-          trackLinks:true,
-          accurateTrackBounce:true,
-          trackHash:true
-      });
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/94316253" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
+    <title>PrimeTime Old</title>
   </head>
   <body>
-    <noscript>
-      <strong>PrimeTime</strong> - включите JavaScript для работы сайта.
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
+    <script>
+    const applyNewVersion = () => {
+      const jwt = localStorage.getItem('jwt')
+      if (jwt && jwt !== 'logout') {
+        document.location.href = `https://new.primetime.su/?auth=${jwt}`
+        return
+      }
+      document.location.href = `https://new.primetime.su/?auth=${jwt}`
+    }
+    applyNewVersion()
+    </script>
   </body>
 </html>
