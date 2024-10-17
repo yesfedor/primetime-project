@@ -525,7 +525,7 @@ $methods = [
         'type' => 'String'
       ],
       'staff-limit' => [
-        'required' => true,
+        'required' => false,
         'type' => 'Int',
         'default' => 2,
       ]
