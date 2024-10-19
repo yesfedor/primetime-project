@@ -797,13 +797,13 @@ function WatchFactsGet ($kinopoiskId) {
 }
 
 function WatchSearchByFilters ($country='', $genre='', $order='RATING', $type='', $year='', $page='1') {
-  $urlApi = 'https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-filters?page=' . $page;
-  if ($country !== '') $urlApi .= '&country=' . $country;
-  if ($genre !== '') $urlApi .= '&genre=' . $genre;
+  $urlApi = 'https://kinopoiskapiunofficial.tech/api/v2.2/films?page=' . $page;
+  if ($country !== '') $urlApi .= '&countries=' . $country;
+  if ($genre !== '') $urlApi .= '&genres=' . $genre;
   if ($order !== '') $urlApi .= '&order=' . $order;
   if ($type !== '') $urlApi .= '&type=' . $type;
   if ($year !== '') $urlApi .= '&yearFrom=' . $year;
-  if ($year !== '') $urlApi .= '&yearTo=' . $year;
+  if ($year !== '') $urlApi .= '&yearTo=3000';
 
   $ch = curl_init();
   $headers = array('accept: application/json', 'x-api-key: eb24ca56-16a8-49ec-91b2-3367940d4c3e');
