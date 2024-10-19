@@ -843,7 +843,7 @@ $methods = [
     'link' => '/suggestion.getByUser',
     'props' => [
       'jwt' => [
-        'required' => true,
+        'required' => false,
         'type' => 'String'
       ]
     ]

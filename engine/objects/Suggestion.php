@@ -45,7 +45,12 @@ function getByUser(string $jwt) {
     ':uid' => $uid,
   ];
 
-  $result = dbGetAll($query, $payload);
+  $content = dbGetAll($query, $payload);
+
+  $result = [
+    'content' => $content,
+    'total' => count($content)
+  ];
 
   return $result;
 }
