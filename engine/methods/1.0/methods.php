@@ -833,6 +833,20 @@ $methods = [
         'type' => 'String'
       ]
     ]
+  ],
+  'suggestion.getByUser' => [
+    'in_active' => true,
+    'beforeMethods' => [],
+    'objects' => ['Watch', 'User'],
+    'title' => 'Suggestion',
+    'detail' => '',
+    'link' => '/suggestion.getByUser',
+    'props' => [
+      'jwt' => [
+        'required' => true,
+        'type' => 'String'
+      ]
+    ]
   ]
 ];
 
