@@ -827,8 +827,9 @@ function WatchSearchByFilters ($country='', $genre='', $order='RATING', $type=''
   $limit = 100;
 
   foreach ($contentData['items'] as $item => $value) {
-    $count++;
     if ($count > $limit) continue;
+    if (!$value['nameRu'] || !$value['posterUrl']) continue;
+    $count++;
     $result[] = [
       'id' => strval($value['kinopoiskId']),
       'kinopoiskId' => strval($value['kinopoiskId']),
