@@ -673,7 +673,7 @@ function WatchGetTrand ($act = 'ALL') {
     FROM WatchHistory wh
     GROUP BY wh.kinopoiskId
   ) rh ON wc.kinopoiskId = rh.kinopoiskId
-  WHERE FIND_IN_SET(wc.type, $types)
+  WHERE FIND_IN_SET(wc.type, :types)
   ORDER BY rh.unique_viewers DESC, rh.recent_views DESC, wc.ratingKinopoisk DESC LIMIT 100;
   ";
 
