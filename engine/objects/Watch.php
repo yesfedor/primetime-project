@@ -650,13 +650,13 @@ function WatchHistoryGet ($jwt) {
 
 // Trand
 function WatchGetTrand ($act = 'ALL') {
-  $types = "FILM,VIDEO,TV_SERIES,MINI_SERIES,TV_SHOW";
+  $types = "'FILM','VIDEO','TV_SERIES','MINI_SERIES','TV_SHOW'";
 
   if ($act === 'FILM') {
     $types = 'FILM';
   }
   if ($act === 'TV_SERIES') {
-    $types = 'TV_SERIES,MINI_SERIES,TV_SHOW';
+    $types = "'TV_SERIES','MINI_SERIES','TV_SHOW'";
   }
 
   $query = " 
@@ -664,8 +664,8 @@ function WatchGetTrand ($act = 'ALL') {
   FROM WatchContent wc
   JOIN (
     SELECT wh.kinopoiskId,
-           COUNT(DISTINCT wh.uid) as unique_viewers,
-           SUM(CASE WHEN wh.time >= UNIX_TIMESTAMP(NOW() - INTERVAL 14 DAY) THEN 1 ELSE 0 END) as recent_views
+      COUNT(DISTINCT wh.uid) as unique_viewers,
+      SUM(CASE WHEN wh.time >= UNIX_TIMESTAMP(NOW() - INTERVAL 14 DAY) THEN 1 ELSE 0 END) as recent_views
     FROM WatchHistory wh
     GROUP BY wh.kinopoiskId
   ) rh ON wc.kinopoiskId = rh.kinopoiskId
@@ -1031,8 +1031,6 @@ function WatchAdminViewed($jwt) {
   $limit = 1500;
 
   $query = "
-  SET @two_months_ago = DATE_SUB(CURDATE(), INTERVAL 2 MONTH);
-
   SELECT wc.id, wc.slug, wc.kinopoiskId, wc.nameRu, wc.ratingAgeLimits, wc.ratingKinopoisk, wc.posterUrl, wc.type, wc.year,
          u.name AS user_name, wh.time AS watch_time
   FROM WatchContent wc
