@@ -650,13 +650,13 @@ function WatchHistoryGet ($jwt) {
 
 // Trand
 function WatchGetTrand ($act = 'ALL') {
-  $types = "'FILM','VIDEO','TV_SERIES','MINI_SERIES','TV_SHOW'";
+  $types = 'FILM,VIDEO,TV_SERIES,MINI_SERIES,TV_SHOW';
 
   if ($act === 'FILM') {
-    $types = "'FILM'";
+    $types = 'FILM';
   }
   if ($act === 'TV_SERIES') {
-    $types = "'TV_SERIES','MINI_SERIES','TV_SHOW'";
+    $types = 'TV_SERIES,MINI_SERIES,TV_SHOW';
   }
 
   $query = " 
