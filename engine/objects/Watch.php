@@ -659,22 +659,23 @@ function WatchGetTrand ($act = 'ALL') {
     $types = 'TV_SERIES,MINI_SERIES,TV_SHOW';
   }
 
-  $query = "
-  SET @types = '$types';
-  
+  $query = " 
   SELECT wc.id, wc.slug, wc.kinopoiskId, wc.nameRu, wc.ratingAgeLimits, wc.ratingKinopoisk, wc.posterUrl, wc.type, wc.year
   FROM WatchContent wc
   JOIN (
     SELECT wh.kinopoiskId,
            COUNT(DISTINCT wh.uid) as unique_viewers,
-           SUM(CASE WHEN wh.time >= UNIX_TIMESTAMP(NOW() - INTERVAL 7 DAY) THEN 1 ELSE 0 END) as recent_views
+           SUM(CASE WHEN wh.time >= UNIX_TIMESTAMP(NOW() - INTERVAL 14 DAY) THEN 1 ELSE 0 END) as recent_views
     FROM WatchHistory wh
     GROUP BY wh.kinopoiskId
   ) rh ON wc.kinopoiskId = rh.kinopoiskId
-  WHERE FIND_IN_SET(wc.type, @types)
-  ORDER BY rh.unique_viewers DESC, rh.recent_views DESC, wc.ratingKinopoisk DESC
-  LIMIT 100;
+  WHERE FIND_IN_SET(wc.type, $types) AND uid != :uid
+  ORDER BY rh.unique_viewers DESC, rh.recent_views DESC, wc.ratingKinopoisk DESC LIMIT 100;
   ";
+
+  $payload = [
+    ':uid' => 0
+  ];
 
   $content = dbGetAll($query, $payload);
 
@@ -1023,6 +1024,10 @@ function WatchAdminViewed($jwt) {
   if (!UserCheckPasswordByJwt($jwt)) return ['code' => 404];
   if ($user_db['access'] !== 'author') return ['code' => 404];
 
+  $two_months_ago = new DateTime();
+  $two_months_ago->sub(new DateInterval('P2M'));
+  $two_months_ago_timestamp = $two_months_ago->getTimestamp();
+
   $limit = 1500;
 
   $query = "
@@ -1033,13 +1038,13 @@ function WatchAdminViewed($jwt) {
   FROM WatchContent wc
   JOIN WatchHistory wh ON wc.kinopoiskId = wh.kinopoiskId
   JOIN User u ON wh.uid = u.uid
-  WHERE wh.time >= UNIX_TIMESTAMP(@two_months_ago) and u.uid != :uid
+  WHERE wh.time >= :time
   ORDER BY wh.time DESC
   LIMIT $limit;
   ";
 
   $payload = [
-    ':uid' => 0,
+    ':time' => $two_months_ago_timestamp
   ];
 
   $content = dbGetAll($query, $payload);
