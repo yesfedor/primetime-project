@@ -830,7 +830,7 @@ function WatchSearchByFilters ($country='', $genre='', $order='RATING', $type=''
     $count++;
     if ($count > $limit) continue;
     $result[] = [
-      'id' => strval(time()),
+      'id' => strval($value['kinopoiskId']),
       'kinopoiskId' => strval($value['kinopoiskId']),
       'nameRu' => $value['nameRu'],
       'type' => $value['type'],
