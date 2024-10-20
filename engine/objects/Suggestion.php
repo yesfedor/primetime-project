@@ -1,7 +1,7 @@
 <?php
 
 function getByUser(string $jwt) {
-  $uid = 15;
+  $uid = 1;
 
   $user = UserJwtDecode($jwt);
   if ($user['data']['uid']) {
