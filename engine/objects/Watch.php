@@ -650,51 +650,37 @@ function WatchHistoryGet ($jwt) {
 
 // Trand
 function WatchGetTrand ($act = 'ALL') {
-  $trandTimeOffset = 604800;
-  $limitOverStack = 100;
-
-  $dynamic_act = "";
-  $dynamcic_var = [];
+  $types = "FILM,VIDEO,TV_SERIES,MINI_SERIES,TV_SHOW";
 
   if ($act === 'FILM') {
-    $dynamic_act = "and type = :type_film";
-    $dynamcic_var = [':type_film' => 'FILM'];
+    $types = 'FILM';
   }
   if ($act === 'TV_SERIES') {
-    $dynamic_act = "and (type = :type_tv or type = :type_mini or type = :type_show)";
-    $dynamcic_var = [':type_tv' => 'TV_SERIES', ':type_mini' => 'MINI_SERIES', ':type_show' => 'TV_SHOW'];
+    $types = 'TV_SERIES,MINI_SERIES,TV_SHOW';
   }
 
-  $query_history = "SELECT kinopoiskId FROM WatchHistory WHERE time < :trandTimeOffset GROUP BY kinopoiskId ORDER BY COUNT(kinopoiskId) DESC";
-  $var_history = [
-    ':trandTimeOffset' => time() + $trandTimeOffset
-  ];
+  $query = "
+  SET @types = '$types';
+  
+  SELECT wc.id, wc.slug, wc.kinopoiskId, wc.nameRu, wc.ratingAgeLimits, wc.ratingKinopoisk, wc.posterUrl, wc.type, wc.year
+  FROM WatchContent wc
+  JOIN (
+    SELECT wh.kinopoiskId,
+           COUNT(DISTINCT wh.uid) as unique_viewers,
+           SUM(CASE WHEN wh.time >= UNIX_TIMESTAMP(NOW() - INTERVAL 7 DAY) THEN 1 ELSE 0 END) as recent_views
+    FROM WatchHistory wh
+    GROUP BY wh.kinopoiskId
+  ) rh ON wc.kinopoiskId = rh.kinopoiskId
+  WHERE FIND_IN_SET(wc.type, @types)
+  ORDER BY rh.unique_viewers DESC, rh.recent_views DESC, wc.ratingKinopoisk DESC
+  LIMIT 100;
+  ";
 
-  $trand = dbGetAll($query_history, $var_history);
-
-  if (!count($trand) > 0) {
-    return [
-      'code' => 404,
-      'total' => 0,
-      'content' => []
-    ];
-  }
-
-  $kinopoiskIdList = [];
-  foreach ($trand as $key => $value) {
-    $kinopoiskIdList[] = $value['kinopoiskId'];
-  }
-  $kinopoiskIdList = implode(',', $kinopoiskIdList);
-
-  $query_content = "SELECT id, slug, kinopoiskId, nameRu, ratingAgeLimits, ratingKinopoisk, posterUrl, type, year FROM WatchContent WHERE kinopoiskId IN ($kinopoiskIdList) and kinopoiskId != :kinopoiskId $dynamic_act ORDER BY FIELD(kinopoiskId, $kinopoiskIdList) LIMIT $limitOverStack";
-  $var_content = array_merge([
-    ':kinopoiskId' => 0
-  ], $dynamcic_var);
-  $content = dbGetAll($query_content, $var_content);
+  $content = dbGetAll($query, $payload);
 
   return [
     'code' => 200,
-    'total' => count($trand),
+    'total' => count($content),
     'content' => $content
   ];
 }
@@ -1037,30 +1023,32 @@ function WatchAdminViewed($jwt) {
   if (!UserCheckPasswordByJwt($jwt)) return ['code' => 404];
   if ($user_db['access'] !== 'author') return ['code' => 404];
 
-  $limit = 500;
-  $query = "SELECT * FROM `WatchHistory` WHERE uid != :uid ORDER BY id DESC LIMIT $limit";
-  $var = [
-    ':uid' => 0
+  $limit = 1500;
+
+  $query = "
+  SET @two_months_ago = DATE_SUB(CURDATE(), INTERVAL 2 MONTH);
+
+  SELECT wc.id, wc.slug, wc.kinopoiskId, wc.nameRu, wc.ratingAgeLimits, wc.ratingKinopoisk, wc.posterUrl, wc.type, wc.year,
+         u.name AS user_name, wh.time AS watch_time
+  FROM WatchContent wc
+  JOIN WatchHistory wh ON wc.kinopoiskId = wh.kinopoiskId
+  JOIN User u ON wh.uid = u.uid
+  WHERE wh.time >= UNIX_TIMESTAMP(@two_months_ago) and u.uid != :uid
+  ORDER BY wh.time DESC
+  LIMIT $limit;
+  ";
+
+  $payload = [
+    ':uid' => 0,
   ];
 
-  function createItem($uid, $kpid) {
-    $user = UserGetPublicByUid($uid);
-    $trailer = WatchGetTrailerData($kpid);
+  $content = dbGetAll($query, $payload);
 
-    return [
-      'user' => $user,
-      'trailer' => $trailer
-    ];
-  }
-
-  $history = dbGetAll($query, $var);
-  $countHistory = count($history);
-
-  $result = [];
-  for ($i = 0; $i < $countHistory; $i++) {
-    $result[$i] = createItem($history[$i]['uid'], $history[$i]['kinopoiskId']);
-    $result[$i]['time'] = $history[$i]['time'];
-  }
+  $result = [
+    'code' => 200,
+    'content' => $content,
+    'total' => count($content)
+  ];
 
   return $result;
 }
