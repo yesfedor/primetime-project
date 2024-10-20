@@ -1036,7 +1036,7 @@ function WatchAdminViewed($jwt) {
 
   $query = "
   SELECT wc.id, wc.slug, wc.kinopoiskId, wc.nameRu, wc.ratingAgeLimits, wc.ratingKinopoisk, wc.posterUrl, wc.type, wc.year,
-         u.name AS user_name, wh.time AS watch_time
+         u.uid AS user_uid, u.name AS user_name, u.surname AS user_surname, wh.time AS watch_time
   FROM WatchContent wc
   JOIN WatchHistory wh ON wc.kinopoiskId = wh.kinopoiskId
   JOIN User u ON wh.uid = u.uid
