@@ -783,9 +783,9 @@ function WatchFactsGet ($kinopoiskId) {
 }
 
 function WatchSearchByFilters ($country='', $genre='', $order='RATING', $type='', $year='', $page='1') {
-  $urlApi = 'https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-filters?page=' . $page;
-  if ($country !== '') $urlApi .= '&country=' . $country;
-  if ($genre !== '') $urlApi .= '&genre=' . $genre;
+  $urlApi = 'https://kinopoiskapiunofficial.tech/api/v2.2/films?page=' . $page;
+  if ($country !== '') $urlApi .= '&countries=' . $country;
+  if ($genre !== '') $urlApi .= '&genres=' . $genre;
   if ($order !== '') $urlApi .= '&order=' . $order;
   if ($type !== '') $urlApi .= '&type=' . $type;
   if ($year !== '') $urlApi .= '&yearFrom=' . $year;
@@ -801,7 +801,7 @@ function WatchSearchByFilters ($country='', $genre='', $order='RATING', $type=''
 
   $contentData = json_decode($data, true);
 
-  if (count($contentData['films']) < 0) return [
+  if (count($contentData['items']) < 0) return [
     'code' => 404,
     'page' => $page,
     'pages' => 0,
@@ -812,24 +812,25 @@ function WatchSearchByFilters ($country='', $genre='', $order='RATING', $type=''
   $count = 0;
   $limit = 100;
 
-  foreach ($contentData['films'] as $item => $value) {
-    $count++;
+  foreach ($contentData['items'] as $item => $value) {
     if ($count > $limit) continue;
+    if (!$value['nameRu'] || !$value['posterUrl']) continue;
+    $count++;
     $result[] = [
-      'id' => strval(time()),
-      'kinopoiskId' => strval($value['filmId']),
+      'id' => strval($value['kinopoiskId']),
+      'kinopoiskId' => strval($value['kinopoiskId']),
       'nameRu' => $value['nameRu'],
       'type' => $value['type'],
       'year' => $value['year'],
       'posterUrl' => $value['posterUrl'],
-      'ratingKinopoisk' => $value['rating']
+      'ratingKinopoisk' => $value['ratingKinopoisk']
     ];
   }
 
   return [
     'code' => 200,
     'page' => $page,
-    'pages' => $contentData['pagesCount'],
+    'pages' => $contentData['totalPages'],
     'items' => $result
   ];
 }
@@ -954,19 +955,19 @@ function WatchPopularsGet ($page=1) {
   foreach ($contentData['films'] as $item => $value) {
     $popular[] = [
       'id' => strval(time()),
-      'kinopoiskId' => strval($value['filmId']),
+      'kinopoiskId' => strval($value['kinopoiskId']),
       'nameRu' => $value['nameRu'],
       'type' => $value['type'],
       'year' => $value['year'],
       'posterUrl' => $value['posterUrl'],
-      'ratingKinopoisk' => $value['rating']
+      'ratingKinopoisk' => $value['ratingKinopoisk']
     ];
   }
 
   return [
     'code' => 200,
     'page' => $page,
-    'pages' => $contentData['pagesCount'],
+    'pages' => $contentData['totalPages'],
     'popular' => $popular
   ];
 }
