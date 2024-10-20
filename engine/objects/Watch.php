@@ -659,28 +659,23 @@ function WatchGetTrand ($act = 'ALL') {
     $types = "'TV_SERIES','MINI_SERIES','TV_SHOW'";
   }
 
-  $timeOffset = date('Y-m-d', strtotime('-2 months'));
-
   $query = " 
   SELECT wc.id, wc.slug, wc.kinopoiskId, wc.nameRu, wc.ratingAgeLimits, wc.ratingKinopoisk, wc.posterUrl, wc.type, wc.year
   FROM WatchContent wc
   JOIN (
     SELECT wh.kinopoiskId,
-           COUNT(DISTINCT wh.uid) as unique_viewers,
-           SUM(CASE WHEN wh.time >= UNIX_TIMESTAMP(:time) THEN 1 ELSE 0 END) as recent_views
+      COUNT(DISTINCT wh.uid) as unique_viewers,
+      SUM(CASE WHEN wh.time >= UNIX_TIMESTAMP(NOW() - INTERVAL 30 DAY) THEN 1 ELSE 0 END) as recent_views
     FROM WatchHistory wh
-    WHERE wh.time >= UNIX_TIMESTAMP(:time)
     GROUP BY wh.kinopoiskId
   ) rh ON wc.kinopoiskId = rh.kinopoiskId
-  JOIN WatchHistory wh ON wc.kinopoiskId = wh.kinopoiskId
-  JOIN User u ON wh.uid = u.uid
-  WHERE FIND_IN_SET(wc.type, '$types')
-  ORDER BY wh.time DESC, rh.unique_viewers DESC, rh.recent_views DESC, wc.ratingKinopoisk DESC
-  LIMIT 100;
+  WHERE FIND_IN_SET(wc.type, '$types') AND wc.id != :uid
+  ORDER BY rh.unique_viewers DESC, rh.recent_views DESC, wc.ratingKinopoisk DESC
+  LIMIT 100
   ";
 
   $payload = [
-    ':time' => $timeOffset
+    ':uid' => 0
   ];
 
   $content = dbGetAll($query, $payload);
