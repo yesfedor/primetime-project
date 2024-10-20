@@ -650,14 +650,18 @@ function WatchHistoryGet ($jwt) {
 
 // Trand
 function WatchGetTrand ($act = 'ALL') {
-  $types = "'FILM','VIDEO','TV_SERIES','MINI_SERIES','TV_SHOW'";
+  $types = ['FILM','VIDEO','TV_SERIES','MINI_SERIES','TV_SHOW'];
 
   if ($act === 'FILM') {
-    $types = 'FILM';
+    $types = ['FILM'];
   }
   if ($act === 'TV_SERIES') {
-    $types = "'TV_SERIES','MINI_SERIES','TV_SHOW'";
+    $types = ['TV_SERIES','MINI_SERIES','TV_SHOW'];
   }
+
+  $types_string = implode(',', $types);
+  $escaped_types_string = str_replace(',', '\',\'', $types_string);
+  $escaped_types_string = '\'' . $escaped_types_string . '\'';
 
   $query = " 
   SELECT wc.id, wc.slug, wc.kinopoiskId, wc.nameRu, wc.ratingAgeLimits, wc.ratingKinopoisk, wc.posterUrl, wc.type, wc.year
@@ -669,12 +673,12 @@ function WatchGetTrand ($act = 'ALL') {
     FROM WatchHistory wh
     GROUP BY wh.kinopoiskId
   ) rh ON wc.kinopoiskId = rh.kinopoiskId
-  WHERE FIND_IN_SET(wc.type, $types) AND uid != :uid
+  WHERE FIND_IN_SET(wc.type, $types)
   ORDER BY rh.unique_viewers DESC, rh.recent_views DESC, wc.ratingKinopoisk DESC LIMIT 100;
   ";
 
   $payload = [
-    ':uid' => 0
+    ':types' => $escaped_types_string
   ];
 
   $content = dbGetAll($query, $payload);
